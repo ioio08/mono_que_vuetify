@@ -1,0 +1,20 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+// $font-size-root: 20px;
+$white: rgba(230, 227, 227, 0.87);
+$container-max-widths: (
+  'md': 960px,
+  'lg': 1140px,
+  'xl': 1500px,
+);
+
+// commons //////////////////////////
+body {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+a.link-black {
+  color: $white !important;
+  text-decoration: none;
+}
