@@ -10,7 +10,7 @@
       v-model="email"
       label="E-mail"
     ></v-text-field>
-    <v-select
+    <v-select  
       v-model="select"
       :items="subjects"
       label="Subject"

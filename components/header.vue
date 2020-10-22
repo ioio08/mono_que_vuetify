@@ -13,7 +13,7 @@
     nav
     dense
     >
-      <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 30px;">
+      <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;">
       </v-app-bar-nav-icon>
       <!-- ユーザーリスト "Profile" "Colum" "Question" "Star" -->
       <v-list-item-title
@@ -36,7 +36,7 @@
       </v-list-item>
       <!-- 管理者リスト "Contact" "Q & A" "About the app" "Admin's pdofile" -->
       <v-list-item-title
-      style="margin:10px 0 20px 10px;"
+      style="margin:20px 0 20px 10px;"
       >ー　Admin Page　ー</v-list-item-title>
       <v-list-item
       v-for="(adminPage, i) in adminPages"
