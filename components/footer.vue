@@ -21,7 +21,6 @@
             </v-icon>
           </v-btn>
           <v-btn
-            type="a"
             v-for="adminPage in adminPages"
             :key="adminPage.title"
             :to="adminPage.to"
