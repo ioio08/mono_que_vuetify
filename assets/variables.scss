@@ -37,11 +37,6 @@ header {
 
 footer {
   div.v-card__text {
-    a.link-white {
-      @include display_tab {
-        display: block !important;
-      }
-    }
 
     button {
       @include display_pc {
@@ -52,6 +47,11 @@ footer {
         display: block !important;
       }
     }
-
+    
+    a.link-white {
+      @include display_tab {
+        display: block !important;
+      }
+    }
   }
 }
