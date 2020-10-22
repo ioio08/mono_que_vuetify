@@ -21,10 +21,11 @@
             </v-icon>
           </v-btn>
           <v-btn
-            v-for="(adminPage,i) in adminPages"
-            :key="i"
+            type="a"
+            v-for="adminPage in adminPages"
+            :key="adminPage.title"
             :to="adminPage.to"
-            class="link-black font-weight-bold"
+            class="link-white font-weight-bold"
             style="margin-left: 20px;"
             >
               {{ adminPage.title }}

@@ -2,19 +2,56 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
-$white: rgba(230, 227, 227, 0.87);
-$container-max-widths: (
-  'md': 960px,
-  'lg': 1140px,
-  'xl': 1500px,
-);
 
-// commons //////////////////////////
+//=================================
+//  import scss
+//=================================
+  @import './_mixin.scss';
+
+//=================================
+//  commons
+//=================================
+
+$white: rgba(230, 227, 227, 0.87);
+
 body {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
-a.link-black {
+
+a.link-white {
   color: $white !important;
   text-decoration: none;
+}
+
+//===============  header  ======================
+
+header {
+  .v-toolbar__title {
+    overflow: visible !important;
+    margin-right: 50px !important;
+  }
+}
+
+//===============  footer  =======================
+
+footer {
+  div.v-card__text {
+    a.link-white {
+      @include display_tab {
+        display: block !important;
+      }
+    }
+
+    button {
+      @include display_pc {
+        display: none !important;
+      }
+
+      @include display_tab {
+        display: block !important;
+      }
+    }
+
+  }
 }

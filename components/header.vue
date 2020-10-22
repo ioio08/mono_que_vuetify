@@ -39,8 +39,8 @@
       style="margin:20px 0 20px 10px;"
       >ー　Admin Page　ー</v-list-item-title>
       <v-list-item
-      v-for="(adminPage, i) in adminPages"
-      :key="i"
+      v-for="adminPage in adminPages"
+      :key="adminPage.title"
       style=" margin-top: 20px;"
       >
       <v-list-item-icon><v-icon>{{ adminPage.icon }} </v-icon></v-list-item-icon>
@@ -68,7 +68,7 @@
       <v-toolbar-title>
         <nuxt-link
           to="/contents/main"
-          class="link-black font-weight-bold"
+          class="link-white font-weight-bold"
         >
           {{ title }}
         </nuxt-link>
