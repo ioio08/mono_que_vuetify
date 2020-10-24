@@ -140,13 +140,10 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 //  ブレイクポイント  max-width で設定
 // @include  $mb:559px;   モバイル
 // @include $tab:959px;  タブレット
 // @include  $pc:1023px;  パソコン
-
 
 // pc で削除
 .pc {
@@ -159,12 +156,21 @@ export default {
   }
 }
 
-//  tab・mb  で削除
+//  tab で削除
 .tab {
   @include tab {
     display: none !important;
   }
 }
+
+//  mb で削除
+.mb {
+  @include mb {
+    display: none !important;
+  }
+}
+
+
 
 // btnActionについて
 // btnActionでメイン画面を薄いマスクで覆い隠す

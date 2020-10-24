@@ -15,8 +15,6 @@
 
 $white: rgba(230, 227, 227, 0.87);
 
-
-
 body {
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -29,28 +27,4 @@ a.link-white {
 
 .v-btn::before {
   background-color: transparent !important;
-}
-
-//===============  footer  =======================
-
-footer {
-  div.v-card__text {
-
-    button {
-      @include pc {
-        display: none !important;
-      }
-
-      @include tab {
-        display: none !important;
-      }
-    }
-
-    a {
-      @include tab {
-        display: none !important;
-      }
-    }
-  }
-
 }

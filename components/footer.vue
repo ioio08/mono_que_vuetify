@@ -8,18 +8,7 @@
         width="100%"
         class="text-center"
       >
-        <v-card-text>
-          <v-btn
-            v-for="(footerIcon, i) in footerIcons"
-            :key="i"
-            :to="footerIcon.to"
-            class="mx-4"
-            :title="footerIcon.hoverTitle"
-          >
-            <v-icon size="24px">
-              {{ footerIcon.icon }}
-            </v-icon>
-          </v-btn>
+        <v-card-text class="mb">
           <v-btn
             v-for="adminPage in adminPages"
             :key="adminPage.title"
@@ -55,3 +44,19 @@ export default {
 }
 </script>
 
+<style lang="scss">
+//  ブレイクポイント  max-width で設定
+// @include  $mb:559px;   モバイル
+// @include $tab:959px;  タブレット
+// @include  $pc:1023px;  パソコン
+
+
+
+//===============  footer  =======================
+
+footer {
+
+}
+
+
+</style>
