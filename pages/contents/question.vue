@@ -19,7 +19,7 @@
             >
               <v-card
                 class="pa-2"
-                style="height:200px"
+                style="height:300px"
                 outlined
                 tile
                 color="indigo"
@@ -40,14 +40,16 @@
           <v-btn
             color="primary"
             nuxt
-            to="/main"
+            to="/contents/main"
+            class="tab"
           >
             Home
           </v-btn>
           <v-btn
             color="primary"
             nuxt
-            to="/colum"
+            to="/contents/colum"
+            class="tab"
           >
             Colum
           </v-btn>

@@ -1,6 +1,6 @@
 <template>
 
-    <header>
+    <div>
 
 
     <!-- ＝＝＝＝＝＝ここからタブメニュー内コンテンツ＝＝＝＝＝＝ -->
@@ -22,7 +22,7 @@
       <v-list-item
       v-for="(userPage, i) in userPages"
       :key="i"
-      style=" margin-top: 20px;"
+      style="margin-top: 20px;"
       >
       <v-list-item-icon><v-icon>{{ userPage.icon }} </v-icon></v-list-item-icon>
       <v-btn
@@ -68,20 +68,22 @@
       <v-toolbar-title>
         <nuxt-link
           to="/contents/main"
-          class="link-white font-weight-bold"
+          class="link-white font-weight-bold "
         >
           {{ title }}
         </nuxt-link>
       </v-toolbar-title>
 
-      <v-spacer />
+      <v-spacer class="tab" />
 
       <!-- header-right -->
       <!-- User-infomation "Sign-up" , "Log-in" -->
+      <!-- tab, mb で削除 -->
       <v-toolbar-items
         v-for="(userSign, i) in userSigns"
         :key="i"
         style="margin-right: 15px"
+        class="tab"
       >
         <v-btn
           :to="userSign.to"
@@ -95,14 +97,14 @@
       <!-- User-avatar -->
       <v-toolbar-items>
         <v-btn icon large to="/users/userProfile">
-          <v-avatar style="margin-right: 10px;">
+          <v-avatar style="margin: 3px 10px 0 0;">
               <v-img src="https://randomuser.me/api/portraits/men/1.jpg" />
           </v-avatar>
         </v-btn>
       </v-toolbar-items>
 
       <!-- ＝＝＝＝＝＝＝＝ヘッダー下部＝＝＝＝＝＝＝＝＝＝＝＝ -->
-      <template v-slot:extension>
+      <template  v-slot:extension>
         <v-tabs>
           <!-- header-left -->
           <!-- Pagenation-tab "Home", "Qestion", "Colum"-->
@@ -132,54 +134,9 @@
         </v-tabs>
       </template>
     </v-app-bar>
-    <!-- Action buttons of post function  fixed in the lower right coner   -->
-    <!-- Open button -->
-    <v-btn
-      color="indigo"
-      elevation="5"
-      fixed
-      bottom
-      right
-      fab
-      x-large
-      @click="btnAction=!btnAction"
-      style="padding:40px;"
-    >
-      <v-icon v-if="btnAction">mdi-close</v-icon>
-      <v-icon v-else>mdi-square-edit-outline</v-icon>
-    </v-btn>
-    <!-- Colum button -->
-    <v-btn
-      color="green"
-      elevation="5"
-      to="/users/userColum"
-      fixed
-      bottom
-      right
-      fab
-      x-large
-      v-if="btnAction"
-      style="padding:40px; right:120px;"
-    >
-      <v-icon>mdi-note-text-outline</v-icon>
-    </v-btn>
-    <!-- Question button  -->
-    <v-btn
-      color="orange"
-      elevation="5"
-      to="/users/userQuestion"
-      fixed
-      bottom
-      right
-      fab
-      x-large
-      v-if="btnAction"
-      style="padding:40px; bottom:120px;"
-    >
-      <v-icon>mdi-comment-question-outline</v-icon>
-    </v-btn>
+
     <!-- ======================================================== -->
-  </header>
+  </div>
 </template>
 
 
@@ -194,8 +151,6 @@ export default {
       clipped: false,
       // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
       drawer: false,
-      // drawerのboolean値で投稿ボタンの出し入れ [true: 出力, false: 隠す(default)]
-      btnAction: false,
 
       contentsPages: [
         {
@@ -229,3 +184,61 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+
+//===============  header  ======================
+
+//  ブレイクポイント  max-width で設定
+// @include  $mb:559px;   モバイル
+// @include $tab:959px;  タブレット
+// @include  $pc:1023px;  パソコン
+
+header {
+
+  // v-app-bar 全体のスタイル
+  @include tab {
+    height: 60px !important;
+    transition: 0.6s;
+  }
+
+
+  //======  ツールバー上部  ======
+  .v-toolbar__content {
+    @include tab {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 0 30px;
+    }
+  }
+
+  .v-avatar {
+    @include tab {
+      height: 40px !important;
+      width: 40px !important;
+      min-width: 40px !important;
+    }
+  }
+
+  //  ヘッダータイトル
+  .v-toolbar__title {
+    font-size: 2rem;
+    margin-right: 50px !important;
+
+    @include tab {
+      margin: 0 !important;
+    }
+  }
+
+  //======  ツールバー下部  ======
+  //  ヘッダータブ
+  .v-toolbar__extension {
+    @include tab {
+      display: none !important;
+      transition: 0.6s;
+    }
+  }
+
+}
+</style>

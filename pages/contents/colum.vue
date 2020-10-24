@@ -40,14 +40,14 @@
           <v-btn
             color="primary"
             nuxt
-            to="/main"
+            to="/contents/main"
           >
             Home
           </v-btn>
           <v-btn
             color="primary"
             nuxt
-            to="/question"
+            to="/contents/question"
           >
             Question
           </v-btn>
@@ -59,7 +59,7 @@
 
 <script>
 export default {
-props:['page']
+props:['page', 'button']
 
 }
 </script>

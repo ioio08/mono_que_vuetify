@@ -8,11 +8,14 @@
 //=================================
   @import './_mixin.scss';
 
+
 //=================================
 //  commons
 //=================================
 
 $white: rgba(230, 227, 227, 0.87);
+
+
 
 body {
   word-wrap: break-word;
@@ -24,13 +27,8 @@ a.link-white {
   text-decoration: none;
 }
 
-//===============  header  ======================
-
-header {
-  .v-toolbar__title {
-    overflow: visible !important;
-    margin-right: 50px !important;
-  }
+.v-btn::before {
+  background-color: transparent !important;
 }
 
 //===============  footer  =======================
@@ -39,19 +37,20 @@ footer {
   div.v-card__text {
 
     button {
-      @include display_pc {
+      @include pc {
         display: none !important;
       }
 
-      @include display_tab {
-        display: block !important;
+      @include tab {
+        display: none !important;
       }
     }
-    
-    a.link-white {
-      @include display_tab {
-        display: block !important;
+
+    a {
+      @include tab {
+        display: none !important;
       }
     }
   }
+
 }

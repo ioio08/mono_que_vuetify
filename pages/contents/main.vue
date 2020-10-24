@@ -1,9 +1,11 @@
 <template>
-  <v-row justify="center" align="center" >
-    <v-col cols="12" sm="10" md="8">
+  <v-row  justify="center" align="center" >
+    <v-col cols="12">
       <div class="text-center">
         <question />
-        <colum />
+        <colum
+        :button = false
+        />
       </div>
       <v-card style="background-color: #C5CAE9">
         <v-card-actions>
@@ -34,9 +36,18 @@ import Question from '~/pages/contents/question'
 import Colum from '~/pages/contents/colum'
 
 export default {
+
   components: {
     'question': Question,
     'colum': Colum,
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tab {
+  @include tab {
+    display: none;
+  }
+}
+</style>
