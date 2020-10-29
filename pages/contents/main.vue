@@ -7,23 +7,18 @@
         :button = false
         />
       </div>
-      <v-card style="background-color: #C5CAE9">
-        <v-card-actions>
-          <v-btn
-            color="primary"
-            nuxt
-            to="/contents/question"
-          >
-            Question
-          </v-btn>
-          <v-btn
-            color="primary"
-            nuxt
-            to="/contents/colum"
-          >
-            Colum
-          </v-btn>
-        </v-card-actions>
+      <v-card style="background-color: #C5CAE9" class="category">
+        <v-card-title>
+          カテゴリー
+        </v-card-title>
+        <v-chip-group column >
+          <v-chip
+          v-for="category in categorys"
+          :key="category.title"
+          :to="category.to"
+          link
+          >{{ "#" + " " + category.title }}</v-chip>
+        </v-chip-group>
       </v-card>
     </v-col>
   </v-row>
@@ -36,15 +31,46 @@ import Question from '~/pages/contents/question'
 import Colum from '~/pages/contents/colum'
 
 export default {
-
   components: {
     'question': Question,
     'colum': Colum,
+  },
+  data() {
+    return {
+      categorys: [
+        {title: "家電", to: "/colum"},
+        {title: "アウトドア", to: "/colum"},
+        {title: "PC", to: "/colum"},
+        {title: "携帯電話", to: "/colum"},
+        {title: "ファッション", to: "/colum"},
+        {title: "メンズ", to: "/colum"},
+        {title: "レディース", to: "/colum"},
+        {title: "車", to: "/colum"},
+        {title: "サイクリング", to: "/colum"},
+        {title: "旅行", to: "/colum"},
+        {title: "小説", to: "/colum"},
+      ]
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+// category
+
+.category {
+  padding-bottom: 20px;
+}
+
+.v-chip-group {
+  background: rgb(187, 222, 251);
+}
+
+.v-chip {
+  margin: 4px 8px 4px 4px !important;
+}
+
+
 .tab {
   @include tab {
     display: none;
