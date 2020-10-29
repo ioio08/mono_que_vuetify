@@ -13,13 +13,15 @@
             <v-col
               v-for="n in 6"
               :key="n"
-              cols="6"
+              cols="12"
+              xs="12"
+              sm="6"
               md="4"
-              dence
+              xl="3"
             >
               <v-card
                 class="pa-2"
-                style="height:300px"
+                style="height:200px"
                 outlined
                 tile
                 color="indigo"
@@ -33,26 +35,10 @@
           <div class="text-center">
             <v-pagination
             v-model="page"
-            :length="6"
+            :length="4"
             ></v-pagination>
           </div>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/contents/main"
-            class="tab"
-          >
-            Home
-          </v-btn>
-          <v-btn
-            color="primary"
-            nuxt
-            to="/contents/colum"
-            class="tab"
-          >
-            Colum
-          </v-btn>
+
         </v-card-actions>
       </v-card>
     </v-col>

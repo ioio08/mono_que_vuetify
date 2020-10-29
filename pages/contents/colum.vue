@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" align="center" >
-    <v-col cols="12" >
+    <v-col cols="12">
       <v-card style="background-color: #C5CAE9">
         <v-card-title class="headline"
         style="color: yellow"
@@ -13,9 +13,11 @@
             <v-col
               v-for="n in 6"
               :key="n"
-              cols="6"
+              cols="12"
+              xs="12"
+              sm="6"
               md="4"
-              dence
+              xl="3"
             >
               <v-card
                 class="pa-2"
@@ -33,24 +35,10 @@
           <div class="text-center">
             <v-pagination
             v-model="page"
-            :length="6"
+            :length="4"
             ></v-pagination>
           </div>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/contents/main"
-          >
-            Home
-          </v-btn>
-          <v-btn
-            color="primary"
-            nuxt
-            to="/contents/question"
-          >
-            Question
-          </v-btn>
+
         </v-card-actions>
       </v-card>
     </v-col>
@@ -63,3 +51,9 @@ props:['page', 'button']
 
 }
 </script>
+
+<style lang="scss">
+.v-card__actions {
+  justify-content: center;
+}
+</style>

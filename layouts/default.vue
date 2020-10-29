@@ -10,7 +10,7 @@
       bottom
       right
       fab
-      x-large
+      large
       @click="btnAction=!btnAction"
       style="padding:25px;"
     >
@@ -26,9 +26,9 @@
       bottom
       right
       fab
-      x-large
+      large
       v-if="btnAction"
-      style="padding:25px;  bottom:95px; "
+      style="padding:25px;  bottom:85px; "
     >
       <v-icon>mdi-home</v-icon>
     </v-btn>
@@ -41,9 +41,9 @@
       bottom
       right
       fab
-      x-large
+      large
       v-if="btnAction"
-      style="padding:25px; bottom:175px; "
+      style="padding:25px; bottom:155px; "
     >
       <v-icon>mdi-note-text-outline</v-icon>
     </v-btn>
@@ -56,9 +56,9 @@
       bottom
       right
       fab
-      x-large
+      large
       v-if="btnAction"
-      style="padding:25px; bottom:255px;"
+      style="padding:25px; bottom:225px;"
     >
       <v-icon>mdi-comment-question-outline</v-icon>
     </v-btn>
@@ -70,9 +70,9 @@
       bottom
       right
       fab
-      x-large
+      large
       v-if="btnAction"
-      style="padding:25px; bottom:335px;"
+      style="padding:25px; bottom:295px;"
       class="search"
     >
       <v-icon>mdi-magnify</v-icon>
