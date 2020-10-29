@@ -16,43 +16,71 @@
       <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;">
       </v-app-bar-nav-icon>
       <!-- ユーザーリスト "Profile" "Colum" "Question" "Star" -->
-      <v-list-item-title
-      style="margin:0 0 20px 10px;"
-      >ー　User Page　ー</v-list-item-title>
-      <v-list-item
-      v-for="(userPage, i) in userPages"
-      :key="i"
-      style="margin-top: 20px;"
-      >
-      <v-list-item-icon><v-icon>{{ userPage.icon }} </v-icon></v-list-item-icon>
-      <v-btn
-          :to="userPage.to"
-          text
-          class="font-weight-bold"
-          style="width: 120px;"
+      <v-list-group :value="true">
+        <template v-slot:activator>
+          <v-icon>mdi-account-circle-outline</v-icon>
+          <v-list-item-title>User's</v-list-item-title>
+        </template>
+        <v-list-item
+        v-for="(userPage, i) in userPages"
+        :key="i"
+        style="margin-top: 20px;"
         >
-          {{ userPage.title }}
-        </v-btn>
-      </v-list-item>
+        <v-list-item-icon><v-icon>{{ userPage.icon }} </v-icon></v-list-item-icon>
+        <v-btn
+            :to="userPage.to"
+            text
+            class="font-weight-bold"
+            style="width: 120px;"
+          >
+            {{ userPage.title }}
+          </v-btn>
+        </v-list-item>
+      </v-list-group>
       <!-- 管理者リスト "Contact" "Q & A" "About the app" "Admin's pdofile" -->
-      <v-list-item-title
-      style="margin:20px 0 20px 10px;"
-      >ー　Admin Page　ー</v-list-item-title>
-      <v-list-item
-      v-for="adminPage in adminPages"
-      :key="adminPage.title"
-      style=" margin-top: 20px;"
-      >
-      <v-list-item-icon><v-icon>{{ adminPage.icon }} </v-icon></v-list-item-icon>
-      <v-btn
-          :to="adminPage.to"
-          text
-          class="font-weight-bold"
-          style="width: 120px;"
+      <v-list-group>
+        <template v-slot:activator>
+            <v-icon>mdi-office-building</v-icon>
+          <v-list-item-title>Admin 's</v-list-item-title>
+        </template>
+        <v-list-item
+        v-for="adminPage in adminPages"
+        :key="adminPage.title"
+        style=" margin-top: 20px;"
         >
-          {{ adminPage.title }}
-        </v-btn>
-      </v-list-item>
+        <v-list-item-icon><v-icon>{{ adminPage.icon }} </v-icon></v-list-item-icon>
+        <v-btn
+            :to="adminPage.to"
+            text
+            class="font-weight-bold"
+            style="width: 120px;"
+          >
+            {{ adminPage.title }}
+          </v-btn>
+        </v-list-item>
+      </v-list-group>
+      <!-- ページ遷移 "Home" "Question" "Colum" -->
+      <v-list-group class="header-nav__pagination">
+        <template v-slot:activator>
+            <v-icon>mdi-apps</v-icon>
+          <v-list-item-title>Contents</v-list-item-title>
+        </template>
+        <v-list-item
+        v-for="contentsPage in contentsPages"
+        :key="contentsPage.title"
+        style=" margin-top: 20px;"
+        >
+          <v-list-item-icon><v-icon>{{ contentsPage.icon }} </v-icon></v-list-item-icon>
+          <v-btn
+            :to="contentsPage.to"
+            text
+            class="font-weight-bold"
+            style="width: 120px;"
+          >
+            {{ contentsPage.title }}
+          </v-btn>
+        </v-list-item>
+      </v-list-group>
     </v-list>
     </v-navigation-drawer>
 
@@ -130,7 +158,6 @@
             <v-btn color="primary" style="margin-right: 10px;"><v-icon>mdi-magnify</v-icon> </v-btn>
           </template>
           </v-text-field>
-
         </v-tabs>
       </template>
     </v-app-bar>
@@ -154,30 +181,30 @@ export default {
 
       contentsPages: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-home',
           title: 'Home',
           to: '/contents/main'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-help-box',
           title: 'Question',
           to: '/contents/question'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-note-text-outline',
           title: 'Colum',
           to: '/contents/colum'
         },
       ],
       userSigns: [
-        { title: '新規会員', to: '/contents/signup' },
-        { title: 'ログイン', to: '/contents/signup' },
+        { title: 'Signup', to: '/contents/signup' },
+        { title: 'Login', to: '/contents/signup' },
       ],
       userPages: [
-        {title: 'プロフィール', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
-        {title: 'マイコラム', to: '/users/userColum', icon:'mdi-note-text-outline',},
-        {title: 'マイクエスチョン', to: '/users/userQuestion', icon:'mdi-comment-question-outline',},
-        {title: 'お気に入り', to: '/users/userStar', icon:'mdi-star-outline',},
+        {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
+        {title: 'MyColum', to: '/users/userColum', icon:'mdi-note-text-outline',},
+        {title: 'MyQuestion', to: '/users/userQuestion', icon:'mdi-comment-question-outline',},
+        {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
       ],
     }
   },
@@ -193,6 +220,22 @@ export default {
 // @include  $mb:559px;   モバイル
 // @include $tab:959px;  タブレット
 // @include  $pc:1023px;  パソコン
+
+  // タブメニュー
+  .v-list-group__header  {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .v-list-item__title {
+    font-size: 1.2rem !important;
+  }
+  .header-nav__pagination {
+    display: none;
+    @include tab {
+      display: block;
+    }
+  }
+
 
 header {
 

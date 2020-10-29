@@ -1,5 +1,29 @@
 <template>
-  <v-app dark>
+  <v-app dark >
+    <!-- ======================================================== -->
+    <!-- ポップアップウィンドウ -->
+    <v-container class="mt-12" >
+      <v-dialog v-model="dialog" width=500>
+        <v-card>
+          <v-card-title>Search</v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-text-field
+            v-model="message"
+            label="Search"
+            type="text"
+            >
+              <template
+              v-slot:append-outer
+              >
+                <v-btn color="primary" style="margin-right: 10px;"><v-icon>mdi-magnify</v-icon> </v-btn>
+              </template>
+            </v-text-field>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-container>
+    <!-- ======================================================== -->
     <!-- Action buttons of post function  fixed in the lower right coner   -->
     <!-- PC ver -->
     <!-- Open button -->
@@ -74,6 +98,7 @@
       v-if="btnAction"
       style="padding:25px; bottom:295px;"
       class="search"
+      @click="dialog = !dialog"
     >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -88,8 +113,8 @@
     />
 
     <!-- default main -->
-    <v-main>
-      <v-container :class="{mask:btnAction}">
+    <v-main  :class="{mask:btnAction}">
+      <v-container >
         <nuxt />
       </v-container>
     </v-main>
@@ -101,8 +126,6 @@
     :footerIcons="footerIcons"
     :adminPages="adminPages"
     />
-
-
   </v-app>
 </template>
 
@@ -118,6 +141,7 @@ export default {
   data () {
     return {
       fixed: false,
+      dialog: false,
       // Post-btnのboolean値で投稿ボタンの出し入れ [true: 出力, false: 隠す(default)]
       btnAction: false,
       page: 1,
@@ -170,6 +194,11 @@ export default {
   }
 }
 
+main {
+  @include tab {
+    padding: 0 !important;
+  }
+}
 
 
 // btnActionについて

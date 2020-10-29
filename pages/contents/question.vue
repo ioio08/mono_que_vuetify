@@ -15,7 +15,7 @@
               :key="n"
               cols="12"
               xs="12"
-              sm="6"
+              sm="4"
               md="4"
               xl="3"
             >
@@ -49,7 +49,7 @@
 
 
 export default {
-props:['page']
+  props:['page'],
 
 }
 </script>

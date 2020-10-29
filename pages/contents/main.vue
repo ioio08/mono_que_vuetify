@@ -1,12 +1,19 @@
 <template>
   <v-row  justify="center" align="center" >
     <v-col cols="12">
+      <!-- Components  "Question" "Colum" -->
       <div class="text-center">
-        <question />
+        <!-- Question component -->
+        <question
+        :page = page
+         />
+        <!-- Colum component -->
         <colum
         :button = false
+        :page = page
         />
       </div>
+      <!-- Categorys Card -->
       <v-card style="background-color: #C5CAE9" class="category">
         <v-card-title>
           カテゴリー
@@ -37,6 +44,7 @@ export default {
   },
   data() {
     return {
+      page: 1,
       categorys: [
         {title: "家電", to: "/colum"},
         {title: "アウトドア", to: "/colum"},
@@ -49,7 +57,8 @@ export default {
         {title: "サイクリング", to: "/colum"},
         {title: "旅行", to: "/colum"},
         {title: "小説", to: "/colum"},
-      ]
+      ],
+
     }
   }
 }
@@ -64,6 +73,7 @@ export default {
 
 .v-chip-group {
   background: rgb(187, 222, 251);
+  padding: 10px 0;
 }
 
 .v-chip {
