@@ -45,7 +45,7 @@
     <v-btn
       color="orange"
       elevation="5"
-      to="/contents/main"
+      to="/main"
       fixed
       bottom
       right
