@@ -1,4 +1,4 @@
-# MONO_QUE_VUETIFY
+# Mono_que_vuetify
 
 ## Build Setup
 
