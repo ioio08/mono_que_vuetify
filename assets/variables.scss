@@ -20,9 +20,13 @@ body {
   overflow-wrap: break-word;
 }
 
+a {
+  text-decoration: none;
+}
+
 a.link-white {
   color: $white !important;
-  text-decoration: none;
+
 }
 
 .v-btn::before {

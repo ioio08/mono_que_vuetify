@@ -130,8 +130,8 @@
 </template>
 
 <script>
-import DefaultHeader from '~/components/header'
-import DefaultFooter from '~/components/footer'
+import DefaultHeader from '~/components/UI/Header'
+import DefaultFooter from '~/components/UI/Footer'
 
 export default {
   components: {

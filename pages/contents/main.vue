@@ -34,8 +34,8 @@
 <script>
 
 // pages
-import Question from '~/pages/contents/question'
-import Colum from '~/pages/contents/colum'
+import Question from '~/pages/contents/questions'
+import Colum from '~/pages/contents/colums'
 
 export default {
   components: {

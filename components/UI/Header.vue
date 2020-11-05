@@ -1,8 +1,6 @@
 <template>
 
     <div>
-
-
     <!-- ＝＝＝＝＝＝ここからタブメニュー内コンテンツ＝＝＝＝＝＝ -->
     <v-navigation-drawer
     app

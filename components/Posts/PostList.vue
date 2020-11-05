@@ -1,15 +1,15 @@
 <template>
   <v-row justify="center" align="center" >
-    <v-col cols="12" >
+    <v-col cols="12">
       <v-card style="background-color: #C5CAE9">
         <v-card-title class="headline"
         style="color: yellow"
         >
-          質問
+        <slot />
         </v-card-title>
         <v-container
         style="background-color: #BBDEFB">
-          <v-row>
+          <v-row justify="center" align="center">
             <v-col
               v-for="n in 6"
               :key="n"
@@ -19,15 +19,7 @@
               md="4"
               xl="3"
             >
-              <v-card
-                class="pa-2"
-                style="height:200px"
-                outlined
-                tile
-                color="indigo"
-              >
-                <v-sheet color="light-blue"  tile class="pa-2">質問</v-sheet>
-              </v-card>
+              <PostPreview />
             </v-col>
           </v-row>
         </v-container>
@@ -38,7 +30,6 @@
             :length="4"
             ></v-pagination>
           </div>
-
         </v-card-actions>
       </v-card>
     </v-col>
@@ -46,10 +37,24 @@
 </template>
 
 <script>
+import PostPreview from '@/components/Posts/PostPreview'
 
+  export default {
+    components: {
+      PostPreview
+    },
+    data() {
+      return {
+        page: 1,
+      }
+    }
 
-export default {
-  props:['page'],
-
-}
+  }
 </script>
+
+
+<style lang="scss">
+.v-card__actions {
+  justify-content: center;
+}
+</style>
