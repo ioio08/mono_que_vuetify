@@ -1,4 +1,4 @@
-# lesson_custom_nuxt
+# MONO_QUE_VUETIFY
 
 ## Build Setup
 
