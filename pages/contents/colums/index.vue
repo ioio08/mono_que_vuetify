@@ -1,12 +1,12 @@
 <template>
-    <PostList >コラム</PostList>
+    <PostList>コラム</PostList>
 </template>
 
 <script>
 import PostList from '@/components/Posts/PostList'
 
 export default {
-props:['page', 'button']
+
 
 }
 </script>

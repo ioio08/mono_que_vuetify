@@ -4,14 +4,9 @@
       <!-- Components  "Question" "Colum" -->
       <div class="text-center">
         <!-- Question component -->
-        <question
-        :page = page
-         />
+        <PostList>質問</PostList>
         <!-- Colum component -->
-        <colum
-        :button = false
-        :page = page
-        />
+        <PostList :button = false>コラム</PostList>
       </div>
       <!-- Categorys Card -->
       <v-card style="background-color: #C5CAE9" class="category">
@@ -34,13 +29,11 @@
 <script>
 
 // pages
-import Question from '~/pages/contents/questions'
-import Colum from '~/pages/contents/colums'
+import PostList from '@/components/Posts/PostList'
 
 export default {
   components: {
-    'question': Question,
-    'colum': Colum,
+    PostList
   },
   data() {
     return {
