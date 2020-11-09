@@ -8,7 +8,7 @@
         <slot />
         </v-card-title>
         <v-container
-        style="background-color: #BBDEFB">
+        style="background-color: #fff">
           <v-row justify="center" align="center">
             <v-col
               v-for="n in 6"
