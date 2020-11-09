@@ -11,15 +11,20 @@
         style="background-color: #fff">
           <v-row justify="center" align="center">
             <v-col
-              v-for="n in 6"
-              :key="n"
+              v-for="existPost in existPosts"
+              :key="existPost.id"
               cols="12"
               xs="12"
               sm="4"
               md="4"
               xl="3"
             >
-              <PostPreview />
+              <PostPreview
+              :post-title="existPost.title"
+              :post-link="existPost.id"
+              :post-src="existPost.src"
+              />
+
             </v-col>
           </v-row>
         </v-container>
@@ -43,11 +48,12 @@ import PostPreview from '@/components/Posts/PostPreview'
     components: {
       PostPreview
     },
+    props:['existPosts'],
     data() {
-      return {
-        page: 1,
-      }
+    return {
+      page: 1,
     }
+  }
 
   }
 </script>

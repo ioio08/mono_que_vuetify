@@ -93,7 +93,7 @@
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <nuxt-link
-          to="/contents/main"
+          to="/main"
           class="link-white font-weight-bold "
         >
           {{ title }}
@@ -181,17 +181,17 @@ export default {
         {
           icon: 'mdi-home',
           title: 'Home',
-          to: '/contents/main'
+          to: 'main'
         },
         {
           icon: 'mdi-help-box',
           title: 'Question',
-          to: '/contents/question'
+          to: '/contents/questions'
         },
         {
           icon: 'mdi-note-text-outline',
           title: 'Colum',
-          to: '/contents/colum'
+          to: '/contents/colums'
         },
       ],
       userSigns: [

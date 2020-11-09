@@ -1,10 +1,10 @@
 <template>
   <v-card style="height:200px;">
-    <nuxt-link to="/contents/colums/1">
-      <v-img src="/images/product_2.jpeg" cover style="height: 100%">
+    <nuxt-link :to="'/contents/colums/' + postLink">
+      <v-img :src="postSrc" cover style="height: 100%">
         <v-card-title >
           <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
-          タイトル
+          {{ postTitle }}
           </v-sheet>
         </v-card-title>
       </v-img>
@@ -14,6 +14,20 @@
 
 <script>
   export default {
+    props:{
+      postTitle: {
+        type:String,
+        required:true
+      },
+      postLink: {
+        type:String,
+        required:true
+      },
+      postSrc: {
+        type:String,
+        required:true
+      },
+    }
 
   }
 </script>
