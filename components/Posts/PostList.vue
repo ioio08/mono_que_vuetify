@@ -23,6 +23,7 @@
               :post-title="existPost.title"
               :post-id="existPost.id"
               :post-src="existPost.src"
+              :post-path="postPath"
               />
 
             </v-col>
@@ -48,7 +49,7 @@ import PostPreview from '@/components/Posts/PostPreview'
     components: {
       PostPreview
     },
-    props:['existPosts'],
+    props:['existPosts', 'postPath'],
     data() {
     return {
       page: 1,

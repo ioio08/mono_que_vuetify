@@ -4,9 +4,9 @@
       <!-- Components  "Question" "Colum" -->
       <div class="text-center">
         <!-- Question component -->
-        <Questions></Questions>
+        <Questions />
         <!-- Colum component -->
-        <Colums></Colums>
+        <Colums />
       </div>
       <!-- Categorys Card -->
       <v-card style="background-color: #C5CAE9" class="category">
