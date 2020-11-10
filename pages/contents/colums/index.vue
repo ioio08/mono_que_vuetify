@@ -1,5 +1,5 @@
 <template>
-    <PostList :exist-posts="columsPosts">コラム</PostList>
+    <PostList :exist-posts="columsPosts" :post-path="columsPath">コラム</PostList>
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
         {
           id: '0',
           title: 'title1',
-          src: '/images/product_2.jpeg'
+          src: '/images/product_2.jpeg',
         },
         {
           id: '1',
@@ -39,7 +39,8 @@ export default {
           title: 'title6',
           src: '/images/product_2.jpeg'
         },
-      ]
+      ],
+      columsPath: '/contents/colums/',
     }
   }
 
