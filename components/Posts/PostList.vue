@@ -21,7 +21,7 @@
             >
               <PostPreview
               :post-title="existPost.title"
-              :post-link="existPost.id"
+              :post-id="existPost.id"
               :post-src="existPost.src"
               />
 

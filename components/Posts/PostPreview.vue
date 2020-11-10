@@ -1,6 +1,6 @@
 <template>
   <v-card style="height:200px;">
-    <nuxt-link :to="'/contents/colums/' + postLink">
+    <nuxt-link :to="'/contents/colums/' + postId">
       <v-img :src="postSrc" cover style="height: 100%">
         <v-card-title >
           <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
@@ -19,7 +19,7 @@
         type:String,
         required:true
       },
-      postLink: {
+      postId: {
         type:String,
         required:true
       },

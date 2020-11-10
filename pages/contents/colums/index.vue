@@ -20,22 +20,22 @@ export default {
           src: '/images/mable.jpg'
         },
         {
-          id: '3',
+          id: '2',
           title: 'title3',
           src: '/images/product_2.jpeg'
         },
         {
-          id: '4',
+          id: '3',
           title: 'title4',
           src: '/images/product_2.jpeg'
         },
         {
-          id: '5',
+          id: '4',
           title: 'title5',
           src: '/images/product_2.jpeg'
         },
         {
-          id: '6',
+          id: '5',
           title: 'title6',
           src: '/images/product_2.jpeg'
         },
