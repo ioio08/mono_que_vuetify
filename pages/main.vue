@@ -8,18 +8,18 @@
         <!-- Colum component -->
         <Colums />
       </div>
-      <!-- Categorys Card -->
-      <v-card style="background-color: #C5CAE9" class="category">
+      <!-- Keywords Card -->
+      <v-card style="background-color: #C5CAE9" class="keyword">
         <v-card-title>
           カテゴリー
         </v-card-title>
         <v-chip-group column >
           <v-chip
-          v-for="category in categorys"
-          :key="category.title"
-          :to="category.to"
+          v-for="keyword in keywords"
+          :key="keyword.title"
+          :to="keyword.to"
           link
-          >{{ "#" + " " + category.title }}</v-chip>
+          >{{ "#" + " " + keyword.title }}</v-chip>
         </v-chip-group>
       </v-card>
     </v-col>
@@ -31,8 +31,12 @@
 // pages
 import Questions from '~/pages/contents/questions'
 import Colums from '~/pages/contents/colums'
+import { mapState } from 'vuex'
 
 export default {
+  computed: {
+    ...mapState('keywords/keyword', ['keywords'])
+  },
   components: {
     Questions,
     Colums
@@ -40,19 +44,6 @@ export default {
   data() {
     return {
       page: 1,
-      categorys: [
-        {title: "家電", to: "/colum"},
-        {title: "アウトドア", to: "/colum"},
-        {title: "PC", to: "/colum"},
-        {title: "携帯電話", to: "/colum"},
-        {title: "ファッション", to: "/colum"},
-        {title: "メンズ", to: "/colum"},
-        {title: "レディース", to: "/colum"},
-        {title: "車", to: "/colum"},
-        {title: "サイクリング", to: "/colum"},
-        {title: "旅行", to: "/colum"},
-        {title: "小説", to: "/colum"},
-      ],
 
     }
   }
@@ -60,9 +51,9 @@ export default {
 </script>
 
 <style lang="scss" >
-// category
+// keyword
 
-.category {
+.keyword {
   padding-bottom: 20px;
 }
 
