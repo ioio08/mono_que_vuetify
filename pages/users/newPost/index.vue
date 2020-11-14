@@ -76,7 +76,7 @@ import { mapState } from 'vuex'
 
 export default {
    computed: {
-  ...mapState('newpost/newpost', ['postDatas']),
+  ...mapState('newpost', ['postDatas']),
   },
   data() {
     return {
@@ -107,7 +107,7 @@ export default {
 
     // formイベント：submit button で発火
     onSavePostData() {
-      this.$store.commit('newpost/newpost/setPostData', {
+      this.$store.commit('newpost/setPostData', {
         author: this.postData.author,
         title: this.postData.title,
         image: this.postData.image,
