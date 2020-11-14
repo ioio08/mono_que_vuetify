@@ -12,12 +12,39 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import firebase from '@/plugins/firebase'
 
 export default {
-  computed: {
-  ...mapState('newpost/newpost', ['postData']),
+  async asyncdata() {
+    let postData = [];
+    console.log(postData);
+
+    await firebase.firestore()
+    .collection("posts")
+    .where('author', '==', 'iori')
+    .get()
+    .then(querySnapshot => {
+      console.log(querySnapshot)
+      snapShot.forEach(doc => {
+        console.log(doc.data)
+        postsData.push({
+          title: doc.data().title,
+          author: doc.data().author,
+          image: doc.data().image,
+          content: doc.data().content,
+        })
+        console.log(postsData)
+
+      })
+    })
+
+    return postData
   },
+  // data() {
+  //   return {
+  //     postsData: [],
+  //   }
+  // },
   methods: {
 
   },

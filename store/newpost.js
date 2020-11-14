@@ -7,7 +7,6 @@ export const state = () => ({
   },
 })
 
-
 export const mutations = {
   setPostData(state, {author, title, image, content}) {
     state.postDatas.author = author
@@ -15,7 +14,6 @@ export const mutations = {
     state.postDatas.image = image
     state.postDatas.content = content
   }
-
 }
 
 export const actions = {
@@ -29,5 +27,4 @@ export const getters = {
   setPostData(state) {
     return state.postData
   }
-
 };

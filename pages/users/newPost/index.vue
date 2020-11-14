@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title><h2>New Post</h2> </v-card-title>
-    <v-form @submit.prevent="onSavePostData">
+    <v-form @submit.prevent="submit">
       <!-- 著者名 -->
       <v-card-actions style="width:400px; ">
         <v-text-field
@@ -73,6 +73,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import firebase from '@/plugins/firebase'
 
 export default {
    computed: {
@@ -113,8 +114,22 @@ export default {
         image: this.postData.image,
         content: this.postData.content
       })
-      console.log(this.postData)
-    }
+    },
+
+    submit () {
+      const db = firebase.firestore()
+      let dbUsers = db.collection('posts')
+      dbUsers
+        .add({
+          author: this.postData.author,
+          title: this.postData.title,
+          image: this.postData.image,
+          content: this.postData.content
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    },
   },
 
 }
