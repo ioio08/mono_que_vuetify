@@ -2,7 +2,7 @@ import firebase from "firebase/app"
 
 if (!firebase.apps.length) {
 firebase.initializeApp({
-  apiKey: "AIzaSyAJdTWb3bd8NqohC19s5Xp6eFwBHPQJCIM",
+    apiKey: "AIzaSyAJdTWb3bd8NqohC19s5Xp6eFwBHPQJCIM",
     authDomain: "mono-que-data.firebaseapp.com",
     databaseURL: "https://mono-que-data.firebaseio.com",
     projectId: "mono-que-data",
