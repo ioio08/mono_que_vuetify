@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title><h2>New Post</h2> </v-card-title>
+    <v-card-title><h2>New Colum Post</h2> </v-card-title>
     <v-form @submit.prevent="submit">
       <!-- 著者名 -->
       <v-card-actions style="width:400px; ">
@@ -73,7 +73,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import firebase from '@/plugins/firebase'
+import db from "~/plugins/firebase";
 
 export default {
    computed: {
@@ -117,9 +117,7 @@ export default {
     },
 
     submit () {
-      const db = firebase.firestore()
-      let dbUsers = db.collection('posts')
-      dbUsers
+      db.collection('posts')
         .add({
           author: this.postData.author,
           title: this.postData.title,
