@@ -5,7 +5,7 @@
       <!-- 著者名 -->
       <v-card-actions style="width:400px; ">
         <v-text-field
-        v-model="postData.author"
+        v-model="postsData.author"
         prepend-icon="mdi-account-circle-outline"
         label="Please write your name"
         ></v-text-field>
@@ -14,7 +14,7 @@
       <!-- タイトル -->
       <v-card-actions style="width:400px; ">
         <v-text-field
-        v-model="postData.title"
+        v-model="postsData.title"
         prepend-icon="mdi-fountain-pen"
         label="Please write post title"
         ></v-text-field>
@@ -33,7 +33,7 @@
 
         <!-- イメージ画像の描画 -->
         <v-card-text>
-          <v-img v-if="postData.image" :src="postData.image" style="width:200px;"/>
+          <v-img v-if="postsData.image" :src="postsData.image" style="width:200px;"/>
         </v-card-text>
         <!-- イメージ画像のアップロード用 input -->
         <input
@@ -48,7 +48,7 @@
       <!-- Post 本文 -->
       <v-card-actions style="width:800px;">
         <v-textarea
-        v-model="postData.content"
+        v-model="postsData.content"
         label="Please write body contents"
         outlined
         auto-grow
@@ -63,10 +63,7 @@
       </v-card-actions>
     </v-form>
     <v-card>
-      {{ postDatas.author }}
-      {{ postDatas.title }}
-      {{ postDatas.image }}
-      {{ postDatas.content }}
+
     </v-card>
   </v-card>
 </template>
@@ -77,16 +74,26 @@ import db from "~/plugins/firebase";
 
 export default {
    computed: {
-  ...mapState('newpost', ['postDatas']),
+  ...mapState('newpost', ['newPostsData']),
   },
   data() {
     return {
-      postData:{
-        author:"",
-        title:"",
-        image: null,
-        content:"",
+      postsData:
+      // this.newPostData
+      // ? {
+      //   author:this.newPostData.author,
+      //   title:this.newPostData.title,
+      //   image:this.newPostData.image,
+      //   content:this.newPostData.content,
+      //   }
+      // :
+      {
+        author:'',
+        title:'',
+        image:null,
+        content:'',
       },
+
       isSelecting: false,
     }
   },
@@ -100,29 +107,20 @@ export default {
       this.$refs.file.click()
     },
 
-    // 選択されたイメージ画像をpostData.imageに代入
+    // 選択されたイメージ画像をnewPostsData.imageに代入
     onFileChanged(e) {
       const fileImg = e.target.files[0]
-      this.postData.image = window.URL.createObjectURL(fileImg);
+      this.postsData.image = window.URL.createObjectURL(fileImg);
     },
 
-    // formイベント：submit button で発火
-    onSavePostData() {
-      this.$store.commit('newpost/setPostData', {
-        author: this.postData.author,
-        title: this.postData.title,
-        image: this.postData.image,
-        content: this.postData.content
-      })
-    },
-
+  // Form送信でFireStore(collection:newPosts)にデータ格納
     submit () {
-      db.collection('posts')
+      db.collection('newPosts')
         .add({
-          author: this.postData.author,
-          title: this.postData.title,
-          image: this.postData.image,
-          content: this.postData.content
+          author: this.postsData.author,
+          title: this.postsData.title,
+          image: this.postsData.image,
+          content: this.postsData.content
         })
         .catch(function(error) {
             console.error("Error writing document: ", error);
