@@ -106,7 +106,6 @@ export default {
           this.imageName = file.name
         }
         reader.readAsDataURL(file)
-
     },
 
     // Form送信でFireStore(collection:newPosts)にデータ格納
@@ -128,6 +127,8 @@ export default {
       }
 
       await this.$store.dispatch('newpost/postContents', contents)
+
+      this.$router.push('/users/newPost/newPostPreview')
 
       // データの初期化
       this.author = '',
