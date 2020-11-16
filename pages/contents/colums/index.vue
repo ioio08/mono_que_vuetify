@@ -8,13 +8,14 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('colum', ['columsPosts'])
+    ...mapState('colums/colum', ['columsPosts'])
   },
   data() {
     return {
       columsPath: '/contents/colums/',
     }
   }
+
 
 }
 </script>
