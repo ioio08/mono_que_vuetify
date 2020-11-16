@@ -1,53 +1,33 @@
 <template>
   <v-card>
-    <v-card-title>{{ newPostsData[0].title }}</v-card-title>
-    <v-card-subtitle>Date: {{ new Date().toLocaleDateString() }}</v-card-subtitle>
-    <v-card-subtitle>Auther:  {{ newPostsData[0].author }}</v-card-subtitle>
+    <v-card-title style="padding:30px"><h1>{{ newPosts[0].text.title }}</h1></v-card-title>
     <v-divider></v-divider>
-    <v-img :src="newPostsData[0].image" cover style="width: 500px; margin: 0 auto;"></v-img>
+    <v-card-subtitle style="padding: 20px 30px"><h2 style="margin-bottom: 10px">Auther:  {{ newPosts[0].text.author }}</h2> Date: {{ newPosts[0].text.created_at }} </v-card-subtitle>
+    <v-divider></v-divider>
+    <v-img :src="newPosts[0].image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
-      <v-sheet>{{ newPostsData[0].content }}</v-sheet>
+      <v-sheet>{{ newPosts[0].text.content }}</v-sheet>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import db from '@/plugins/firebase'
+import { db, storage, firebase } from '~/plugins/firebase'
 
 
 export default {
   async asyncData({context}){
-    const newPostsData = []
-    await db.collection('newPosts').where('author', '==', 'iori').get()
+    const newPosts = []
+    await db.collection('newPosts').get()
     .then(snap =>{
       snap.forEach(doc => {
-        newPostsData.push(doc.data())
+        newPosts.push(doc.data())
       })
     })
     return {
-      newPostsData: newPostsData
+      newPosts: newPosts
     }
   }
-  // async asyncData() {
-  //   return db.collection('posts').where('author', '==', 'iori').get()
-  //     .then(querySnapshot => {
-  //       let postsData = []
-  //       snapShot.forEach(doc => {
-  //         postsData.push({
-  //           title : doc.data().title,
-  //           author : doc.data().author,
-  //           image : doc.data().image,
-  //           content : doc.data().content,
-  //           id : doc.id,
-  //         })
-  //       })
-  //       return postsData[0]
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //       return
-  //     })
-  // },
 
 }
 </script>
