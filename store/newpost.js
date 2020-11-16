@@ -14,6 +14,7 @@ export const actions = {
   }),
 
   // contentsを投稿
+  
   async postContents(context, payload) {
     const contents = payload
     const loadImage = await context.dispatch('uploadImage', {
