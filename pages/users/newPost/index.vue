@@ -1,11 +1,11 @@
 <template>
   <v-card>
     <v-card-title><h2>New Colum Post</h2> </v-card-title>
-    <v-form @submit.prevent="submit">
+    <v-form @submit.prevent="postContents">
       <!-- 著者名 -->
       <v-card-actions style="width:400px; ">
         <v-text-field
-        v-model="postsData.author"
+        v-model="author"
         prepend-icon="mdi-account-circle-outline"
         label="Please write your name"
         ></v-text-field>
@@ -14,7 +14,7 @@
       <!-- タイトル -->
       <v-card-actions style="width:400px; ">
         <v-text-field
-        v-model="postsData.title"
+        v-model="title"
         prepend-icon="mdi-fountain-pen"
         label="Please write post title"
         ></v-text-field>
@@ -33,7 +33,7 @@
 
         <!-- イメージ画像の描画 -->
         <v-card-text>
-          <v-img v-if="postsData.image" :src="postsData.image" style="width:200px;"/>
+          <v-img v-if="preview" :src="preview" style="width:200px;"/>
         </v-card-text>
         <!-- イメージ画像のアップロード用 input -->
         <input
@@ -48,7 +48,7 @@
       <!-- Post 本文 -->
       <v-card-actions style="width:800px;">
         <v-textarea
-        v-model="postsData.content"
+        v-model="content"
         label="Please write body contents"
         outlined
         auto-grow
@@ -69,36 +69,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import firebase from "firebase/app"
 import db from "~/plugins/firebase";
 
 export default {
-   computed: {
-  ...mapState('newpost', ['newPostsData']),
-  },
+
   data() {
     return {
-      postsData:
-      // this.newPostData
-      // ? {
-      //   author:this.newPostData.author,
-      //   title:this.newPostData.title,
-      //   image:this.newPostData.image,
-      //   content:this.newPostData.content,
-      //   }
-      // :
-      {
-        author:'',
-        title:'',
-        image:null,
-        content:'',
-      },
-
+      author:'',
+      title:'',
+      image:null,
+      preview:'',
+      imageName:'',
+      content:'',
       isSelecting: false,
     }
   },
   methods: {
-    // イメージ画像読み込み中のローディング
+    // イメージ画像読み込み中のローディング切り替え
     onButtonClick() {
       this.isSelecting = true
       window.addEventListener('focus', () => {
@@ -107,24 +95,47 @@ export default {
       this.$refs.file.click()
     },
 
-    // 選択されたイメージ画像をnewPostsData.imageに代入
+    // 選択された画像ファイルの設定(1.描画 2.アップロードの準備)
     onFileChanged(e) {
-      const fileImg = e.target.files[0]
-      this.postsData.image = window.URL.createObjectURL(fileImg);
+      // fileに選択した画像ファイル格納
+      const file = e.target.files[0]
+      this.image = file
+      const reader = new FileReader()
+        reader.onload = e => {
+          this.preview = e.target.result
+          this.imageName = file.name
+        }
+        reader.readAsDataURL(file)
+
     },
 
-  // Form送信でFireStore(collection:newPosts)にデータ格納
-    submit () {
-      db.collection('newPosts')
-        .add({
-          author: this.postsData.author,
-          title: this.postsData.title,
-          image: this.postsData.image,
-          content: this.postsData.content
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
+    // Form送信でFireStore(collection:newPosts)にデータ格納
+    async postContents() {
+      const d = new Date()
+      const today = d.toLocaleDateString()
+
+      const contents = {
+        text: {
+          created_at: today,
+          author: this.author,
+          title: this.title,
+          content: this.content
+        },
+        image: {
+          image: this.image,
+          name: this.imageName
+        }
+      }
+
+      await this.$store.dispatch('newpost/postContents', contents)
+
+      // データの初期化
+      this.author = '',
+      this.title = '',
+      this.image = null,
+      this.preview = '',
+      this.imageName = '',
+      this.content = ''
     },
   },
 

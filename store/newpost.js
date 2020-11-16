@@ -1,21 +1,55 @@
 import { firestoreAction } from 'vuexfire'
-import db from '~/plugins/firebase'
+import { db, storage, firebase } from '~/plugins/firebase'
 
-const newPostsDataRef = db.collection('newPostsData')
+const newPostsRef = db.collection('newPosts')
 
 export const state = () => ({
-  newPostsData: {
-    author:'name',
-    title:'title',
-    image:null,
-    content:'contents',
-  },
+  newPosts: {},
 })
 
 export const actions = {
+  // 初期化
   init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('posts', newPostsDataRef)
-  })
+    bindFirestoreRef('newPosts', newPostsRef)
+  }),
+
+  // contentsを投稿
+  async postContents(context, payload) {
+    const contents = payload
+    const loadImage = await context.dispatch('uploadImage', {
+      image: contents.image.image,
+      name: contents.image.name,
+    })
+    contents.image = loadImage
+
+    await newPostsRef.add(contents)
+  },
+
+  // ストレージに画像を追加
+  uploadImage(context, payload) {
+    if (!payload.image) {
+      return {
+        name: 'サンプル画像',
+        src: 'https://placehold.jp/150x150.png'
+      }
+    }
+
+    const storageRef = storage.ref()
+
+    return new Promise((resolve, reject) => {
+      storageRef
+        .child(`images/${payload.name}`)
+        .put(payload.image)
+        .then(snapshot => {
+          snapshot.ref.getDownloadURL().then(url => {
+            resolve({ name: payload.name, src: url })
+          })
+        })
+        .catch(err => {
+          console.log('画像投稿エラー', err)
+        })
+    })
+  }
 }
 
 export const getters = {
