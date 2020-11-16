@@ -8,7 +8,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('question', ['questionPosts'])
+    ...mapState('questions/question', ['questionPosts'])
   },
   data() {
     return {
