@@ -112,7 +112,6 @@ export default {
     async postContents() {
       const d = new Date()
       const today = d.toLocaleDateString()
-
       const contents = {
         text: {
           created_at: today,

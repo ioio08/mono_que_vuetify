@@ -35,7 +35,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('keywords/keyword', ['keywords'])
+    ...mapState('keyword', ['keywords'])
   },
   components: {
     Questions,
