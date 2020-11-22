@@ -1,8 +1,8 @@
 <template>
   <v-card>
-    <v-card-title>{{ loadedColumData.text.title }}</v-card-title>
-    <v-card-subtitle>Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
-    <v-card-subtitle>Author:  {{ loadedColumData.text.author }}</v-card-subtitle>
+    <v-card-title><h2>{{ loadedColumData.text.title }}</h2></v-card-title>
+    <v-divider></v-divider>
+    <v-card-subtitle><h3>Author:  {{ loadedColumData.text.author }}</h3> Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
     <v-divider></v-divider>
     <v-img :src="loadedColumData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
