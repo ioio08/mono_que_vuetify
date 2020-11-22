@@ -123,7 +123,7 @@ export default {
 
     // Form送信でFireStore(collection:newPost)にデータ格納
     async postContents() {
-      await this.$store.dispatch('newpost/postContents', this.newPost)
+      await this.$store.dispatch('colum/postContents', this.newPost)
     },
   },
 

@@ -9,7 +9,7 @@
             <!-- 著者名 -->
             <v-card-actions >
               <v-text-field
-              v-model="newPost.text.author"
+              v-model="newPosts.text.author"
               prepend-icon="mdi-account-circle-outline"
               label="Please write your name"
               ></v-text-field>
@@ -18,7 +18,7 @@
             <!-- タイトル -->
             <v-card-actions >
               <v-text-field
-              v-model="newPost.text.title"
+              v-model="newPosts.text.title"
               prepend-icon="mdi-fountain-pen"
               label="Please write post title"
               ></v-text-field>
@@ -52,7 +52,7 @@
             <!-- Post 本文 -->
             <v-card-actions>
               <v-textarea
-              v-model="newPost.text.content"
+              v-model="newPosts.text.content"
               label="Please write body contents"
               outlined
               auto-grow
@@ -61,11 +61,9 @@
               ></v-textarea>
             </v-card-actions>
 
+            <!-- submit button -->
             <v-card-actions>
-              <!-- submit button -->
               <v-btn  color="primary" type="submit">Post</v-btn>
-              <!-- edit button -->
-              <v-btn  color="primary" type="submit">Edit</v-btn>
             </v-card-actions>
 
           </v-form>
@@ -83,7 +81,7 @@ export default {
 
   data() {
     return {
-      newPost:{
+      newPosts:{
         text: {
           author:'',
           title:'',
@@ -112,18 +110,18 @@ export default {
     onFileChanged(e) {
       // fileに選択した画像ファイル格納
       const file = e.target.files[0]
-      this.newPost.images.image = file
+      this.newPosts.images.image = file
       const reader = new FileReader()
       reader.onload = e => {
         this.preview = e.target.result
-        this.newPost.images.name = file.name
+        this.newPosts.images.name = file.name
       }
       reader.readAsDataURL(file)
     },
 
-    // Form送信でFireStore(collection:newPost)にデータ格納
+    // Form送信でFireStore(collection:newPosts)にデータ格納
     async postContents() {
-      await this.$store.dispatch('newpost/postContents', this.newPost)
+      await this.$store.dispatch('newpost/postContents', this.newPosts)
     },
   },
 
