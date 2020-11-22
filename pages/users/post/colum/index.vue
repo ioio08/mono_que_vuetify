@@ -4,7 +4,6 @@
 
 <script>
 import PostForm from '@/components/Posts/PostForm'
-// import { db, storage } from '~/plugins/firebase'
 
 export default {
   components: {
