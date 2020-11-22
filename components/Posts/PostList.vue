@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" align="center" >
+  <v-row align="center" >
     <v-col cols="12">
       <v-card style="background-color: #C5CAE9">
         <v-card-title class="headline"
@@ -12,7 +12,7 @@
           <v-row justify="center" align="center">
             <v-col
               v-for="existPost in existPosts"
-              :key="existPost.id"
+              :key="existPost.text.docId"
               cols="12"
               xs="12"
               sm="4"
@@ -20,12 +20,11 @@
               xl="3"
             >
               <PostPreview
-              :post-title="existPost.title"
-              :post-id="existPost.id"
-              :post-src="existPost.src"
+              :post-title="existPost.text.title"
+              :post-doc-id="existPost.text.docId"
+              :post-src="existPost.image.src"
               :post-path="postPath"
               />
-
             </v-col>
           </v-row>
         </v-container>
@@ -45,18 +44,18 @@
 <script>
 import PostPreview from '@/components/Posts/PostPreview'
 
-  export default {
-    components: {
-      PostPreview
-    },
-    props:['existPosts', 'postPath'],
-    data() {
+export default {
+  components: {
+    PostPreview
+  },
+  props:['existPosts', 'postPath'],
+  data() {
     return {
       page: 1,
     }
   }
 
-  }
+}
 </script>
 
 

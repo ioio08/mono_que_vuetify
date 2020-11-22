@@ -1,21 +1,32 @@
 <template>
-    <PostList :exist-posts="columsPosts" :post-path="columsPath">コラム</PostList>
+    <PostList
+    :exist-posts="loadedColumDatas"
+    :post-path="postPath">コラム</PostList>
 </template>
 
 <script>
 import PostList from '@/components/Posts/PostList'
-import { mapState } from 'vuex'
+import { db } from '~/plugins/firebase'
 
 export default {
-  computed: {
-    ...mapState('colum', ['columsPosts'])
+  // columコレクションの全てのデータを取得
+  // loadedColumDatasに格納してv-forで描画
+  async asyncData({ params }){
+    const loadedColumDatas = []
+    await db.collection("colum").get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        loadedColumDatas.push(doc.data())
+      });
+    });
+    // 分割代入で配列からオブジェクトを取り出す
+    return { loadedColumDatas }
   },
   data() {
     return {
-      columsPath: '/contents/colums/',
+      // columPostPreviewへのpath
+      postPath: 'colums/'
     }
   }
-
 
 }
 </script>
