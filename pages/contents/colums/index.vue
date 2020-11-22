@@ -1,6 +1,6 @@
 <template>
     <PostList
-    :exist-posts="loadedColumDatas"
+    :exist-posts="loadedColumPosts"
     :post-path="postPath">コラム</PostList>
 </template>
 
@@ -10,16 +10,16 @@ import { db } from '~/plugins/firebase'
 
 export default {
   // columコレクションの全てのデータを取得
-  // loadedColumDatasに格納してv-forで描画
+  // loadedColumPostsに格納してv-forで描画
   async asyncData({ params }){
-    const loadedColumDatas = []
+    const loadedColumPosts = []
     await db.collection("colum").get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        loadedColumDatas.push(doc.data())
+        loadedColumPosts.push(doc.data())
       });
     });
     // 分割代入で配列からオブジェクトを取り出す
-    return { loadedColumDatas }
+    return { loadedColumPosts }
   },
   data() {
     return {

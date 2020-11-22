@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" >
+  <v-row justify="center" align="center" >
     <v-col cols="12">
       <v-card style="background-color: #C5CAE9">
         <v-card-title class="headline"
@@ -9,7 +9,7 @@
         </v-card-title>
         <v-container
         style="background-color: #fff">
-          <v-row justify="center" align="center">
+          <v-row align="center">
             <v-col
               v-for="existPost in existPosts"
               :key="existPost.text.docId"
