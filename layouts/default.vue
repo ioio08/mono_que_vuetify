@@ -200,6 +200,7 @@ main {
   }
 }
 
+
 // btnActionについて
 // btnActionでメイン画面を薄いマスクで覆い隠す
 .mask {
@@ -214,7 +215,5 @@ main {
   }
 }
 
-.container {
-  max-width: 1100px;
-}
+
 </style>

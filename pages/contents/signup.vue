@@ -1,9 +1,7 @@
 <template>
-  <v-card>
-    <v-container>
-      
-    </v-container>
-  </v-card>
+  <div>
+    新規会員登録ページ
+  </div>
 </template>
 
 <script>
