@@ -18,7 +18,6 @@ export default {
     const loadedColumData = await db.collection("colum").doc(params.id).get().then(doc => doc.data());
     return { loadedColumData }
   },
- 
 }
 </script>
 
