@@ -1,6 +1,6 @@
 <template>
   <v-card style="text-alighn: center">
-    <v-card-title><h2>New [slot] Post</h2></v-card-title>
+    <v-card-title><h2>New [slotここに記載] Post</h2></v-card-title>
     <v-divider></v-divider>
     <v-container>
       <v-row justify="center" align="center">
