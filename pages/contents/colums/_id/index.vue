@@ -6,7 +6,7 @@
     <v-divider></v-divider>
     <v-img :src="loadedColumData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
-      <v-sheet>{{ loadedColumData.text.content }}</v-sheet>
+      <v-sheet><h2><pre>{{ loadedColumData.text.content }}</pre></h2> </v-sheet>
     </v-card-text>
   </v-card>
 </template>
@@ -22,5 +22,21 @@ export default {
 </script>
 
 <style>
+
+.v-card__title {
+  text-align: center !important;
+}
+
+.v-card__text {
+  padding-bottom: 5%;
+  max-width: 100%;
+}
+
+pre {
+  white-space: pre-wrap ;
+  line-height: 2rem;
+  letter-spacing: 3px;
+  font-weight: normal;
+}
 
 </style>
