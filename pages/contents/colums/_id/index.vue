@@ -1,34 +1,24 @@
 <template>
   <v-card>
-    <v-card-title>{{ loadedPost.title }}</v-card-title>
-    <v-card-subtitle>Date:  {{ loadedPost.updatedDate }}</v-card-subtitle>
-    <v-card-subtitle>Auther:  {{ loadedPost.author }}</v-card-subtitle>
+    <v-card-title>{{ loadedColumData.text.title }}</v-card-title>
+    <v-card-subtitle>Date:  {{ loadedColumData.text.updatedDate }}</v-card-subtitle>
+    <v-card-subtitle>Auther:  {{ loadedColumData.text.author }}</v-card-subtitle>
     <v-divider></v-divider>
-    <v-img :src="loadedPost.thumbnail" cover style="width: 500px; margin: 0 auto;"></v-img>
+    <v-img :src="loadedColumData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
-      <v-sheet>{{ loadedPost.content }}</v-sheet>
+      <v-sheet>{{ loadedColumData.text.content }}</v-sheet>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-  export default {
-    asyncData (context, callcack) {
-    setTimeout(() => {
-      callcack(null, {
-        loadedPost: {
-            id: '1',
-            title: "MARGIELA THE HERMES YEARS",
-            author: 'Iori',
-            updatedDate: new Date(),
-            content: '私はこれから「マルジェラ・エルメス期」の素晴らしさについて語ろうと思う、、、',
-            thumbnail: '/images/product_2.jpeg'
-          },
-        })
-      }, 1000)
-    },
-
-  }
+import { db } from '~/plugins/firebase'
+export default {
+  async asyncData({ params }){
+    const loadedColumData = await db.collection("colum").doc(params.id).get().then(doc => doc.data());
+    return { loadedColumData }
+  },
+}
 </script>
 
 <style>
