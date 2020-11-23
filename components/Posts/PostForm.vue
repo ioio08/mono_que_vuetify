@@ -1,30 +1,30 @@
 <template>
   <v-card style="text-alighn: center">
-    <v-card-title><h2>New [slot] Post</h2></v-card-title>
+    <v-card-title><h2><slot/> Post</h2></v-card-title>
     <v-divider></v-divider>
     <v-container>
       <v-row justify="center" align="center">
         <v-col cols="12" md="10" sm="8" >
-          <v-form @submit.prevent="postContents">
-            <!-- 著者名 -->
+          <v-form @submit.prevent="onPost">
+            <!-- Post: 著者名 -->
             <v-card-actions >
               <v-text-field
-              v-model="newPosts.text.author"
+              v-model="newPost.text.author"
               prepend-icon="mdi-account-circle-outline"
               label="Please write your name"
               ></v-text-field>
             </v-card-actions>
 
-            <!-- タイトル -->
+            <!-- Post: タイトル -->
             <v-card-actions >
               <v-text-field
-              v-model="newPosts.text.title"
+              v-model="newPost.text.title"
               prepend-icon="mdi-fountain-pen"
               label="Please write post title"
               ></v-text-field>
             </v-card-actions>
 
-            <!-- イメージ画像 -->
+            <!-- Post画像: upload -->
             <v-card-actions >
               <v-btn
               color="primary"
@@ -35,11 +35,11 @@
                 <v-icon>mdi-image</v-icon>アップロード
               </v-btn>
 
-              <!-- イメージ画像の描画 -->
+              <!-- Post画像: 描画 -->
               <v-card-text>
                 <v-img v-if="preview" :src="preview" style="width:200px;"/>
               </v-card-text>
-              <!-- イメージ画像のアップロード用 input -->
+              <!-- Post画像:アップロード用 input -->
               <input
                 ref="file"
                 style="display:none;"
@@ -52,7 +52,7 @@
             <!-- Post 本文 -->
             <v-card-actions>
               <v-textarea
-              v-model="newPosts.text.content"
+              v-model="newPost.text.content"
               label="Please write body contents"
               outlined
               auto-grow
@@ -61,9 +61,12 @@
               ></v-textarea>
             </v-card-actions>
 
-            <!-- submit button -->
             <v-card-actions>
-              <v-btn  color="primary" type="submit">Post</v-btn>
+              <!-- submit: onPost()メソッド -->
+              <v-btn  color="primary" type="submit">投稿</v-btn>
+
+              <!-- click: onCancel()メソッド -->
+              <v-btn @click="onCancel">戻る</v-btn>
             </v-card-actions>
 
           </v-form>
@@ -74,29 +77,46 @@
 </template>
 
 <script>
-import PostForm from '@/components/Posts/PostForm'
-import { db, storage } from '~/plugins/firebase'
-
 export default {
-
+  props: {
+    postData: {
+      type: Object,
+      required: false
+    },
+    postPath: {
+      type: String,
+      required: true
+    },
+  },
   data() {
     return {
-      newPosts:{
+      newPost: this.postData
+      ?{ ...this.postData}
+      :{
         text: {
           author:'',
           title:'',
           content:'',
         },
-        images:{
-          image:null,
+        image:{
+          src:null,
           name:'',
         }
       },
-      preview:'',
+      preview: this.postData
+      ? this.postData.image.src
+      : null,
+      existName: this.postData
+      ? this.postData.image.name
+      : null,
       isSelecting: false,
     }
   },
   methods: {
+    onCancel() {
+      this.$router.push(this.postPath + this.newPost.text.docId)
+    },
+
     // イメージ画像読み込み中のローディング切り替え
     onButtonClick() {
       this.isSelecting = true
@@ -110,18 +130,20 @@ export default {
     onFileChanged(e) {
       // fileに選択した画像ファイル格納
       const file = e.target.files[0]
-      this.newPosts.images.image = file
+      this.newPost.image.src = file
       const reader = new FileReader()
       reader.onload = e => {
         this.preview = e.target.result
-        this.newPosts.images.name = file.name
+        this.newPost.image.name = file.name
       }
       reader.readAsDataURL(file)
     },
 
-    // Form送信でFireStore(collection:newPosts)にデータ格納
-    async postContents() {
-      await this.$store.dispatch('newpost/postContents', this.newPosts)
+    // Form送信で親コンポーネントのpostContentsメソッド発火
+    onPost() {
+      // Save the post
+      this.newPost.image.existName = this.existName
+      this.$emit('submit', this.newPost)
     },
   },
 

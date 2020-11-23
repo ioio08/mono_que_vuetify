@@ -1,36 +1,84 @@
 <template>
   <v-card>
-    <v-card-title>{{ loadedPost.title }}</v-card-title>
-    <v-card-subtitle>Date:  {{ loadedPost.updatedDate }}</v-card-subtitle>
-    <v-card-subtitle>Auther:  {{ loadedPost.author }}</v-card-subtitle>
+    <v-card-title><h2>{{ loadedQuestionData.text.title }}</h2></v-card-title>
     <v-divider></v-divider>
-    <v-img :src="loadedPost.thumbnail" cover style="width: 500px; margin: 0 auto;"></v-img>
+    <v-card-subtitle><h3>Author:  {{ loadedQuestionData.text.author }}</h3> Date:  {{ loadedQuestionData.text.postDay }}</v-card-subtitle>
+
+    <!-- toPostList-btn , Edit-btn , Delete-btn -->
+    <v-card-actions>
+      <v-btn @click="onBackPage">一覧へ</v-btn>
+      <v-btn @click="onEdit">編集</v-btn>
+      <v-btn @click="dialog = !dialog">削除</v-btn>
+    </v-card-actions>
+
+    <v-divider></v-divider>
+    <v-img :src="loadedQuestionData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
-      <v-sheet>{{ loadedPost.content }}</v-sheet>
+      <v-sheet><h2><pre>{{ loadedQuestionData.text.content }}</pre></h2> </v-sheet>
     </v-card-text>
+    
+    <v-dialog v-model="dialog" width=600>
+      <v-card>
+        <v-container>
+          <v-row justify="center" align="center">
+            <v-card-text><h2 style="text-align:center;">本当に削除してもよろしいでしょうか？</h2></v-card-text>
+            <v-divider></v-divider>
+            <v-col cols="12" sm="3" md="3" lg="3">
+              <v-card-actions>
+                <v-btn>削除</v-btn>
+              </v-card-actions>
+            </v-col>
+            <v-col cols="12" sm="3" md="3" lg="3">
+              <v-card-actions>
+                <v-btn @click="dialog = !dialog">戻る</v-btn>
+              </v-card-actions>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
-  export default {
-    asyncData (context, callcack) {
-    setTimeout(() => {
-      callcack(null, {
-        loadedPost: {
-            id: '1',
-            title: "MARGIELA THE HERMES YEARS",
-            author: 'Iori',
-            updatedDate: new Date(),
-            content: '私はこれから「マルジェラ・エルメス期」の素晴らしさについて語ろうと思う、、、',
-            thumbnail: '/images/product_2.jpeg'
-          },
-        })
-      }, 1000)
+import { db } from '~/plugins/firebase'
+export default {
+  async asyncData({ params }){
+    const loadedQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
+    return { loadedQuestionData }
+  },
+  methods: {
+    onBackPage() {
+      this.$router.push('/contents/questions')
     },
-
+    onEdit() {
+      this.$router.push('/users/post/question/' + this.$route.params.id)
+    }
+  },
+  data() {
+    return {
+      dialog: false,
+    }
   }
+}
 </script>
 
 <style>
+
+.v-card__title {
+  text-align: center !important;
+}
+
+.v-card__text {
+  padding-bottom: 5%;
+  max-width: 100%;
+}
+
+pre {
+  white-space: pre-wrap ;
+  line-height: 2rem;
+  letter-spacing: 3px;
+  font-weight: normal;
+}
 
 </style>

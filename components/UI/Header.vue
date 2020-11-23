@@ -181,7 +181,7 @@ export default {
         {
           icon: 'mdi-home',
           title: 'Home',
-          to: 'main'
+          to: '/main'
         },
         {
           icon: 'mdi-help-box',
