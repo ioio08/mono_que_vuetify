@@ -16,13 +16,15 @@ export const actions = {
 
   // contentsを投稿
   async postContents(context, payload) {
-    // firestore documentID取得
+    // newPost => payload => contents
     const contents = payload
+    // Fire Storageへimageを格納 + imageURLを同時に FireStoreへ格納するアクションメソッド
     contents.image  = await context.dispatch('uploadImage', {
       src: contents.image.src,
       name: contents.image.name,
     })
 
+    // Editの場合の条件分岐
     if (contents.text.docId !== null && contents.text.docId !== undefined) {
       await columPostRef.doc(contents.text.docId).set({
         text:{
@@ -38,9 +40,12 @@ export const actions = {
           src: contents.image.src
         },
       })
-      // pathにdocIDを渡して動的なページ遷移
+      // path/docIDは維持したまま
       this.$router.push('/contents/colums/' + contents.text.docId )
+
+    // 新規投稿の場合の条件分岐
     } else {
+      // 新しくdocIdを取得する
       const docId = db.collection("colum").doc().id;
       await columPostRef.doc(docId).set({
         text:{
@@ -59,22 +64,22 @@ export const actions = {
       // pathにdocIDを渡して動的なページ遷移
       this.$router.push('/contents/colums/' + docId )
     }
-
-
   },
 
-  // ストレージに画像を追加
+  // Fire Storageにimageをuploadするメソッド
   uploadImage(context, payload) {
-
+    // imageがuploadされなかった場合のダミー条件
     if (!payload.src) {
       return {
         name: 'サンプル画像',
         src: 'https://placehold.jp/150x150.png',
       }
     }
+
     const storageRef = storage.ref()
     return new Promise((resolve, reject) => {
       storageRef
+        // Fire Storage に'images'ディレクトリを作成
         .child(`images/${payload.name}`)
         .put(payload.src)
         .then(snapshot => {

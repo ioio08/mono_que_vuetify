@@ -3,6 +3,8 @@
     <v-card-title><h2>{{ loadedColumData.text.title }}</h2></v-card-title>
     <v-divider></v-divider>
     <v-card-subtitle><h3>Author:  {{ loadedColumData.text.author }}</h3> Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
+    
+    <!-- Edit-btn , Delete-btn -->
     <v-card-actions>
       <v-btn @click="onEdit">Edit</v-btn>
       <v-btn>Delete</v-btn>

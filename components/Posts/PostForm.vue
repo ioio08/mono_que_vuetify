@@ -99,7 +99,10 @@ export default {
       },
       preview: this.postData
       ? this.postData.image.src
-      : '',
+      : null,
+      existName: this.postData
+      ? this.postData.image.name
+      : null,
       isSelecting: false,
     }
   },
@@ -129,6 +132,7 @@ export default {
     // Form送信で親コンポーネントのpostContentsメソッド発火
     onPost() {
       // Save the post
+      this.newPost.image.existName = this.existName
       this.$emit('submit', this.newPost)
     },
   },

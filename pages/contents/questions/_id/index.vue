@@ -3,6 +3,12 @@
     <v-card-title><h2>{{ loadedQuestionData.text.title }}</h2></v-card-title>
     <v-divider></v-divider>
     <v-card-subtitle><h3>Author:  {{ loadedQuestionData.text.author }}</h3> Date:  {{ loadedQuestionData.text.postDay }}</v-card-subtitle>
+
+    <!-- Edit-btn , Delete-btn -->
+    <v-card-actions>
+      <v-btn @click="onEdit">Edit</v-btn>
+      <v-btn>Delete</v-btn>
+    </v-card-actions>
     <v-divider></v-divider>
     <v-img :src="loadedQuestionData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
@@ -18,6 +24,11 @@ export default {
     const loadedQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
     return { loadedQuestionData }
   },
+  methods: {
+    onEdit() {
+      this.$router.push('/users/post/question/' + this.$route.params.id)
+    }
+  }
 }
 </script>
 

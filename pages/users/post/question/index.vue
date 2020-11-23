@@ -1,5 +1,5 @@
 <template>
-  <PostForm @submit="postContents">Question</PostForm>
+  <PostForm @submit="postContents">New Question</PostForm>
 </template>
 
 <script>
