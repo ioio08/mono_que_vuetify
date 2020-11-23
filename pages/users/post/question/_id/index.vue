@@ -1,6 +1,7 @@
 <template>
   <PostForm
   :post-data="loadeQuestionData"
+  :post-path="postPath"
   @submit="postContents">Edit Question</PostForm>
 
 </template>
@@ -17,12 +18,19 @@ export default {
     const loadeQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
     return { loadeQuestionData }
   },
+  data() {
+    return {
+      // questionPostPreviewへのpath
+      postPath: '/contents/questions/'
+    }
+  },
   methods: {
     // Form送信でFireStore(collection:question)にデータ格納
     async postContents(newPost) {
       await this.$store.dispatch('question/postContents', newPost)
     },
   },
+
 
 }
 </script>

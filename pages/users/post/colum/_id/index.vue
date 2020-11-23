@@ -1,6 +1,7 @@
 <template>
   <PostForm
   :post-data="loadedColumData"
+  :post-path="postPath"
   @submit="postContents">Edit Colum</PostForm>
 
 </template>
@@ -16,6 +17,12 @@ export default {
   async asyncData({ params }){
     const loadedColumData = await db.collection("colum").doc(params.id).get().then(doc => doc.data());
     return { loadedColumData }
+  },
+  data() {
+    return {
+      // columPostPreviewへのpath
+      postPath: '/contents/colums/'
+    }
   },
   methods: {
     // Form送信でFireStore(collection:colum)にデータ格納

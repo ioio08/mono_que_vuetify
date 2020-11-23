@@ -61,10 +61,12 @@
               ></v-textarea>
             </v-card-actions>
 
-            <!-- submit button -->
-            <!-- submit: onPost()メソッド -->
             <v-card-actions>
-              <v-btn  color="primary" type="submit">Post</v-btn>
+              <!-- submit: onPost()メソッド -->
+              <v-btn  color="primary" type="submit">投稿</v-btn>
+
+              <!-- click: onCancel()メソッド -->
+              <v-btn @click="onCancel">戻る</v-btn>
             </v-card-actions>
 
           </v-form>
@@ -80,7 +82,11 @@ export default {
     postData: {
       type: Object,
       required: false
-    }
+    },
+    postPath: {
+      type: String,
+      required: true
+    },
   },
   data() {
     return {
@@ -107,6 +113,10 @@ export default {
     }
   },
   methods: {
+    onCancel() {
+      this.$router.push(this.postPath + this.newPost.text.docId)
+    },
+
     // イメージ画像読み込み中のローディング切り替え
     onButtonClick() {
       this.isSelecting = true

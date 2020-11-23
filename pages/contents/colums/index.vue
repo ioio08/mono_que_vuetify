@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       // columPostPreviewへのpath
-      postPath: 'colums/'
+      postPath: '/contents/colums/'
     }
   }
 
