@@ -96,8 +96,6 @@ export const actions = {
 
       // Edit : image.srcを変えない場合
     } else if (payload.name === payload.existName) {
-      console.log('no change :' + payload.name);
-      console.log('no change :' + payload.src);
       return {
         src: payload.src,
         name: payload.name,
@@ -123,10 +121,8 @@ export const actions = {
 
         // upload済みimageのdelete
         let deleteRef = storageRef.child('images/' + payload.existName)
-        deleteRef.delete().then(function() {
-          console.log('success');
-        }).catch(err =>  {
-          console.log('エラー' + '：' + err);
+        deleteRef.delete().catch(err =>  {
+          console.log('エラー:' + err);
         });
       })
     }

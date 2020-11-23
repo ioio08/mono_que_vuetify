@@ -16,7 +16,7 @@
     <v-card-text>
       <v-sheet><h2><pre>{{ loadedQuestionData.text.content }}</pre></h2> </v-sheet>
     </v-card-text>
-    
+
     <v-dialog v-model="dialog" width=600>
       <v-card>
         <v-container>
@@ -25,7 +25,7 @@
             <v-divider></v-divider>
             <v-col cols="12" sm="3" md="3" lg="3">
               <v-card-actions>
-                <v-btn>削除</v-btn>
+                <v-btn @click="deletePost">削除</v-btn>
               </v-card-actions>
             </v-col>
             <v-col cols="12" sm="3" md="3" lg="3">
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { db } from '~/plugins/firebase'
+import { db, storage } from '~/plugins/firebase'
 export default {
   async asyncData({ params }){
     const loadedQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
@@ -53,7 +53,21 @@ export default {
     },
     onEdit() {
       this.$router.push('/users/post/question/' + this.$route.params.id)
-    }
+    },
+    deletePost() {
+      // ドキュメントの削除
+      db.collection("question").doc(this.loadedQuestionData.text.docId).delete()
+      .catch(err => {
+        console.error("Error removing document: ", err);
+      });
+
+      // FireStorageのimage削除
+      const deleteRef = storage.ref().child('images/' + this.loadedQuestionData.image.src)
+      deleteRef.delete().catch(err => {
+        console.log('エラー:' + err)});
+
+      this.onBackPage()
+    },
   },
   data() {
     return {

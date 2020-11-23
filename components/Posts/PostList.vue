@@ -20,9 +20,7 @@
               xl="3"
             >
               <PostPreview
-              :post-title="existPost.text.title"
-              :post-doc-id="existPost.text.docId"
-              :post-src="existPost.image.src"
+              :exist-post="existPost"
               :post-path="postPath"
               />
             </v-col>

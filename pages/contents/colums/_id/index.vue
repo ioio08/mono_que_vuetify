@@ -25,7 +25,7 @@
             <v-divider></v-divider>
             <v-col cols="12" sm="3" md="3" lg="3">
               <v-card-actions>
-                <v-btn>削除</v-btn>
+                <v-btn @click="deletePost">削除</v-btn>
               </v-card-actions>
             </v-col>
             <v-col cols="12" sm="3" md="3" lg="3">
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { db } from '~/plugins/firebase'
+import { db, storage } from '~/plugins/firebase'
 export default {
   async asyncData({ params }){
     const loadedColumData = await db.collection("colum").doc(params.id).get().then(doc => doc.data());
@@ -49,11 +49,25 @@ export default {
   },
   methods: {
     onBackPage() {
-      this.$router.push('/contents/questions')
+      this.$router.push('/contents/colums')
     },
     onEdit() {
       this.$router.push('/users/post/colum/' + this.$route.params.id)
-    }
+    },
+    deletePost() {
+      // ドキュメントの削除
+      db.collection("colum").doc(this.loadedColumData.text.docId).delete()
+      .catch(err => {
+        console.error("Error removing document: ", err);
+      });
+
+      // FireStorageのimage削除
+      const deleteRef = storage.ref().child('images/' + this.loadedColumData.image.src)
+      deleteRef.delete().catch(err => {
+        console.log('エラー:' + err)});
+
+      this.onBackPage()
+    },
   },
   data() {
     return {

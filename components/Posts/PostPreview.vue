@@ -1,10 +1,10 @@
 <template>
   <v-card style="height:200px;">
-    <nuxt-link :to="postPath + postDocId">
-      <v-img :src="postSrc" cover style="height: 100%">
+    <nuxt-link :to="postPath + existPost.text.docId">
+      <v-img :src="existPost.image.src" cover style="height: 100%">
         <v-card-title >
           <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
-          {{ postTitle }}
+          {{ existPost.text.title }}
           </v-sheet>
         </v-card-title>
       </v-img>
@@ -15,24 +15,15 @@
 <script>
   export default {
     props:{
-      postTitle: {
-        type:String,
-        required:true
-      },
-      postDocId: {
-        type:String,
-        required:true
-      },
-      postSrc: {
-        type:String,
+      existPost: {
+        type:Object,
         required:true
       },
       postPath: {
         type:String,
         required:true
       },
-    }
-
+    },
   }
 </script>
 
