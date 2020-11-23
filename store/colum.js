@@ -17,38 +17,56 @@ export const actions = {
   // contentsを投稿
   async postContents(context, payload) {
     // firestore documentID取得
-    const docId = db.collection("colum").doc().id;
     const contents = payload
-    const loadImage = await context.dispatch('uploadImage', {
-      image: contents.images.image,
-      name: contents.images.name,
-    })
-    // contents.images.image => contents.images.src
-    // contents.images.name => contents.images.name
-    contents.images = loadImage
-
-    await columPostRef.doc(docId).set({
-      text:{
-        author: contents.text.author,
-        title: contents.text.title,
-        content: contents.text.content,
-        docId: docId,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        postDay: new Date().toLocaleString()
-      },
-      image: {
-        name: contents.images.name,
-        src: contents.images.src
-      },
+    contents.image  = await context.dispatch('uploadImage', {
+      src: contents.image.src,
+      name: contents.image.name,
     })
 
-    // pathにdocIDを渡して動的なページ遷移
-    this.$router.push('/contents/colums/' + docId +'')
+    if (contents.text.docId !== null && contents.text.docId !== undefined) {
+      await columPostRef.doc(contents.text.docId).set({
+        text:{
+          author: contents.text.author,
+          title: contents.text.title,
+          content: contents.text.content,
+          docId: contents.text.docId,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          postDay: new Date().toLocaleString()
+        },
+        image: {
+          name: contents.image.name,
+          src: contents.image.src
+        },
+      })
+      // pathにdocIDを渡して動的なページ遷移
+      this.$router.push('/contents/colums/' + contents.text.docId )
+    } else {
+      const docId = db.collection("colum").doc().id;
+      await columPostRef.doc(docId).set({
+        text:{
+          author: contents.text.author,
+          title: contents.text.title,
+          content: contents.text.content,
+          docId: docId,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          postDay: new Date().toLocaleString()
+        },
+        image: {
+          name: contents.image.name,
+          src: contents.image.src
+        },
+      })
+      // pathにdocIDを渡して動的なページ遷移
+      this.$router.push('/contents/colums/' + docId )
+    }
+
+
   },
 
   // ストレージに画像を追加
   uploadImage(context, payload) {
-    if (!payload.image) {
+
+    if (!payload.src) {
       return {
         name: 'サンプル画像',
         src: 'https://placehold.jp/150x150.png',
@@ -58,7 +76,7 @@ export const actions = {
     return new Promise((resolve, reject) => {
       storageRef
         .child(`images/${payload.name}`)
-        .put(payload.image)
+        .put(payload.src)
         .then(snapshot => {
           snapshot.ref.getDownloadURL().then(url => {
             resolve({ name: payload.name, src: url })

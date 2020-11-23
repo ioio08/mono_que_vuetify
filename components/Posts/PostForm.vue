@@ -1,6 +1,6 @@
 <template>
   <v-card style="text-alighn: center">
-    <v-card-title><h2>New <slot/> Post</h2></v-card-title>
+    <v-card-title><h2><slot/> Post</h2></v-card-title>
     <v-divider></v-divider>
     <v-container>
       <v-row justify="center" align="center">
@@ -76,20 +76,30 @@
 
 <script>
 export default {
+  props: {
+    postData: {
+      type: Object,
+      required: false
+    }
+  },
   data() {
     return {
-      newPost:{
+      newPost: this.postData
+      ?{ ...this.postData}
+      :{
         text: {
           author:'',
           title:'',
           content:'',
         },
-        images:{
-          image:null,
+        image:{
+          src:null,
           name:'',
         }
       },
-      preview:'',
+      preview: this.postData
+      ? this.postData.image.src
+      : '',
       isSelecting: false,
     }
   },
@@ -107,11 +117,11 @@ export default {
     onFileChanged(e) {
       // fileに選択した画像ファイル格納
       const file = e.target.files[0]
-      this.newPost.images.image = file
+      this.newPost.image.src = file
       const reader = new FileReader()
       reader.onload = e => {
         this.preview = e.target.result
-        this.newPost.images.name = file.name
+        this.newPost.image.name = file.name
       }
       reader.readAsDataURL(file)
     },
