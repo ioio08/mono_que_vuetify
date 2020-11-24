@@ -1,8 +1,12 @@
 <template>
-  <Form @click="signUp">
+  <Form @click="login">
     <template v-slot:title>
       ログイン
     </template>
+    <template v-slot:button>
+      ログイン
+    </template>
+
   </Form>
 </template>
 
@@ -15,7 +19,7 @@ export default {
     Form,
   },
   methods: {
-    signUp: function (mailaddress, password) {
+    login: function (mailaddress, password) {
       auth.signInWithEmailAndPassword(mailaddress, password)
       .then(
         alert('sucsses')

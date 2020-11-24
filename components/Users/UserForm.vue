@@ -29,7 +29,7 @@
         </v-col>
         <v-col cols="12" sm="3" md="3">
           <v-card-actions>
-            <v-btn @click="onClick">登録</v-btn>
+            <v-btn @click="onClick"><slot name="button"></slot></v-btn>
             <v-btn @click="reset">リセット</v-btn>
           </v-card-actions>
         </v-col>

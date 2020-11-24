@@ -13,6 +13,8 @@
     >
       <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;">
       </v-app-bar-nav-icon>
+      
+      <!-- ここからタブメニューリスト -->
       <!-- ユーザーリスト "Profile" "Colum" "Question" "Star" -->
       <v-list-group :value="true">
         <template v-slot:activator>

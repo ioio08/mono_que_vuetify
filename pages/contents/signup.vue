@@ -3,6 +3,9 @@
     <template v-slot:title>
       新規会員登録
     </template>
+    <template v-slot:button>
+      登録
+    </template>
   </Form>
 </template>
 
