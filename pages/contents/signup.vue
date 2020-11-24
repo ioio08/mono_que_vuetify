@@ -1,12 +1,67 @@
 <template>
   <v-card>
     <v-container>
-      
+      <v-row>
+        <v-col cols="12">
+          <v-card-title>
+            <h2>新規登録（slot/ ログインにも対応させる）</h2>
+          </v-card-title>
+        </v-col>
+        <v-col cols="12" sm="10" md="10">
+          <v-card-actions>
+            <v-text-field
+            type="email"
+            v-model="mailaddress"
+            prepend-icon="mdi-email"
+            label="Please write your mailaddress">
+            </v-text-field>
+          </v-card-actions>
+        </v-col>
+        <v-col cols="12" sm="10" md="10">
+          <v-card-actions>
+            <v-text-field
+            type="password"
+            v-model="password"
+            prepend-icon="mdi-lock-outline"
+            label="Please write your password">
+            </v-text-field>
+          </v-card-actions>
+        </v-col>
+        <v-col cols="12" sm="3" md="3">
+          <v-card-actions>
+            <v-btn @click="signUp">登録</v-btn>
+            <v-btn @click="reset">リセット</v-btn>
+          </v-card-actions>
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>
 
 <script>
+import { auth } from '~/plugins/firebase'
+
 export default {
+  data() {
+    return {
+      mailaddress:'',
+      password:'',
+    }
+  },
+  methods: {
+    signUp: function () {
+      auth.createUserWithEmailAndPassword(this.mailaddress, this.password)
+      .then(
+        console.log('sucsses')
+      )
+      .catch(
+        console.log('faild')
+      )
+    },
+    reset() {
+      this.mailaddress = ''
+      this.password = ''
+    }
+  }
 }
 </script>
