@@ -23,11 +23,6 @@ export default {
   plugins: [
   ],
 
-  //router
-  router: {
-    middleware: ["authenticated"]
-  },
-
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
@@ -39,6 +34,7 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    '@nuxtjs/dotenv'
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)

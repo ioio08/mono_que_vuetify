@@ -10,7 +10,7 @@
         </v-col>
         <v-col>
           <v-card-actions>
-            <v-btn @click=" logout">ログアウト</v-btn>
+            <v-btn @click="logout">ログアウト</v-btn>
           </v-card-actions>
         </v-col>
       </v-row>
