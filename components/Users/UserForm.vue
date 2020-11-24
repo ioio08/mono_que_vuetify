@@ -11,7 +11,7 @@
           <v-card-actions>
             <v-text-field
             type="email"
-            v-model="mailaddress"
+            v-model="users.mailaddress"
             prepend-icon="mdi-email"
             label="Please write your mailaddress">
             </v-text-field>
@@ -21,7 +21,7 @@
           <v-card-actions>
             <v-text-field
             type="password"
-            v-model="password"
+            v-model="users.password"
             prepend-icon="mdi-lock-outline"
             label="Please write your password">
             </v-text-field>
@@ -41,19 +41,19 @@
 <script>
 
 export default {
-  data() {
-    return {
+  data:() => ({
+    users: {
       mailaddress:'',
       password:'',
-    }
-  },
+    },
+  }),
   methods: {
     onClick() {
-      this.$emit('click', this.mailaddress, this.password)
+      this.$emit('click', this.users.mailaddress, this.users.password)
     },
     reset() {
-      this.mailaddress = ''
-      this.password = ''
+      this.users.mailaddress = ''
+      this.users.password = ''
     }
   }
 }

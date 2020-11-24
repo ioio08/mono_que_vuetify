@@ -2,14 +2,14 @@ import firebase from "firebase/app"
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
-    apiKey: "AIzaSyAJdTWb3bd8NqohC19s5Xp6eFwBHPQJCIM",
-    authDomain: "mono-que-data.firebaseapp.com",
-    databaseURL: "https://mono-que-data.firebaseio.com",
-    projectId: "mono-que-data",
-    storageBucket: "mono-que-data.appspot.com",
-    messagingSenderId: "359914177786",
-    appId: "1:359914177786:web:13ba738f87f4a883c27543",
-    measurementId: "G-5E3TJJE4BY"
+    apiKey: process.env.FB_API_KEY,
+    authDomain: process.env.FB_AUTH_DOMAIN,
+    databaseURL: process.env.FB_DATABASE_URL,
+    projectId: process.env.FB_PROJECT_ID,
+    storageBucket: process.env.FB_STORAGE_BUCKET,
+    messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID,
   })
 }
 

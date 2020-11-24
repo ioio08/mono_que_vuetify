@@ -23,6 +23,11 @@ export default {
   plugins: [
   ],
 
+  //router
+  router: {
+    middleware: ["authenticated"]
+  },
+
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
