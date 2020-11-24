@@ -19,14 +19,16 @@ export default {
     Form,
   },
   methods: {
-    login: function (mailaddress, password) {
+    login(mailaddress, password) {
       auth.signInWithEmailAndPassword(mailaddress, password)
-      .then(
-        alert('sucsses')
-      )
-      .catch(
-        console.log('faild')
-      )
+      .then(() => {
+        console.log('sucsses login');
+        this.$router.push('/contents/logout')
+        })
+      .catch(e => {
+        console.log('Error:' + e)
+        return
+      })
     },
   }
 }

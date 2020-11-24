@@ -18,7 +18,7 @@ export default {
     Form,
   },
   methods: {
-    signUp: function (mailaddress, password) {
+    signUp(mailaddress, password) {
       auth.createUserWithEmailAndPassword(mailaddress, password)
       .then(
         console.log('sucsses')
