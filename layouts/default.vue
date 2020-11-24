@@ -52,6 +52,7 @@
       fab
       large
       v-if="btnAction"
+      @click="btnAction=!btnAction"
       style="padding:25px;  bottom:85px; "
     >
       <v-icon>mdi-home</v-icon>
@@ -60,13 +61,14 @@
     <v-btn
       color="green"
       elevation="5"
-      to="/users/userColum"
+      to="/users/post/colum"
       fixed
       bottom
       right
       fab
       large
       v-if="btnAction"
+      @click="btnAction=!btnAction"
       style="padding:25px; bottom:155px; "
     >
       <v-icon>mdi-note-text-outline</v-icon>
@@ -75,13 +77,14 @@
     <v-btn
       color="orange"
       elevation="5"
-      to="/users/userQuestion"
+      to="/users/post/question"
       fixed
       bottom
       right
       fab
       large
       v-if="btnAction"
+      @click="btnAction=!btnAction"
       style="padding:25px; bottom:225px;"
     >
       <v-icon>mdi-comment-question-outline</v-icon>
@@ -98,8 +101,8 @@
       v-if="btnAction"
       style="padding:25px; bottom:295px;"
       class="search"
-      @click="dialog = !dialog"
-    >
+      @click="onClickSearch"
+      >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
 
@@ -159,6 +162,12 @@ export default {
       ],
     }
   },
+  methods: {
+    onClickSearch() {
+      this.btnAction = !this.btnAction
+      this.dialog = !this.dialog
+    }
+  }
 
 }
 </script>

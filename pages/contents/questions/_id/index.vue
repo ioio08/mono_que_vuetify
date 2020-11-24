@@ -44,7 +44,10 @@
 import { db, storage } from '~/plugins/firebase'
 export default {
   async asyncData({ params }){
-    const loadedQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
+    const loadedQuestionData = await db.collection("question")
+    .doc(params.id)
+    .get()
+    .then(doc => doc.data());
     return { loadedQuestionData }
   },
   methods: {
