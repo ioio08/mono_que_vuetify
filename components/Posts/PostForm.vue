@@ -85,7 +85,7 @@ export default {
     },
     postPath: {
       type: String,
-      required: true
+      required: false
     },
   },
   data() {
