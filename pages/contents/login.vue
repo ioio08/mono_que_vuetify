@@ -1,12 +1,12 @@
 <template>
-  <Form @submit="signUp">
+  <Form @submit="login">
     <template v-slot:title>
-      <h1>新規会員登録</h1>
+      <h1>ログイン</h1>
     </template>
     <template v-slot:button>
-      <v-btn type="submit">登録</v-btn>
+      <v-btn type="submit">ログイン</v-btn>
     </template>
-    <template v-if="error" v-slot:errorMessage>
+    <template v-if="error"  v-slot:errorMessage>
       <p>  {{ error }}  </p>
     </template>
   </Form>
@@ -21,14 +21,14 @@ export default {
     Form,
   },
   data:() => ({
-    error:null,
+    error: '  ',
   }),
   methods: {
-    signUp(mailaddress, password) {
-      auth.createUserWithEmailAndPassword(mailaddress, password)
-      .then(
-        console.log('sucsses')
-      )
+    login(email, password) {
+      auth.signInWithEmailAndPassword(email, password)
+      .then(data => {
+        this.$router.push('/users/userProfile')
+        })
       .catch(e => this.error = e )
     },
   }

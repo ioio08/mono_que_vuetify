@@ -18,6 +18,7 @@ export default {
         loadedColumPosts.push(doc.data())
       });
     });
+
     // 分割代入で配列からオブジェクトを取り出す
     return { loadedColumPosts }
   },

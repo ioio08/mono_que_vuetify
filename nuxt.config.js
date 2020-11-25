@@ -1,6 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+
+  ssr: false,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: 'MONO QUE',
@@ -20,8 +22,7 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-  ],
+  plugins:  ['~/plugins/firebase.js'] ,
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -34,6 +35,7 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    '@nuxtjs/dotenv'
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)

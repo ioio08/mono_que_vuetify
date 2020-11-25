@@ -13,6 +13,8 @@
     >
       <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;">
       </v-app-bar-nav-icon>
+
+      <!-- ここからタブメニューリスト -->
       <!-- ユーザーリスト "Profile" "Colum" "Question" "Star" -->
       <v-list-group :value="true">
         <template v-slot:activator>
@@ -106,22 +108,31 @@
       <!-- User-infomation "Sign-up" , "Log-in" -->
       <!-- tab, mb で削除 -->
       <v-toolbar-items
+      style="margin-right: 5%"
+      v-if="loggedIn">
+        <v-btn
+        text
+        @click="logout">
+        |  Logout |
+        </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items
+        v-else
         v-for="(userSign, i) in userSigns"
         :key="i"
-        style="margin-right: 15px"
-        class="tab"
+        style="margin-right: 5%"
       >
         <v-btn
           :to="userSign.to"
           text
           class="font-weight-bold"
         >
-          {{ userSign.title }}
+        | {{ userSign.title }} |
         </v-btn>
       </v-toolbar-items>
 
       <!-- User-avatar -->
-      <v-toolbar-items>
+      <v-toolbar-items v-if="loggedIn">
         <v-btn icon large to="/users/userProfile">
           <v-avatar style="margin: 3px 10px 0 0;">
               <v-img src="https://randomuser.me/api/portraits/men/1.jpg" />
@@ -166,17 +177,22 @@
 
 
 <script>
+import { auth } from '~/plugins/firebase'
+import Cookies from "js-cookie"
 
 export default {
   //  default.vue ~ props
   props:['title','fixed','message', 'adminPages'],
+  mounted() {
+    this.setupFirebase();
+  },
 
-  data() {
-    return {
+  data:() => ({
       clipped: false,
       // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
       drawer: false,
-
+      // login or ogout を色別する変数 (true: login中, false: logout中)
+      loggedIn: false,
       contentsPages: [
         {
           icon: 'mdi-home',
@@ -196,7 +212,7 @@ export default {
       ],
       userSigns: [
         { title: 'Signup', to: '/contents/signup' },
-        { title: 'Login', to: '/contents/signup' },
+        { title: 'Login', to: '/contents/login' },
       ],
       userPages: [
         {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
@@ -204,8 +220,37 @@ export default {
         {title: 'MyQuestion', to: '/users/userQuestion', icon:'mdi-comment-question-outline',},
         {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
       ],
+  }),
+  methods: {
+    logout() {
+      auth.signOut()
+      .then(() => {
+        this.$router.push('/contents/login');
+        // Cookie.remove("access_token")
+      })
+      .catch(e => {
+        console.log('logout is faild')
+      })
+    },
+    setupFirebase() {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          this.loggedIn = true;
+
+          auth.currentUser.getIdToken(true)
+          .then(token => {
+            Cookies.set('access_token', token)
+          })
+
+        } else {
+          this.loggedIn = false;
+          Cookies.remove('access_token')
+          console.log('faild! loggedIn is' + this.loggedIn);
+        }
+      })
     }
-  },
+
+  }
 
 }
 </script>

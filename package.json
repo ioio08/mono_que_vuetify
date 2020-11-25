@@ -9,8 +9,14 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
+    "cookieparser": "^0.1.0",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.8"
+    "firebase": "^8.1.1",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.1.2",
+    "nuxt": "^2.14.7",
+    "vuexfire": "^3.2.4"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"
