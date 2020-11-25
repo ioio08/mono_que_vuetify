@@ -108,7 +108,7 @@
       <!-- User-infomation "Sign-up" , "Log-in" -->
       <!-- tab, mb で削除 -->
       <v-toolbar-items
-      style="margin-right: 15px"
+      style="margin-right: 5%"
       v-if="loggedIn">
         <v-btn
         text
@@ -120,8 +120,7 @@
         v-else
         v-for="(userSign, i) in userSigns"
         :key="i"
-        style="margin-right: 15px"
-        class="tab"
+        style="margin-right: 5%"
       >
         <v-btn
           :to="userSign.to"
