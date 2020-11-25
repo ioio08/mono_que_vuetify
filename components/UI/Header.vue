@@ -179,7 +179,7 @@
 
 <script>
 import { auth } from '~/plugins/firebase'
-import Cookie from "js-cookie"
+import Cookies from "js-cookie"
 
 export default {
   //  default.vue ~ props
@@ -226,10 +226,8 @@ export default {
     logout() {
       auth.signOut()
       .then(() => {
-        this.$router.push('/contents/login'),
+        this.$router.push('/contents/login');
         // Cookie.remove("access_token")
-        console.log(this.loggedIn);
-        console.log("sucsses logout");
       })
       .catch(e => {
         console.log('logout is faild')
@@ -237,14 +235,18 @@ export default {
     },
     setupFirebase() {
       auth.onAuthStateChanged(user => {
-        console.log(this.loggedIn);
         if (user) {
-          console.log('logged in');
-          console.log(this.loggedIn);
           this.loggedIn = true;
+
+          auth.currentUser.getIdToken(true)
+          .then(token => {
+            Cookies.set('access_token', token)
+          })
+
         } else {
           this.loggedIn = false;
-          console.log('faild ' + this.loggedIn);
+          Cookies.remove('access_token')
+          console.log('faild! loggedIn is' + this.loggedIn);
         }
       })
     }

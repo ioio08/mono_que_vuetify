@@ -27,7 +27,6 @@ export default {
     login(email, password) {
       auth.signInWithEmailAndPassword(email, password)
       .then(data => {
-        console.log('sucsses login, user:' + data);
         this.$router.push('/users/userProfile')
         })
       .catch(e => this.error = e )
