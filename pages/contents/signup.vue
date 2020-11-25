@@ -1,10 +1,13 @@
 <template>
-  <Form @click="signUp">
+  <Form @submit="signUp">
     <template v-slot:title>
-      新規会員登録
+      <h1>新規会員登録</h1>
     </template>
     <template v-slot:button>
-      登録
+      <v-btn type="submit">登録</v-btn>
+    </template>
+    <template v-if="error" v-slot:errorMessage>
+      <p>  {{ error }}  </p>
     </template>
   </Form>
 </template>
@@ -17,15 +20,16 @@ export default {
   components: {
     Form,
   },
+  data:() => ({
+    error:null,
+  }),
   methods: {
     signUp(mailaddress, password) {
       auth.createUserWithEmailAndPassword(mailaddress, password)
       .then(
         console.log('sucsses')
       )
-      .catch(
-        console.log('faild')
-      )
+      .catch(e => this.error = e )
     },
   }
 }

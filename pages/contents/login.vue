@@ -1,12 +1,14 @@
 <template>
-  <Form @click="login">
+  <Form @submit="login">
     <template v-slot:title>
-      ログイン
+      <h1>ログイン</h1>
     </template>
     <template v-slot:button>
-      ログイン
+      <v-btn type="submit">ログイン</v-btn>
     </template>
-
+    <template v-if="error"  v-slot:errorMessage>
+      <p>  {{ error }}  </p>
+    </template>
   </Form>
 </template>
 
@@ -18,17 +20,17 @@ export default {
   components: {
     Form,
   },
+  data:() => ({
+    error: '  ',
+  }),
   methods: {
-    login(mailaddress, password) {
-      auth.signInWithEmailAndPassword(mailaddress, password)
-      .then(() => {
-        console.log('sucsses login');
-        this.$router.push('/contents/logout')
+    login(email, password) {
+      auth.signInWithEmailAndPassword(email, password)
+      .then(data => {
+        console.log('sucsses login, user:' + data);
+        this.$router.push('/users/userProfile')
         })
-      .catch(e => {
-        console.log('Error:' + e)
-        return
-      })
+      .catch(e => this.error = e )
     },
   }
 }

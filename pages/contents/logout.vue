@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { auth } from '@/plugins/firebase'
+import { auth } from '~/plugins/firebase'
 import Cookie from "js-cookie"
 
 export default {
@@ -33,7 +33,6 @@ export default {
       })
       .catch(e => {
         console.log('logout is faild')
-        return
       })
     }
   }

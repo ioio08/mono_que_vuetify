@@ -1,6 +1,5 @@
 <template>
   <v-app dark >
-    <!-- ======================================================== -->
     <!-- ポップアップウィンドウ -->
     <v-container class="mt-12" >
       <v-dialog v-model="dialog" width=500>
@@ -23,7 +22,7 @@
         </v-card>
       </v-dialog>
     </v-container>
-    <!-- ======================================================== -->
+    
     <!-- Action buttons of post function  fixed in the lower right coner   -->
     <!-- PC ver -->
     <!-- Open button -->

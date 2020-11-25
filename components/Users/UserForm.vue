@@ -1,37 +1,39 @@
 <template>
   <v-card>
-    <v-container>
-      <v-row>
+    <v-container >
+      <v-row justify="start" align="center">
         <v-col cols="12">
-          <v-card-title>
-            <h2><slot name="title"></slot></h2>
-          </v-card-title>
-        </v-col>
-        <v-col cols="12" sm="10" md="10">
-          <v-card-actions>
-            <v-text-field
-            type="email"
-            v-model="users.mailaddress"
-            prepend-icon="mdi-email"
-            label="Please write your mailaddress">
-            </v-text-field>
-          </v-card-actions>
-        </v-col>
-        <v-col cols="12" sm="10" md="10">
-          <v-card-actions>
-            <v-text-field
-            type="password"
-            v-model="users.password"
-            prepend-icon="mdi-lock-outline"
-            label="Please write your password">
-            </v-text-field>
-          </v-card-actions>
-        </v-col>
-        <v-col cols="12" sm="3" md="3">
-          <v-card-actions>
-            <v-btn @click="onClick"><slot name="button"></slot></v-btn>
-            <v-btn @click="reset">リセット</v-btn>
-          </v-card-actions>
+          <v-card-text style="text-align: center">
+            <slot name="title"/>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-form @submit.prevent="onClick">
+            <v-row justify="start" justify-xs="center" align="center" >
+              <v-col cols="12">
+                <v-text-field
+                  type="email"
+                  v-model="users.email"
+                  prepend-icon="mdi-email"
+                  label="Email">
+                </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    type="password"
+                    v-model="users.password"
+                    prepend-icon="mdi-lock-outline"
+                    label="Password">
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-card-actions>
+                    <slot name="button"/>
+                    <v-btn @click="reset">リセット</v-btn>
+                  </v-card-actions>
+                </v-col>
+              </v-row>
+            </v-form>
+          <slot name="errorMessage" />
         </v-col>
       </v-row>
     </v-container>
@@ -43,18 +45,44 @@
 export default {
   data:() => ({
     users: {
-      mailaddress:'',
+      email:'',
       password:'',
-    },
+    }
   }),
   methods: {
     onClick() {
-      this.$emit('click', this.users.mailaddress, this.users.password)
+      this.$emit('submit', this.users.email, this.users.password)
     },
     reset() {
-      this.users.mailaddress = ''
+      this.users.email = ''
       this.users.password = ''
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.v-card {
+  width: 80%;
+  margin: 0 auto 5%;
+  @include mb {
+    width: 95%;
+  }
+}
+
+.v-card__actions {
+  justify-content: space-around;
+}
+
+.row {
+  width: 80%;
+  margin: 0 auto;
+  @include mb {
+    width: 95%;
+  }
+}
+
+form {
+  margin-top: 5%;
+}
+</style>
