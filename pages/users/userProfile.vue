@@ -6,14 +6,13 @@
 
 <script>
 import { auth } from '~/plugins/firebase'
-import { getUserFromCookie } from '~/store/users.js'
+import { getUserFromCookie } from '~/store/cookies.js'
 import Cookies from "js-cookie"
 
 export default {
   asyncData({ req, redirect }) {
     if (process.server) {
       const user =  getUserFromCookie(req)
-      console.log(user);
       if (!user) {
         redirect('/contents/login')
       }

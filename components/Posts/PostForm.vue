@@ -77,6 +77,10 @@
 </template>
 
 <script>
+import { auth } from '~/plugins/firebase'
+import { getUserFromCookie } from '~/store/cookies.js'
+import Cookies from "js-cookie"
+
 export default {
   props: {
     postData: {
@@ -87,6 +91,14 @@ export default {
       type: String,
       required: false
     },
+  },
+  beforeCreate() {
+    let user = auth.currentUser;
+    if (!user) {
+      this.$router.push('/contents/login')
+    } else {
+
+    }
   },
   data() {
     return {
@@ -110,6 +122,7 @@ export default {
       ? this.postData.image.name
       : null,
       isSelecting: false,
+      loggedIn: false,
     }
   },
   methods: {
