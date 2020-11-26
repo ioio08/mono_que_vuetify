@@ -16,6 +16,7 @@
 import Form from "@/components/Users/UserForm";
 import { auth } from '~/plugins/firebase'
 
+
 export default {
   components: {
     Form,
@@ -25,12 +26,15 @@ export default {
   }),
   methods: {
     login(email, password) {
-      auth.signInWithEmailAndPassword(email, password)
-      .then(data => {
-        this.$router.push('/users/userProfile')
-        })
-      .catch(e => this.error = e )
-    },
+      this.$store.dispatch('auth/signInWithEmail',{email: email, password: password})
+    }
+    // login(email, password) {
+    //   auth.signInWithEmailAndPassword(email, password)
+    //   .then(data => {
+    //     this.$router.push('/users/userProfile')
+    //   })
+    //   .catch(e => this.error = e )
+    // },
   }
 }
 </script>

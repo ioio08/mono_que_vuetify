@@ -1,13 +1,14 @@
 <template>
-  <div>
-    user's profile
-  </div>
+  <v-card>
+    {{ user.email }}
+  </v-card>
 </template>
 
 <script>
 import { auth } from '~/plugins/firebase'
 import { getUserFromCookie } from '~/store/cookies.js'
-import Cookies from "js-cookie"
+import { mapGetters } from 'vuex'
+
 
 export default {
   asyncData({ req, redirect }) {
@@ -18,6 +19,8 @@ export default {
       }
     } else {
       let user = auth.currentUser;
+      // console.log(user);
+
       if (!user) {
         redirect('/contents/login')
       }
@@ -26,5 +29,11 @@ export default {
   data:() => ({
 
   }),
+  computed: {
+    ...mapGetters({
+      user: 'auth/user'
+    })
+  }
+
 }
 </script>
