@@ -43,7 +43,7 @@
 <script>
 import { db, storage } from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
-
+import { mapGetters } from 'vuex'
 
 export default {
   async asyncData({ params }){
@@ -52,15 +52,13 @@ export default {
     .get()
     .then(doc => doc.data());
 
-    let user = auth.currentUser
-    let loggedIn
-    if (user) {
-      loggedIn = true
-    } else {
-      loggedIn = false
-    }
-
-    return { loadedQuestionData, loggedIn }
+    return { loadedQuestionData }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      loggedIn: 'auth/authStatus'
+    })
   },
   methods: {
     onBackPage() {

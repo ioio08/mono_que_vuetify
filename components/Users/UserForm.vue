@@ -27,8 +27,11 @@
                 </v-col>
                 <v-col cols="12">
                   <v-card-actions>
+                    <slot name="google" />
                     <slot name="button"/>
+
                     <v-btn @click="reset">リセット</v-btn>
+
                   </v-card-actions>
                 </v-col>
               </v-row>

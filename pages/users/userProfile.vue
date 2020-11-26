@@ -1,30 +1,30 @@
 <template>
-  <div>
-    user's profile
-  </div>
+  <v-card>
+    <v-card v-if="authStatus">
+      {{ user.email }}
+      {{ user.uid }}
+      こっちはログイン中だけ表示
+    </v-card>
+    <v-card v-else>
+      {{ user.email }}
+      {{ user.uid }}
+      こっちは未ログイン中だけ
+    </v-card>
+  </v-card>
 </template>
 
 <script>
 import { auth } from '~/plugins/firebase'
-import { getUserFromCookie } from '~/store/cookies.js'
-import Cookies from "js-cookie"
+import { mapGetters } from 'vuex'
+
 
 export default {
-  asyncData({ req, redirect }) {
-    if (process.server) {
-      const user =  getUserFromCookie(req)
-      if (!user) {
-        redirect('/contents/login')
-      }
-    } else {
-      let user = auth.currentUser;
-      if (!user) {
-        redirect('/contents/login')
-      }
-    }
-  },
-  data:() => ({
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      authStatus: 'auth/authStatus'
+    })
+  }
 
-  }),
 }
 </script>
