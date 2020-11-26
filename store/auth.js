@@ -46,7 +46,18 @@ export const actions = {
   signInWithGoogle({ commit }){
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(() => {
-      auth.signInWithPopup(new auth.GoogleAuthProvider())
+      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(data => {
+        const user = {}
+        user.email = data.user.email
+        user.uid = data.user.uid
+        // ログイン状態をtrue, falseで管理
+        // true: ログイン中 , false: 未ログイン
+        let authStatus = true
+        this.$router.push('/users/userProfile')
+        commit('setUser', user )
+        commit('setAuthStatus', authStatus )
+      })
 
     })
   },
