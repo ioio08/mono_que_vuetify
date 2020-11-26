@@ -1,13 +1,18 @@
-
+import firebase from "@firebase/app"
 import { auth } from '~/plugins/firebase.js'
 
 export const state = () => ({
   user: null,
+  authStatus: false,
 })
 
 export const mutations = {
   setUser(state, payload) {
     state.user = payload
+  },
+
+  setAuthStatus(state, payload) {
+    state.authStatus = payload
   }
 }
 
@@ -17,20 +22,33 @@ export const actions = {
   },
 
   signInWithEmail({ commit }, { email, password } ) {
-    return auth.signInWithEmailAndPassword(email, password)
-    .then(data => {
-      const user = {}
-      user.email = data.user.email
-      user.uid = data.user.uid
-      this.$router.push('/users/userProfile')
-      commit('setUser', user )
+    return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        auth.signInWithEmailAndPassword(email, password)
+          .then(data => {
+          // 取得したデータからuserのemail, uidを取得
+          const user = {}
+          user.email = data.user.email
+          user.uid = data.user.uid
+
+          // ログイン状態をtrue, falseで管理
+          // true: ログイン中 , false: 未ログイン
+          let authStatus = true
+          this.$router.push('/users/userProfile')
+          commit('setUser', user )
+          commit('setAuthStatus', authStatus )
+        })
+
     })
-    // .catch(e => this.error = e)
 
   },
 
   signInWithGoogle({ commit }){
-    return auth.signInWithPopup(new auth.GoogleAuthProvider())
+    return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(() => {
+      auth.signInWithPopup(new auth.GoogleAuthProvider())
+
+    })
   },
 
   signOut() {
@@ -39,10 +57,10 @@ export const actions = {
 }
 
 export const getters = {
-  user(state){
+  user(state) {
     return state.user
   },
-  isAuthenticated (state) {
-    return !!state.user
+  authStatus(state) {
+    return state.authStatus
   }
 }

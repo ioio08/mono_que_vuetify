@@ -109,11 +109,20 @@
       <!-- tab, mb で削除 -->
       <v-toolbar-items
       style="margin-right: 5%"
-      v-if="loggedIn">
+      v-if="loggedIn"
+      >
         <v-btn
         text
         @click="logout">
         |  Logout |
+        </v-btn>
+      </v-toolbar-items>
+      <!-- User-avatar -->
+      <v-toolbar-items v-if="loggedIn">
+        <v-btn icon large to="/users/userProfile">
+          <v-avatar style="margin: 3px 10px 0 0;">
+              <v-img src="https://randomuser.me/api/portraits/men/1.jpg" />
+          </v-avatar>
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items
@@ -131,14 +140,6 @@
         </v-btn>
       </v-toolbar-items>
 
-      <!-- User-avatar -->
-      <v-toolbar-items v-if="loggedIn">
-        <v-btn icon large to="/users/userProfile">
-          <v-avatar style="margin: 3px 10px 0 0;">
-              <v-img src="https://randomuser.me/api/portraits/men/1.jpg" />
-          </v-avatar>
-        </v-btn>
-      </v-toolbar-items>
 
       <!-- ＝＝＝＝＝＝＝＝ヘッダー下部＝＝＝＝＝＝＝＝＝＝＝＝ -->
       <template  v-slot:extension>
@@ -178,20 +179,18 @@
 
 <script>
 import { auth } from '~/plugins/firebase'
-import Cookies from "js-cookie"
+import { mapGetters } from 'vuex'
 
 export default {
   //  default.vue ~ props
   props:['title','fixed','message', 'adminPages'],
-  mounted() {
-    this.setupFirebase();
-  },
+  // mounted() {
+  //   this.setupFirebase();
+  // },
   data:() => ({
       clipped: false,
       // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
       drawer: false,
-      // login or ogout を色別する変数 (true: login中, false: logout中)
-      loggedIn: false,
       contentsPages: [
         {
           icon: 'mdi-home',
@@ -219,6 +218,7 @@ export default {
         {title: 'MyQuestion', to: '/users/userQuestion', icon:'mdi-comment-question-outline',},
         {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
       ],
+
   }),
   methods: {
     logout() {
@@ -230,23 +230,13 @@ export default {
         console.log('logout is faild')
       })
     },
-    setupFirebase() {
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          this.loggedIn = true;
-          auth.currentUser.getIdToken(true)
-          .then(token => {
-            Cookies.set('access_token', token)
-          })
-
-        } else {
-          this.loggedIn = false;
-          Cookies.remove('access_token')
-        }
-      })
-    }
-
-  }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      loggedIn: 'auth/authStatus'
+    })
+  },
 
 }
 </script>

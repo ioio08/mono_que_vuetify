@@ -1,19 +1,28 @@
 import { auth } from '~/plugins/firebase.js'
 
+
 export default (context) => {
   const { store } = context
-
   return new Promise((resolve, reject) => {
-    auth().onAuthStateChanged(user => {
-      //本来は、ここで必要なユーザー情報のオブジェクトを作成して
-      //ユーザー情報としてセットする方が好ましいですが、
-      //サンプルなので、全てセットしています。
-      let users = {
-        name = user.uid,
-        email = user.email
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // ** ログイン済のユーザー
+        console.log('ok!!Login User!!')
+        const users = {}
+        users.email = user.email
+        users.uid = user.uid
+
+        let authStatus = true
+        store.commit('auth/setUser', users)
+        store.commit('auth/setAuthStatus', authStatus)
+        resolve(users)
+      } else {
+        // ** ログインしていないユーザーもしくは認証が切れている
+        console.log("not login");
+        let authStatus = false
+        store.commit('auth/setAuthStatus', authStatus)
+        resolve(false)
       }
-      store.commit('setUser', users)
-      resolve()
     })
   })
 }
