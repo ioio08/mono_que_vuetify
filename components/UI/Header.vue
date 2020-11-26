@@ -186,7 +186,6 @@ export default {
   mounted() {
     this.setupFirebase();
   },
-
   data:() => ({
       clipped: false,
       // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
@@ -226,7 +225,6 @@ export default {
       auth.signOut()
       .then(() => {
         this.$router.push('/contents/login');
-        // Cookie.remove("access_token")
       })
       .catch(e => {
         console.log('logout is faild')
@@ -236,7 +234,6 @@ export default {
       auth.onAuthStateChanged(user => {
         if (user) {
           this.loggedIn = true;
-
           auth.currentUser.getIdToken(true)
           .then(token => {
             Cookies.set('access_token', token)
@@ -245,7 +242,6 @@ export default {
         } else {
           this.loggedIn = false;
           Cookies.remove('access_token')
-          console.log('faild! loggedIn is' + this.loggedIn);
         }
       })
     }
