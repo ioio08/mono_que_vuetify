@@ -63,7 +63,7 @@
 
             <v-card-actions>
               <!-- submit: onPost()メソッド -->
-              <v-btn  color="primary" type="submit">投稿</v-btn>
+              <v-btn color="primary" type="submit">投稿</v-btn>
 
               <!-- click: onCancel()メソッド -->
               <v-btn @click="onCancel">戻る</v-btn>
@@ -81,6 +81,7 @@ import { auth } from '~/plugins/firebase'
 import { getUserFromCookie } from '~/store/cookies.js'
 import Cookies from "js-cookie"
 
+
 export default {
   props: {
     postData: {
@@ -92,12 +93,17 @@ export default {
       required: false
     },
   },
-  beforeCreate() {
-    let user = auth.currentUser;
-    if (!user) {
-      this.$router.push('/contents/login')
+  asyncData({ req, redirect }) {
+    if (process.server) {
+      const user =  getUserFromCookie(req)
+      if (!user) {
+        redirect('/contents/login')
+      }
     } else {
-
+      let user = auth.currentUser;
+      if (!user) {
+        redirect('/contents/login')
+      }
     }
   },
   data() {

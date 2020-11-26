@@ -5,10 +5,10 @@
     <v-card-subtitle><h3>Author:  {{ loadedColumData.text.author }}</h3> Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
 
     <!-- toPostList-btn , Edit-btn , Delete-btn -->
-    <v-card-actions>
+    <v-card-actions >
       <v-btn @click="onBackPage">一覧へ</v-btn>
-      <v-btn @click="onEdit">編集</v-btn>
-      <v-btn @click="dialog = !dialog">削除</v-btn>
+      <v-btn v-if="loggedIn" @click="onEdit">編集</v-btn>
+      <v-btn v-if="loggedIn" @click="dialog = !dialog">削除</v-btn>
     </v-card-actions>
 
     <v-divider></v-divider>
@@ -42,10 +42,24 @@
 
 <script>
 import { db, storage } from '~/plugins/firebase'
+import { auth } from '~/plugins/firebase'
+
 export default {
   async asyncData({ params }){
-    const loadedColumData = await db.collection("colum").doc(params.id).get().then(doc => doc.data());
-    return { loadedColumData }
+    const loadedColumData = await db.collection("colum")
+    .doc(params.id)
+    .get()
+    .then(doc => doc.data());
+
+    let user = auth.currentUser
+    let loggedIn
+    if (user) {
+      loggedIn = true
+    } else {
+      loggedIn = false
+    }
+
+    return { loadedColumData, loggedIn }
   },
   methods: {
     onBackPage() {
