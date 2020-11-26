@@ -7,8 +7,8 @@
     <!-- toPostList-btn , Edit-btn , Delete-btn -->
     <v-card-actions>
       <v-btn @click="onBackPage">一覧へ</v-btn>
-      <v-btn @click="onEdit">編集</v-btn>
-      <v-btn @click="dialog = !dialog">削除</v-btn>
+      <v-btn v-if="loggedIn" @click="onEdit">編集</v-btn>
+      <v-btn v-if="loggedIn" @click="dialog = !dialog">削除</v-btn>
     </v-card-actions>
 
     <v-divider></v-divider>
@@ -42,13 +42,25 @@
 
 <script>
 import { db, storage } from '~/plugins/firebase'
+import { auth } from '~/plugins/firebase'
+
+
 export default {
   async asyncData({ params }){
     const loadedQuestionData = await db.collection("question")
     .doc(params.id)
     .get()
     .then(doc => doc.data());
-    return { loadedQuestionData }
+
+    let user = auth.currentUser
+    let loggedIn
+    if (user) {
+      loggedIn = true
+    } else {
+      loggedIn = false
+    }
+
+    return { loadedQuestionData, loggedIn }
   },
   methods: {
     onBackPage() {
