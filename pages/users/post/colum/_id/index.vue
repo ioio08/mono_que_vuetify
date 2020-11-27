@@ -16,12 +16,13 @@ export default {
   },
   async asyncData({ params }){
     const loadedColumData = await db.collection("colum").doc(params.id).get().then(doc => doc.data());
+
     return { loadedColumData }
   },
   data() {
     return {
       // columPostPreviewへのpath
-      postPath: '/contents/colums/'
+      postPath: '/users/userColums/'
     }
   },
   methods: {

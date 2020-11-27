@@ -6,6 +6,7 @@
 import PostForm from '@/components/Posts/PostForm'
 
 export default {
+  middleware : 'authenticated',
   components: {
     PostForm
   },

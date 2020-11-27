@@ -4,11 +4,9 @@
     <v-divider></v-divider>
     <v-card-subtitle><h3>Author:  {{ loadedColumData.text.author }}</h3> Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
 
-    <!-- toPostList-btn , Edit-btn , Delete-btn -->
+    <!-- Post 一覧 -->
     <v-card-actions >
       <v-btn @click="onBackPage">一覧へ</v-btn>
-      <v-btn v-if="loggedIn" @click="onEdit">編集</v-btn>
-      <v-btn v-if="loggedIn" @click="dialog = !dialog">削除</v-btn>
     </v-card-actions>
 
     <v-divider></v-divider>

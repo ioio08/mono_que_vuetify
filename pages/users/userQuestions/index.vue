@@ -1,6 +1,6 @@
 <template>
   <PostList
-  :exist-posts="userColumDatas"
+  :exist-posts="userQuestionDatas"
   :post-path="postPath">コラム</PostList>
 </template>
 
@@ -10,37 +10,38 @@ import { db, storage } from '~/plugins/firebase'
 
 export default {
   middleware : 'authenticated',
+  
   // uidが一致するドキュメントのみを取得する
-  // postPath をuserColumsに設定
+  // postPath をuserQuestionsに設定
   async asyncData({ store }){
     const user = store.getters['auth/user']
-    let userColumDatas = []
-    await db.collection('colum')
+    let userQuestionDatas = []
+    await db.collection('question')
     .where('text.uid', '==', user.uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        userColumDatas.push(doc.data())
+        userQuestionDatas.push(doc.data())
       })
     });
-    return { userColumDatas }
+    return { userQuestionDatas }
   },
   methods: {
     onBackPage() {
-      this.$router.push('/users/userColums')
+      this.$router.push('/users/userQuestions')
     },
     onEdit() {
-      this.$router.push('/users/post/colum/' + this.$route.params.id)
+      this.$router.push('/users/post/question/' + this.$route.params.id)
     },
     deletePost() {
       // ドキュメントの削除
-      db.collection("colum").doc(this.userColumDatas.text.docId).delete()
+      db.collection("question").doc(this.userQuestionDatas.text.docId).delete()
       .catch(err => {
         console.error("Error removing document: ", err);
       });
 
       // FireStorageのimage削除
-      const deleteRef = storage.ref().child('images/' + this.userColumDatas.image.src)
+      const deleteRef = storage.ref().child('images/' + this.userQuestionDatas.image.src)
       deleteRef.delete().catch(err => {
         console.log('エラー:' + err)});
 
@@ -50,7 +51,7 @@ export default {
   data() {
     return {
       dialog: false,
-      postPath: '/users/userColums/'
+      postPath: '/users/userQuestions/'
     }
   }
 }

@@ -214,8 +214,8 @@ export default {
       ],
       userPages: [
         {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
-        {title: 'MyColum', to: '/users/userColum', icon:'mdi-note-text-outline',},
-        {title: 'MyQuestion', to: '/users/userQuestion', icon:'mdi-comment-question-outline',},
+        {title: 'MyColum', to: '/users/userColums', icon:'mdi-note-text-outline',},
+        {title: 'MyQuestion', to: '/users/userQuestions', icon:'mdi-comment-question-outline',},
         {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
       ],
   }),
