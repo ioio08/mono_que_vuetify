@@ -2,6 +2,7 @@ import { firestoreAction } from 'vuexfire'
 import firebase from "firebase/app"
 import { db, storage } from '~/plugins/firebase'
 
+// columコレクションのインタスタンス作成
 const columPostRef = db.collection('colum')
 
 export const state = () => ({
@@ -14,11 +15,12 @@ export const actions = {
     bindFirestoreRef('colum', columPostRef)
   }),
 
-  // contentsを投稿
+  // PostDataを投稿してFirebaseに登録する関数
   async postContents(context, payload) {
     // newPost => payload => contents
     const contents = payload
-    // Fire Storageへimageを格納 + imageURLを同時に FireStoreへ格納するアクションメソッド
+
+    // FireStorageへimageを格納 + imageURLをFireStoreへ格納する関数
     contents.image  = await context.dispatch('uploadImage', {
       src: contents.image.src,
       name: contents.image.name,
@@ -42,12 +44,14 @@ export const actions = {
           src: contents.image.src
         },
       })
-      // path/docIDは維持したまま
+
+      // 編集したPostのPreview画面に戻る
       this.$router.push('/users/userColums/' + contents.text.docId )
 
     // 新規投稿の場合の条件分岐
     } else {
-      // 新しくdocIdを取得する
+
+      // Firebaseに登録するdocIdを取得する
       const docId = db.collection("colum").doc().id;
       await columPostRef.doc(docId).set({
         text:{
@@ -69,10 +73,10 @@ export const actions = {
     }
   },
 
-  // Fire Storageにimageをuploadするメソッド
+  // FireStorageにimageをuploadする関数
   uploadImage(context, payload) {
     const storageRef = storage.ref()
-    // imageがuploadされなかった場合のダミー条件
+    // imageが検出できない場合のダミー条件
     if (!payload.src) {
       return {
         name: 'サンプル画像',
@@ -83,7 +87,7 @@ export const actions = {
     } else if (payload.existName === null) {
       return new Promise((resolve, reject) => {
         storageRef
-        // Fire Storage に'images'ディレクトリを作成
+        // FireStorage に'images'ディレクトリを作成
         .child(`images/${payload.name}`)
         .put(payload.src)
         .then(snapshot => {
@@ -96,7 +100,7 @@ export const actions = {
         })
       })
 
-    // Edit : image.srcを変えない場合
+    // Edit : image.srcが変更されない場合
     } else if (payload.name === payload.existName) {
       return {
         src: payload.src,

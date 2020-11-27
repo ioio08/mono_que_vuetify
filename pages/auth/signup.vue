@@ -24,13 +24,11 @@ export default {
     error:null,
   }),
   methods: {
-    signUp(mailaddress, password) {
-      auth.createUserWithEmailAndPassword(mailaddress, password)
-      .then(
-        console.log('sucsses')
-      )
-      .catch(e => this.error = e )
+    signUp(email, password) {
+      this.$store.dispatch('auth/signUp', { email: email, password: password })
+
     },
+    
   }
 }
 </script>
