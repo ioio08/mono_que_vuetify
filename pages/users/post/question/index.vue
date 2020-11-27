@@ -1,4 +1,5 @@
 <template>
+<!-- Question 新規登録Form -->
   <PostForm @submit="postContents">New Question</PostForm>
 </template>
 
@@ -6,6 +7,7 @@
 import PostForm from '@/components/Posts/PostForm'
 
 export default {
+  // ログイン中のみ参照できる様に制御
   middleware : 'authenticated',
   components: {
     PostForm
@@ -16,11 +18,6 @@ export default {
       await this.$store.dispatch('question/postContents', newPost)
     },
   },
-
 }
 </script>
-
-<style lang="scss" scoped>
-
-
-</style>
+>

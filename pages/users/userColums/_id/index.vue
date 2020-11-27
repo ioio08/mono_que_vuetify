@@ -17,6 +17,7 @@
       <v-sheet><h2><pre>{{ userColumData.text.content }}</pre></h2> </v-sheet>
     </v-card-text>
 
+    <!-- 本当に削除するの確認するdailog -->
     <v-dialog v-model="dialog" width=600>
       <v-card>
         <v-container>
@@ -43,7 +44,6 @@
 <script>
 import { db, storage } from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
-import { mapGetters } from 'vuex'
 
 export default {
   // paramsのdocIdに応じてドキュメント指定して取得
@@ -54,12 +54,6 @@ export default {
     .then(doc => doc.data());
 
     return { userColumData }
-  },
-  computed: {
-    ...mapGetters({
-      user: 'auth/user',
-      loggedIn: 'auth/authStatus'
-    })
   },
   methods: {
     onBackPage() {

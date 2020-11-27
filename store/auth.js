@@ -7,6 +7,7 @@ import { auth } from '~/plugins/firebase.js'
 export const state = () => ({
   user: null,
   authStatus: false,
+  errorMessage: '  ',
 })
 
 export const mutations = {
@@ -16,6 +17,10 @@ export const mutations = {
 
   setAuthStatus(state, payload) {
     state.authStatus = payload
+  },
+
+  setErrorMessage(state, payload) {
+    state.errorMessage = payload
   }
 }
 
@@ -24,18 +29,27 @@ export const actions = {
   signUp({ commit }, { email, password }) {
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       auth.createUserWithEmailAndPassword(email, password)
-        .then(data => {
-          // 取得したデータからuserのemail, uidを取得
-          const user = {}
-          user.email = data.user.email
-          user.uid = data.user.uid
+      .then(data => {
+        // 取得したデータからuserのemail, uidを取得
+        const user = {}
+        user.email = data.user.email
+        user.uid = data.user.uid
 
-          // ログイン状態をtrue, falseで管理
-          // true: ログイン中 , false: 未ログイン
-          let authStatus = true
-          this.$router.push('/users/userProfile')
-          commit('setUser', user )
-          commit('setAuthStatus', authStatus )
+        // ログイン状態をtrue, falseで管理
+        // true: ログイン中 , false: 未ログイン
+        let authStatus = true
+
+        // errorMessageの初期化
+        let errorMessage = ''
+
+        this.$router.push('/users/userProfile')
+        commit('setUser', user )
+        commit('setAuthStatus', authStatus )
+        commit('setErrorMessage', errorMessage)
+      })
+      .catch(() => {
+        let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
+        commit('setErrorMessage', errorMessage)
       })
     })
   },
@@ -55,9 +69,18 @@ export const actions = {
           // ログイン状態をtrue, falseで管理
           // true: ログイン中 , false: 未ログイン
           let authStatus = true
+
+          // errorMessageの初期化
+          let errorMessage = ''
+
           this.$router.push('/users/userProfile')
           commit('setUser', user )
           commit('setAuthStatus', authStatus )
+          commit('setErrorMessage', errorMessage)
+        })
+        .catch(() => {
+          let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
+          commit('setErrorMessage', errorMessage)
         })
     })
   },
@@ -71,14 +94,23 @@ export const actions = {
         const user = {}
         user.email = data.user.email
         user.uid = data.user.uid
+
         // ログイン状態をtrue, falseで管理
         // true: ログイン中 , false: 未ログイン
         let authStatus = true
+
+        // errorMessageの初期化
+        let errorMessage = ''
+
         this.$router.push('/users/userProfile')
         commit('setUser', user )
         commit('setAuthStatus', authStatus )
+        commit('setErrorMessage', errorMessage)
       })
-
+      .catch(() => {
+        let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
+        commit('setErrorMessage', errorMessage)
+      })
     })
   },
 
@@ -101,5 +133,8 @@ export const getters = {
   },
   authStatus(state) {
     return state.authStatus
+  },
+  errorMessage(state) {
+    return state.errorMessage
   }
 }

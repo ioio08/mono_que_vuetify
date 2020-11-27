@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" align="center" >
+  <v-row justify="center" align="center">
     <v-col cols="12">
       <v-card style="background-color: #C5CAE9">
         <v-card-title class="headline"
@@ -9,7 +9,7 @@
         <!-- Postのタイトル挿入場所 -->
         <slot />
         </v-card-title>
-        <v-container
+        <v-container v-if="existPosts.length > 0"
         style="background-color: #fff">
           <v-row align="center">
 
@@ -31,7 +31,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <v-card-actions>
+        <v-card-actions v-if="existPosts.length > 0">
           <div class="text-center">
 
             <!-- ページネーション -->
@@ -41,6 +41,20 @@
             ></v-pagination>
           </div>
         </v-card-actions>
+
+        <!-- 何も投稿がない場合に表示 -->
+        <v-row justify="center" align="center" v-else>
+          <v-col cols="12" xs="10" sm="10" md="10">
+            <v-card>
+              <v-card-text>
+              <h2>
+                何も投稿がありません<br><br>
+                どんどん投稿していきましょう！
+              </h2>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-card>
     </v-col>
   </v-row>

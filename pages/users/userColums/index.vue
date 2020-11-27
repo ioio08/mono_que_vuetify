@@ -1,4 +1,5 @@
 <template>
+<!-- Userが投稿したColum一覧 -->
   <PostList
   :exist-posts="userColumDatas"
   :post-path="postPath">コラム</PostList>
@@ -9,7 +10,9 @@ import PostList from '@/components/Posts/PostList'
 import { db, storage } from '~/plugins/firebase'
 
 export default {
+  // ログイン中のみ確認できる用に制御
   middleware : 'authenticated',
+
   // uidが一致するドキュメントのみを取得する
   // postPath をuserColumsに設定
   async asyncData({ store }){
@@ -23,36 +26,12 @@ export default {
         userColumDatas.push(doc.data())
       })
     });
+
     return { userColumDatas }
   },
-  methods: {
-    onBackPage() {
-      this.$router.push('/users/userColums')
-    },
-    onEdit() {
-      this.$router.push('/users/post/colum/' + this.$route.params.id)
-    },
-    deletePost() {
-      // ドキュメントの削除
-      db.collection("colum").doc(this.userColumDatas.text.docId).delete()
-      .catch(err => {
-        console.error("Error removing document: ", err);
-      });
-
-      // FireStorageのimage削除
-      const deleteRef = storage.ref().child('images/' + this.userColumDatas.image.src)
-      deleteRef.delete().catch(err => {
-        console.log('エラー:' + err)});
-
-      this.onBackPage()
-    },
-  },
-  data() {
-    return {
-      dialog: false,
+  data:() => ({
       postPath: '/users/userColums/'
-    }
-  }
+  }),
 }
 </script>
 
