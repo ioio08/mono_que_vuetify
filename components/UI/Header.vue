@@ -218,13 +218,12 @@ export default {
         {title: 'MyQuestion', to: '/users/userQuestion', icon:'mdi-comment-question-outline',},
         {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
       ],
-
   }),
   methods: {
     logout() {
       auth.signOut()
       .then(() => {
-        this.$router.push('/contents/login');
+        this.$router.push('/auth/login');
       })
       .catch(e => {
         console.log('logout is faild')
