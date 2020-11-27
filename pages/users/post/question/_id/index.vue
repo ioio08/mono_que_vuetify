@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       // questionPostPreviewへのpath
-      postPath: '/contents/questions/'
+      postPath: '/users/userQuestions/'
     }
   },
   methods: {

@@ -145,6 +145,11 @@ export default {
     // Form送信で親コンポーネントのpostContentsメソッド発火
     onPost() {
       // Save the post
+      // uid取得
+      let user = this.$store.getters['auth/user']
+      this.newPost.text.uid = user.uid
+
+      // 既存の画像を受け渡す
       this.newPost.image.existName = this.existName
       this.$emit('submit', this.newPost)
     },

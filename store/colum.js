@@ -33,6 +33,7 @@ export const actions = {
           title: contents.text.title,
           content: contents.text.content,
           docId: contents.text.docId,
+          uid: contents.text.uid,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           postDay: new Date().toLocaleString()
         },
@@ -42,7 +43,7 @@ export const actions = {
         },
       })
       // path/docIDは維持したまま
-      this.$router.push('/contents/colums/' + contents.text.docId )
+      this.$router.push('/users/userColums/' + contents.text.docId )
 
     // 新規投稿の場合の条件分岐
     } else {
@@ -54,6 +55,7 @@ export const actions = {
           title: contents.text.title,
           content: contents.text.content,
           docId: docId,
+          uid: contents.text.uid,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           postDay: new Date().toLocaleString()
         },
@@ -63,7 +65,7 @@ export const actions = {
         },
       })
       // pathにdocIDを渡して動的なページ遷移
-      this.$router.push('/contents/colums/' + docId )
+      this.$router.push('/users/userColums/' + docId )
     }
   },
 
@@ -130,5 +132,4 @@ export const actions = {
 
 export const getters = {
   posts: state => state.newPost
-
 };
