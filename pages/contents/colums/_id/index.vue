@@ -1,47 +1,31 @@
 <template>
   <v-card>
+
+    <!-- ページ上部 -->
     <v-card-title><h2>{{ loadedColumData.text.title }}</h2></v-card-title>
     <v-divider></v-divider>
-    <v-card-subtitle><h3>Author:  {{ loadedColumData.text.author }}</h3> Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
+    <v-card-subtitle>
+      <h3>Author:  {{ loadedColumData.text.author }}</h3>
+          Date:  {{ loadedColumData.text.postDay }}
+    </v-card-subtitle>
 
-    <!-- Post 一覧 -->
+    <!-- ColumsPost 一覧 button -->
     <v-card-actions >
       <v-btn @click="onBackPage">一覧へ</v-btn>
     </v-card-actions>
 
     <v-divider></v-divider>
+
+    <!-- ページ下部 -->
     <v-img :src="loadedColumData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
       <v-sheet><h2><pre>{{ loadedColumData.text.content }}</pre></h2> </v-sheet>
     </v-card-text>
-
-    <v-dialog v-model="dialog" width=600>
-      <v-card>
-        <v-container>
-          <v-row justify="center" align="center">
-            <v-card-text><h2 style="text-align:center;">本当に削除してもよろしいでしょうか？</h2></v-card-text>
-            <v-divider></v-divider>
-            <v-col cols="12" sm="3" md="3" lg="3">
-              <v-card-actions>
-                <v-btn @click="deletePost">削除</v-btn>
-              </v-card-actions>
-            </v-col>
-            <v-col cols="12" sm="3" md="3" lg="3">
-              <v-card-actions>
-                <v-btn @click="dialog = !dialog">戻る</v-btn>
-              </v-card-actions>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
 <script>
-import { db, storage } from '~/plugins/firebase'
-import { auth } from '~/plugins/firebase'
-import { mapGetters } from 'vuex'
+import { db } from '~/plugins/firebase'
 
 export default {
   async asyncData({ params }){
@@ -52,39 +36,11 @@ export default {
 
     return { loadedColumData }
   },
-  computed: {
-    ...mapGetters({
-      user: 'auth/user',
-      loggedIn: 'auth/authStatus'
-    })
-  },
   methods: {
     onBackPage() {
       this.$router.push('/contents/colums')
     },
-    onEdit() {
-      this.$router.push('/users/post/colum/' + this.$route.params.id)
-    },
-    deletePost() {
-      // ドキュメントの削除
-      db.collection("colum").doc(this.loadedColumData.text.docId).delete()
-      .catch(err => {
-        console.error("Error removing document: ", err);
-      });
-
-      // FireStorageのimage削除
-      const deleteRef = storage.ref().child('images/' + this.loadedColumData.image.src)
-      deleteRef.delete().catch(err => {
-        console.log('エラー:' + err)});
-
-      this.onBackPage()
-    },
   },
-  data() {
-    return {
-      dialog: false,
-    }
-  }
 }
 </script>
 

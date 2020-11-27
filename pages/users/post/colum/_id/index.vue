@@ -1,9 +1,9 @@
 <template>
+<!-- Colum 編集Form -->
   <PostForm
   :post-data="loadedColumData"
   :post-path="postPath"
   @submit="postContents">Edit Colum</PostForm>
-
 </template>
 
 <script>

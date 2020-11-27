@@ -1,4 +1,5 @@
 <template>
+<!-- Question 編集Form -->
   <PostForm
   :post-data="loadeQuestionData"
   :post-path="postPath"
@@ -16,6 +17,7 @@ export default {
   },
   async asyncData({ params }){
     const loadeQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
+
     return { loadeQuestionData }
   },
   data() {

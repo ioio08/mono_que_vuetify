@@ -1,98 +1,93 @@
 <template>
 
     <div>
-    <!-- ＝＝＝＝＝＝ここからタブメニュー内コンテンツ＝＝＝＝＝＝ -->
-    <v-navigation-drawer
-    app
-    v-model="drawer"
-    clipped
-    >
-    <v-list
-    nav
-    dense
-    >
-      <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;">
-      </v-app-bar-nav-icon>
+    <!-- ＝＝＝＝＝＝ここからSideBar＝＝＝＝＝＝ -->
+    <v-navigation-drawer app v-model="drawer" clipped>
+      <v-list nav dense>
+        <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;"></v-app-bar-nav-icon>
 
-      <!-- ここからタブメニューリスト -->
-      <!-- ユーザーリスト "Profile" "Colum" "Question" "Star" -->
-      <v-list-group :value="true">
-        <template v-slot:activator>
-          <v-icon>mdi-account-circle-outline</v-icon>
-          <v-list-item-title>User's</v-list-item-title>
-        </template>
-        <v-list-item
-        v-for="(userPage, i) in userPages"
-        :key="i"
-        style="margin-top: 20px;"
-        >
-        <v-list-item-icon><v-icon>{{ userPage.icon }} </v-icon></v-list-item-icon>
-        <v-btn
-            :to="userPage.to"
-            text
-            class="font-weight-bold"
-            style="width: 120px;"
+        <!-- ここからSideBarコンテンツリスト: 1.Users, 2.Admins, 3. Contents(responsiveでtabサイズから表示) -->
+        <!-- 1.Users : "Profile" "Colum" "Question" "Star" : defaultでリストを表示させる(value = true)-->
+        <v-list-group :value="true">
+          <template v-slot:activator>
+            <v-icon>mdi-account-circle-outline</v-icon>
+            <v-list-item-title>User's</v-list-item-title>
+          </template>
+
+          <!-- Usersのリストレンダリング -->
+          <v-list-item
+          v-for="(userPage, i) in userPages"
+          :key="i"
+          style="margin-top: 20px;"
           >
-            {{ userPage.title }}
-          </v-btn>
-        </v-list-item>
-      </v-list-group>
-      <!-- 管理者リスト "Contact" "Q & A" "About the app" "Admin's pdofile" -->
-      <v-list-group>
-        <template v-slot:activator>
-            <v-icon>mdi-office-building</v-icon>
-          <v-list-item-title>Admin 's</v-list-item-title>
-        </template>
-        <v-list-item
-        v-for="adminPage in adminPages"
-        :key="adminPage.title"
-        style=" margin-top: 20px;"
-        >
-        <v-list-item-icon><v-icon>{{ adminPage.icon }} </v-icon></v-list-item-icon>
-        <v-btn
-            :to="adminPage.to"
-            text
-            class="font-weight-bold"
-            style="width: 120px;"
-          >
-            {{ adminPage.title }}
-          </v-btn>
-        </v-list-item>
-      </v-list-group>
-      <!-- ページ遷移 "Home" "Question" "Colum" -->
-      <v-list-group class="header-nav__pagination">
-        <template v-slot:activator>
-            <v-icon>mdi-apps</v-icon>
-          <v-list-item-title>Contents</v-list-item-title>
-        </template>
-        <v-list-item
-        v-for="contentsPage in contentsPages"
-        :key="contentsPage.title"
-        style=" margin-top: 20px;"
-        >
-          <v-list-item-icon><v-icon>{{ contentsPage.icon }} </v-icon></v-list-item-icon>
+          <v-list-item-icon><v-icon>{{ userPage.icon }} </v-icon></v-list-item-icon>
           <v-btn
-            :to="contentsPage.to"
-            text
-            class="font-weight-bold"
-            style="width: 120px;"
+              :to="userPage.to"
+              text
+              class="font-weight-bold"
+              style="width: 120px;"
+            >
+              {{ userPage.title }}
+            </v-btn>
+          </v-list-item>
+        </v-list-group>
+
+        <!-- 2. Admins :  "Contact" "Q & A" "About the app" "Admin's pdofile" -->
+        <v-list-group>
+          <template v-slot:activator>
+              <v-icon>mdi-office-building</v-icon>
+            <v-list-item-title>Admin 's</v-list-item-title>
+          </template>
+          <v-list-item
+          v-for="adminPage in adminPages"
+          :key="adminPage.title"
+          style=" margin-top: 20px;"
           >
-            {{ contentsPage.title }}
-          </v-btn>
-        </v-list-item>
-      </v-list-group>
-    </v-list>
+          <v-list-item-icon><v-icon>{{ adminPage.icon }} </v-icon></v-list-item-icon>
+          <v-btn
+              :to="adminPage.to"
+              text
+              class="font-weight-bold"
+              style="width: 120px;"
+            >
+              {{ adminPage.title }}
+            </v-btn>
+          </v-list-item>
+        </v-list-group>
+
+        <!-- 3. Contents :  "Home" "Question" "Colum" (tabから表示) -->
+        <v-list-group class="header-nav__pagination">
+          <template v-slot:activator>
+              <v-icon>mdi-apps</v-icon>
+            <v-list-item-title>Contents</v-list-item-title>
+          </template>
+          <v-list-item
+          v-for="contentsPage in contentsPages"
+          :key="contentsPage.title"
+          style=" margin-top: 20px;"
+          >
+            <v-list-item-icon><v-icon>{{ contentsPage.icon }} </v-icon></v-list-item-icon>
+            <v-btn
+              :to="contentsPage.to"
+              text
+              class="font-weight-bold"
+              style="width: 120px;"
+            >
+              {{ contentsPage.title }}
+            </v-btn>
+          </v-list-item>
+        </v-list-group>
+      </v-list>
     </v-navigation-drawer>
 
     <!-- ＝＝＝＝＝＝＝ヘッダー上部＝＝＝＝＝＝＝＝＝＝ -->
-    <v-app-bar
-    elevation="1"
-    app
-    clipped-left
-    >
+    <v-app-bar elevation="1" app clipped-left>
+
       <!-- header-left -->
-      <!-- Menu-bar "Open User-Menu" -->
+      <!-- SideBar "Open SideBar Contents" -->
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
+
+      <!-- Title : ClickでHomeにページ遷移 -->
       <v-toolbar-title>
         <nuxt-link
           to="/main"
@@ -107,16 +102,17 @@
       <!-- header-right -->
       <!-- User-infomation "Sign-up" , "Log-in" -->
       <!-- tab, mb で削除 -->
-      <v-toolbar-items
-      style="margin-right: 5%"
-      v-if="loggedIn"
-      >
+      <!-- Login状態で切り替え。 true(ログイン中)：logout, avatar, false(未ログイン)：sign in, login -->
+
+      <!-- ログイン中の設定 -->
+      <v-toolbar-items style="margin-right: 5%" v-if="loggedIn">
         <v-btn
         text
         @click="logout">
         |  Logout |
         </v-btn>
       </v-toolbar-items>
+
       <!-- User-avatar -->
       <v-toolbar-items v-if="loggedIn">
         <v-btn icon large to="/users/userProfile">
@@ -125,6 +121,8 @@
           </v-avatar>
         </v-btn>
       </v-toolbar-items>
+
+      <!-- 未ログインの表示 -->
       <v-toolbar-items
         v-else
         v-for="(userSign, i) in userSigns"
@@ -171,8 +169,6 @@
         </v-tabs>
       </template>
     </v-app-bar>
-
-    <!-- ======================================================== -->
   </div>
 </template>
 
@@ -191,27 +187,19 @@ export default {
       clipped: false,
       // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
       drawer: false,
+
+      // Contentsのデータ(Headerタブ、SideBarメニューの２カ所で使用)
       contentsPages: [
-        {
-          icon: 'mdi-home',
-          title: 'Home',
-          to: '/main'
-        },
-        {
-          icon: 'mdi-help-box',
-          title: 'Question',
-          to: '/contents/questions'
-        },
-        {
-          icon: 'mdi-note-text-outline',
-          title: 'Colum',
-          to: '/contents/colums'
-        },
+        { icon: 'mdi-home', title: 'Home', to: '/main'},
+        { icon: 'mdi-help-box', title: 'Question', to: '/contents/questions'},
+        { icon: 'mdi-note-text-outline', title: 'Colum', to: '/contents/colums'},
       ],
+      // sign in, loginの制御データ
       userSigns: [
         { title: 'Signup', to: '/auth/signup' },
         { title: 'Login', to: '/auth/login' },
       ],
+      // Usersデータ
       userPages: [
         {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
         {title: 'MyColum', to: '/users/userColums', icon:'mdi-note-text-outline',},
@@ -242,29 +230,29 @@ export default {
 
 <style lang="scss">
 
-//===============  header  ======================
+//===============  Header Components  ======================
 
 //  ブレイクポイント  max-width で設定
 // @include  $mb:559px;   モバイル
 // @include $tab:959px;  タブレット
 // @include  $pc:1023px;  パソコン
 
-  // タブメニュー
-  .v-list-group__header  {
-    text-align: center;
-    margin-top: 15px;
+// SideBar
+.v-list-group__header  {
+  text-align: center;
+  margin-top: 15px;
+}
+.v-list-item__title {
+  font-size: 1.2rem !important;
+}
+.header-nav__pagination {
+  display: none;
+  @include tab {
+    display: block;
   }
-  .v-list-item__title {
-    font-size: 1.2rem !important;
-  }
-  .header-nav__pagination {
-    display: none;
-    @include tab {
-      display: block;
-    }
-  }
+}
 
-
+// Header
 header {
 
   // v-app-bar 全体のスタイル

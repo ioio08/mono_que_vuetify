@@ -4,15 +4,18 @@
 
       <!-- Components  "Question" "Colum" -->
       <div class="text-center">
+
         <!-- Question component -->
         <PostList
         :exist-posts="loadedQuestionPosts"
         :post-path="postQuestionPath">質問</PostList>
+
         <!-- Colum component -->
         <PostList
         :exist-posts="loadedColumPosts"
         :post-path="postColumPath">コラム</PostList>
       </div>
+
       <!-- Keywords Card -->
       <v-card style="background-color: #C5CAE9" class="keyword">
         <v-card-title>
@@ -45,18 +48,20 @@ export default {
   components: {
     PostList
   },
-  async asyncData({ params }){
-    const loadedQuestionPosts = []
-    await db.collection("question").get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        loadedQuestionPosts.push(doc.data())
-      });
-    });
 
+  // Colums, Questions のPostDataをFirebaseから取得してレンダリング
+  async asyncData({ params }){
     const loadedColumPosts = []
     await db.collection("colum").get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         loadedColumPosts.push(doc.data())
+      });
+    });
+
+    const loadedQuestionPosts = []
+    await db.collection("question").get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        loadedQuestionPosts.push(doc.data())
       });
     });
 
@@ -88,7 +93,6 @@ export default {
 .v-chip {
   margin: 4px 8px 4px 4px !important;
 }
-
 
 .tab {
   @include tab {

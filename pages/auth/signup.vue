@@ -6,6 +6,8 @@
     <template v-slot:button>
       <v-btn type="submit">登録</v-btn>
     </template>
+
+    <!-- login失敗時のエラー表示 -->
     <template v-if="error" v-slot:errorMessage>
       <p>  {{ error }}  </p>
     </template>
@@ -20,16 +22,14 @@ export default {
   components: {
     Form,
   },
-  data:() => ({
-    error:null,
-  }),
+  computed: {
+    ...mapGetters({error:'auth/errorMessage'})
+  },
   methods: {
-    signUp(mailaddress, password) {
-      auth.createUserWithEmailAndPassword(mailaddress, password)
-      .then(
-        console.log('sucsses')
-      )
-      .catch(e => this.error = e )
+    // Email sign inのActionsを発火させる関数
+    // dispatchに２つ以上引数渡すときはオブジェクト形式にしないと送れないので下記のコード
+    signUp(email, password) {
+      this.$store.dispatch('auth/signUp', { email: email, password: password })
     },
   }
 }
