@@ -1,14 +1,9 @@
 <template>
-    <v-footer
-      :padless="true"
-    >
-      <v-card
-        flat
-        tile
-        width="100%"
-        class="text-center"
-      >
+    <v-footer :padless="true">
+      <v-card flat tile width="100%" class="text-center">
         <v-card-text class="mb">
+
+          <!-- Admins のリストレンダリング -->
           <v-btn
             v-for="adminPage in adminPages"
             :key="adminPage.title"
@@ -32,15 +27,18 @@
 
 <script>
 export default {
-  props:['fixed', 'title','categorys', 'footerIcons', 'adminPages'],
+  props:{
+    title: {
+      type: String,
+      required:true,
+      default: 'MONO-QUE'
+    },
+    adminPages: {
+      type: Array,
+      required:true,
+    },
 
-  data() {
-    return {
-
-
-    }
   },
-
 }
 </script>
 

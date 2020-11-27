@@ -4,11 +4,9 @@
     <v-divider></v-divider>
     <v-card-subtitle><h3>Author:  {{ loadedQuestionData.text.author }}</h3> Date:  {{ loadedQuestionData.text.postDay }}</v-card-subtitle>
 
-    <!-- toPostList-btn , Edit-btn , Delete-btn -->
-    <v-card-actions>
+    <!-- QuestionsPost 一覧 -->
+    <v-card-actions >
       <v-btn @click="onBackPage">一覧へ</v-btn>
-      <v-btn v-if="loggedIn" @click="onEdit">編集</v-btn>
-      <v-btn v-if="loggedIn" @click="dialog = !dialog">削除</v-btn>
     </v-card-actions>
 
     <v-divider></v-divider>
@@ -41,7 +39,7 @@
 </template>
 
 <script>
-import { db, storage } from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 

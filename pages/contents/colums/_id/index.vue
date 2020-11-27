@@ -4,7 +4,7 @@
     <v-divider></v-divider>
     <v-card-subtitle><h3>Author:  {{ loadedColumData.text.author }}</h3> Date:  {{ loadedColumData.text.postDay }}</v-card-subtitle>
 
-    <!-- Post 一覧 -->
+    <!-- ColumsPost 一覧 -->
     <v-card-actions >
       <v-btn @click="onBackPage">一覧へ</v-btn>
     </v-card-actions>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { db, storage } from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 

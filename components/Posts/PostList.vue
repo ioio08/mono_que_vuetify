@@ -5,11 +5,15 @@
         <v-card-title class="headline"
         style="color: yellow"
         >
+
+        <!-- Postのタイトル挿入場所 -->
         <slot />
         </v-card-title>
         <v-container
         style="background-color: #fff">
           <v-row align="center">
+
+            <!-- PostDataのリストレンダリング -->
             <v-col
               v-for="existPost in existPosts"
               :key="existPost.text.docId"
@@ -19,6 +23,7 @@
               md="4"
               xl="3"
             >
+            <!-- Question, Columによって値が可変の為、共通の変数名を設定 -->
               <PostPreview
               :exist-post="existPost"
               :post-path="postPath"
@@ -28,6 +33,8 @@
         </v-container>
         <v-card-actions>
           <div class="text-center">
+
+            <!-- ページネーション -->
             <v-pagination
             v-model="page"
             :length="4"
@@ -46,13 +53,23 @@ export default {
   components: {
     PostPreview
   },
-  props:['existPosts', 'postPath'],
+  props:{
+    // Colum, Questionによってデータが可変の為、抽象的な命名
+    // loadedDataがそれぞれから渡される
+    existPosts: {
+      type:Array,
+      required:true
+    },
+    postPath: {
+      type:String,
+      required:true
+    },
+  },
   data() {
     return {
       page: 1,
     }
   }
-
 }
 </script>
 

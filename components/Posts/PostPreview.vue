@@ -1,5 +1,8 @@
 <template>
+<!-- Postのプレビュー -->
   <v-card style="height:200px;">
+
+    <!-- docIdを渡して遷移先を動的に変更 -->
     <nuxt-link :to="postPath + existPost.text.docId">
       <v-img :src="existPost.image.src" cover style="height: 100%">
         <v-card-title >
