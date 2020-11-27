@@ -209,8 +209,8 @@ export default {
         },
       ],
       userSigns: [
-        { title: 'Signup', to: '/contents/signup' },
-        { title: 'Login', to: '/contents/login' },
+        { title: 'Signup', to: '/auth/signup' },
+        { title: 'Login', to: '/auth/login' },
       ],
       userPages: [
         {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},

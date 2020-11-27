@@ -5,9 +5,13 @@
       <!-- Components  "Question" "Colum" -->
       <div class="text-center">
         <!-- Question component -->
-        <Questions />
+        <PostList
+        :exist-posts="loadedQuestionPosts"
+        :post-path="postQuestionPath">質問</PostList>
         <!-- Colum component -->
-        <Colums />
+        <PostList
+        :exist-posts="loadedColumPosts"
+        :post-path="postColumPath">コラム</PostList>
       </div>
       <!-- Keywords Card -->
       <v-card style="background-color: #C5CAE9" class="keyword">
@@ -30,8 +34,8 @@
 <script>
 
 // pages
-import Questions from '~/pages/contents/questions'
-import Colums from '~/pages/contents/colums'
+import PostList from '@/components/Posts/PostList'
+import { db } from '~/plugins/firebase'
 import { mapState } from 'vuex'
 
 export default {
@@ -39,13 +43,31 @@ export default {
     ...mapState('keyword', ['keywords'])
   },
   components: {
-    Questions,
-    Colums
+    PostList
+  },
+  async asyncData({ params }){
+    const loadedQuestionPosts = []
+    await db.collection("question").get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        loadedQuestionPosts.push(doc.data())
+      });
+    });
+
+    const loadedColumPosts = []
+    await db.collection("colum").get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        loadedColumPosts.push(doc.data())
+      });
+    });
+
+    // 分割代入で配列からオブジェクトを取り出す
+    return { loadedQuestionPosts, loadedColumPosts }
   },
   data() {
     return {
       page: 1,
-
+      postQuestionPath: '/contents/questions/',
+      postColumPath: '/contents/colums/',
     }
   }
 }

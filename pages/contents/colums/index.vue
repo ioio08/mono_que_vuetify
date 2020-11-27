@@ -9,6 +9,9 @@ import PostList from '@/components/Posts/PostList'
 import { db } from '~/plugins/firebase'
 
 export default {
+  components: {
+    PostList
+  },
   // columコレクションの全てのデータを取得
   // loadedColumPostsに格納してv-forで描画
   async asyncData({ params }){
