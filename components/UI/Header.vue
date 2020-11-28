@@ -140,7 +140,7 @@
 
 
       <!-- ＝＝＝＝＝＝＝＝ヘッダー下部＝＝＝＝＝＝＝＝＝＝＝＝ -->
-      <template  v-slot:extension>
+      <template  v-slot:extension >
         <v-tabs>
           <!-- header-left -->
           <!-- Pagenation-tab "Home", "Qestion", "Colum"-->
@@ -155,8 +155,9 @@
 
           <!-- header-right "Search-function" -->
           <v-text-field
+            style="padding-top:15px"
             v-model="message"
-            label="Search"
+            label="あなたの気になっているものはなんですか？"
             type="text"
           >
           <template
@@ -254,10 +255,11 @@ export default {
 
 // Header
 header {
+  height: 130px !important;
 
   // v-app-bar 全体のスタイル
   @include tab {
-    height: 60px !important;
+    height: 70px !important;
     transition: 0.6s;
   }
 
@@ -293,11 +295,12 @@ header {
   //======  ツールバー下部  ======
   //  ヘッダータブ
   .v-toolbar__extension {
+    height: 65px !important;
     @include tab {
       display: none !important;
       transition: 0.6s;
     }
   }
-
 }
+
 </style>

@@ -15,7 +15,7 @@
 
             <!-- PostDataのリストレンダリング -->
             <v-col
-              v-for="existPost in existPosts"
+              v-for="existPost in getSixPosts"
               :key="existPost.text.docId"
               cols="12"
               xs="12"
@@ -23,6 +23,7 @@
               md="4"
               xl="3"
             >
+
             <!-- Question, Columによって値が可変の為、共通の変数名を設定 -->
               <PostPreview
               :exist-post="existPost"
@@ -31,13 +32,14 @@
             </v-col>
           </v-row>
         </v-container>
+
+        <!-- ページネーション -->
         <v-card-actions v-if="existPosts.length > 0">
           <div class="text-center">
 
-            <!-- ページネーション -->
             <v-pagination
             v-model="page"
-            :length="4"
+            :length="pageLength"
             ></v-pagination>
           </div>
         </v-card-actions>
@@ -56,6 +58,7 @@
           </v-col>
         </v-row>
       </v-card>
+
     </v-col>
   </v-row>
 </template>
@@ -79,11 +82,27 @@ export default {
       required:true
     },
   },
-  data() {
-    return {
-      page: 1,
+  computed: {
+    getSixPosts() {
+      return this.pageChange(this.page)
+    },
+    pageLength() {
+      if (this.existPosts % 6 === 0) {
+        return Math.floor(this.existPosts.length / 6)
+      } else {
+        return Math.floor(this.existPosts.length / 6) + 1
+      }
     }
-  }
+  },
+  methods: {
+    pageChange(page) {
+      return this.existPosts.slice(this.pageSize*(page -1), this.pageSize*(page));
+    }
+  },
+  data:() =>({
+    page:1,
+    pageSize: 6,
+  })
 }
 </script>
 
@@ -92,4 +111,5 @@ export default {
 .v-card__actions {
   justify-content: center;
 }
+
 </style>

@@ -44,6 +44,7 @@
 <script>
 import { db, storage } from '~/plugins/firebase'
 import { auth } from '~/plugins/firebase'
+import { mapGetters } from 'vuex'
 
 export default {
   // paramsのdocIdに応じてドキュメント指定して取得
@@ -54,6 +55,12 @@ export default {
     .then(doc => doc.data());
 
     return { userQuestionData }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      loggedIn: 'auth/authStatus'
+    })
   },
   methods: {
     onBackPage() {
