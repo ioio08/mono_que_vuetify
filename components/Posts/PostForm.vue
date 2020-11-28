@@ -110,7 +110,8 @@ export default {
         image:{
           src:null,
           name:'',
-        }
+        },
+        tag: {}
       },
       // 画像のアップロードを一旦描画する為の変数設定：三項演算子
       // 新規登録：this.postData = null なので、初期値nullの設定
