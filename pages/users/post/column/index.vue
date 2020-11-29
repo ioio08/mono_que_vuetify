@@ -1,6 +1,6 @@
 <template>
 <!-- Colum 新規登録Form -->
-  <PostForm @submit="postContents">New Colum</PostForm>
+  <PostForm @submit="postContents">New Column</PostForm>
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
   methods: {
     // Form送信でFireStore(collection:colum)にデータ格納
     async postContents(newPost) {
-      await this.$store.dispatch('colum/postContents', newPost)
+      await this.$store.dispatch('column/postContents', newPost)
     },
   },
 }

@@ -2,15 +2,12 @@
   <v-row justify="center" align="center">
     <v-col cols="12">
       <v-card style="background-color: #C5CAE9">
-        <v-card-title class="headline"
-        style="color: yellow"
-        >
+        <v-card-title class="headline" style="color: yellow">
 
         <!-- Postのタイトル挿入場所 -->
         <slot />
         </v-card-title>
-        <v-container v-if="existPosts.length > 0"
-        style="background-color: #fff">
+        <v-container v-if="existPosts.length > 0" style="background-color: #fff">
           <v-row align="center">
 
             <!-- PostDataのリストレンダリング -->
@@ -21,14 +18,12 @@
               xs="12"
               sm="4"
               md="4"
-              xl="3"
-            >
+              xl="3">
 
             <!-- Question, Columによって値が可変の為、共通の変数名を設定 -->
               <PostPreview
               :exist-post="existPost"
-              :post-path="postPath"
-              />
+              :post-path="postPath"/>
             </v-col>
           </v-row>
         </v-container>
@@ -36,11 +31,7 @@
         <!-- ページネーション -->
         <v-card-actions v-if="existPosts.length > 0">
           <div class="text-center">
-
-            <v-pagination
-            v-model="page"
-            :length="pageLength"
-            ></v-pagination>
+            <v-pagination v-model="page" :length="pageLength"></v-pagination>
           </div>
         </v-card-actions>
 
@@ -87,7 +78,7 @@ export default {
       return this.pageChange(this.page)
     },
     pageLength() {
-      if (this.existPosts % 6 === 0) {
+      if (this.existPosts.length % 6 === 0) {
         return Math.floor(this.existPosts.length / 6)
       } else {
         return Math.floor(this.existPosts.length / 6) + 1

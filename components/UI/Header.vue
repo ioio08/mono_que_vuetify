@@ -7,7 +7,7 @@
         <v-app-bar-nav-icon @click="drawer=!drawer" style="margin-bottom: 20px;"></v-app-bar-nav-icon>
 
         <!-- ここからSideBarコンテンツリスト: 1.Users, 2.Admins, 3. Contents(responsiveでtabサイズから表示) -->
-        <!-- 1.Users : "Profile" "Colum" "Question" "Star" : defaultでリストを表示させる(value = true)-->
+        <!-- 1.Users : "Profile" "Column" "Question" "Star" : defaultでリストを表示させる(value = true)-->
         <v-list-group :value="true">
           <template v-slot:activator>
             <v-icon>mdi-account-circle-outline</v-icon>
@@ -55,7 +55,7 @@
           </v-list-item>
         </v-list-group>
 
-        <!-- 3. Contents :  "Home" "Question" "Colum" (tabから表示) -->
+        <!-- 3. Contents :  "Home" "Question" "Column" (tabから表示) -->
         <v-list-group class="header-nav__pagination">
           <template v-slot:activator>
               <v-icon>mdi-apps</v-icon>
@@ -143,7 +143,7 @@
       <template  v-slot:extension >
         <v-tabs>
           <!-- header-left -->
-          <!-- Pagenation-tab "Home", "Qestion", "Colum"-->
+          <!-- Pagenation-tab "Home", "Qestion", "Column"-->
           <v-tab
           align-with-title
           v-for="(contentsPage, i) in contentsPages"
@@ -156,15 +156,16 @@
           <!-- header-right "Search-function" -->
           <v-text-field
             style="padding-top:15px"
-            v-model="message"
+            v-model="keyword"
             label="あなたの気になっているものはなんですか？"
             type="text"
           >
-          <template
-          v-slot:append-outer
-
-          >
-            <v-btn color="primary" style="margin-right: 10px;"><v-icon>mdi-magnify</v-icon> </v-btn>
+          <template v-slot:append-outer>
+            <v-btn
+            color="primary"
+            style="margin-right: 10px;">
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
           </template>
           </v-text-field>
         </v-tabs>
@@ -181,32 +182,30 @@ import { mapGetters } from 'vuex'
 export default {
   //  default.vue ~ props
   props:['title','fixed','message', 'adminPages'],
-  // mounted() {
-  //   this.setupFirebase();
-  // },
   data:() => ({
-      clipped: false,
-      // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
-      drawer: false,
+    keyword: '',
+    clipped: false,
+    // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
+    drawer: false,
 
-      // Contentsのデータ(Headerタブ、SideBarメニューの２カ所で使用)
-      contentsPages: [
-        { icon: 'mdi-home', title: 'Home', to: '/main'},
-        { icon: 'mdi-help-box', title: 'Question', to: '/contents/questions'},
-        { icon: 'mdi-note-text-outline', title: 'Colum', to: '/contents/colums'},
-      ],
-      // sign in, loginの制御データ
-      userSigns: [
-        { title: 'Signup', to: '/auth/signup' },
-        { title: 'Login', to: '/auth/login' },
-      ],
-      // Usersデータ
-      userPages: [
-        {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
-        {title: 'MyColum', to: '/users/userColums', icon:'mdi-note-text-outline',},
-        {title: 'MyQuestion', to: '/users/userQuestions', icon:'mdi-comment-question-outline',},
-        {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
-      ],
+    // Contentsのデータ(Headerタブ、SideBarメニューの２カ所で使用)
+    contentsPages: [
+      { icon: 'mdi-home', title: 'Home', to: '/main'},
+      { icon: 'mdi-help-box', title: 'Question', to: '/contents/questions'},
+      { icon: 'mdi-note-text-outline', title: 'Column', to: '/contents/columns'},
+    ],
+    // sign in, loginの制御データ
+    userSigns: [
+      { title: 'Signup', to: '/auth/signup' },
+      { title: 'Login', to: '/auth/login' },
+    ],
+    // Usersデータ
+    userPages: [
+      {title: 'Profile', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
+      {title: 'MyColumn', to: '/users/userColumns', icon:'mdi-note-text-outline',},
+      {title: 'MyQuestion', to: '/users/userQuestions', icon:'mdi-comment-question-outline',},
+      {title: 'favorite', to: '/users/userStar', icon:'mdi-star-outline',},
+    ],
   }),
   methods: {
     logout() {

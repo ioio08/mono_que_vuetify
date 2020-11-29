@@ -56,11 +56,11 @@
       <v-icon>mdi-home</v-icon>
     </v-btn>
 
-    <!-- Colum button -->
+    <!-- Column button -->
     <v-btn
       color="green"
       elevation="5"
-      to="/users/post/colum"
+      to="/users/post/column"
       fixed
       bottom
       right

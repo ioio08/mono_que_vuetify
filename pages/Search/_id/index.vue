@@ -23,7 +23,6 @@ export default {
     });
 
     // 分割代入で配列からオブジェクトを取り出す
-    
     return { loadedColumPosts }
   },
   data() {
