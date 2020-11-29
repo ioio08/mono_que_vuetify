@@ -1,6 +1,6 @@
 <template>
   <v-card style="text-alighn: center">
-    <!-- Colum, Questionによってタイトル変更 -->
+    <!-- Column, Questionによってタイトル変更 -->
     <v-card-title><h2><slot/> Post</h2></v-card-title>
     <v-divider></v-divider>
     <v-container>
@@ -25,6 +25,26 @@
               label="Please write post title"
               ></v-text-field>
             </v-card-actions>
+
+            <!-- TODO Post: タグ -->
+            <v-card-actions  style="width: 500px !important">
+              <v-text-field
+              v-model="tags"
+              prepend-icon="mdi-fountain-pen"
+              label="Please write post tag"
+              ></v-text-field>
+              <v-btn style="margin-left:20px" @click="pushTags">+tag</v-btn>
+            </v-card-actions>
+
+        <!--   v-if="newPost.tags.length > 0" -->
+            <v-chip-group column>
+              <v-chip
+              v-for="(tag, i) in newPost.tags"
+              :key="i"
+              >{{ "#" + " " + tag }}
+                <span @click="deleteTags(i)">[ x ]</span>
+              </v-chip>
+            </v-chip-group>
 
             <!-- Post画像: upload -->
             <v-card-actions >
@@ -58,8 +78,8 @@
               label="Please write body contents"
               outlined
               auto-grow
-              rows="8"
-              row-height="20"
+              rows="20"
+              row-height="30"
               ></v-textarea>
             </v-card-actions>
 
@@ -83,12 +103,12 @@ import { auth } from '~/plugins/firebase'
 
 export default {
   props: {
-    // Colum, Questionからデータ受け取り
+    // Column, Questionからデータ受け取り
     postData: {
       type: Object,
       required: false
     },
-    // Colum, Quesitonを分岐させるため
+    // Column, Quesitonを分岐させるため
     postPath: {
       type: String,
       required: false
@@ -100,8 +120,8 @@ export default {
       // 新規登録：this.postData = null なので、初期値の設定
       // 編集：this.postData がpropsで渡され、newPostとして設定
       newPost: this.postData
-      ?{ ...this.postData}
-      :{
+      ? { ...this.postData}
+      : {
         text: {
           author:'',
           title:'',
@@ -111,7 +131,7 @@ export default {
           src:null,
           name:'',
         },
-        tag: {}
+        tags: []
       },
       // 画像のアップロードを一旦描画する為の変数設定：三項演算子
       // 新規登録：this.postData = null なので、初期値nullの設定
@@ -130,12 +150,24 @@ export default {
       isSelecting: false,
       // ログインの有無
       loggedIn: false,
+      // tagを一旦格納する変数
+      tags: '',
     }
   },
   methods: {
     // 新規投稿・編集をやめる際のボタン
     onCancel() {
       this.$router.push(this.postPath + this.newPost.text.docId)
+    },
+
+    // newPost.tagsに記述したタグを挿入する
+    pushTags() {
+      this.newPost.tags.push(this.tags)
+      this.tags = ''
+    },
+    // tagsを削除する
+    deleteTags(i) {
+      this.newPost.tags.splice(i, 1)
     },
 
     // イメージ画像読み込み中のローディング切り替え
@@ -181,6 +213,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.v-chip-group {
+  background: none;
+}
 
 </style>

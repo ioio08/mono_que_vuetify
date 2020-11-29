@@ -2,7 +2,7 @@
   <v-row  justify="center" align="center" >
     <v-col cols="12">
 
-      <!-- Components  "Question" "Colum" -->
+      <!-- Components  "Question" "Column" -->
       <div class="text-center">
 
         <!-- Question component -->
@@ -10,10 +10,10 @@
         :exist-posts="loadedQuestionPosts"
         :post-path="postQuestionPath">質問</PostList>
 
-        <!-- Colum component -->
+        <!-- Column component -->
         <PostList
-        :exist-posts="loadedColumPosts"
-        :post-path="postColumPath">コラム</PostList>
+        :exist-posts="loadedColumnPosts"
+        :post-path="postColumnPath">コラム</PostList>
       </div>
 
       <!-- Keywords Card -->
@@ -21,7 +21,7 @@
         <v-card-title>
           カテゴリー
         </v-card-title>
-        <v-chip-group column >
+        <v-chip-group columnn >
           <v-chip
           v-for="keyword in keywords"
           :key="keyword.title"
@@ -49,12 +49,12 @@ export default {
     PostList
   },
 
-  // Colums, Questions のPostDataをFirebaseから取得してレンダリング
+  // Columns, Questions のPostDataをFirebaseから取得してレンダリング
   async asyncData({ params }){
-    const loadedColumPosts = []
-    await db.collection("colum").get().then(querySnapshot => {
+    const loadedColumnPosts = []
+    await db.collection("column").get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        loadedColumPosts.push(doc.data())
+        loadedColumnPosts.push(doc.data())
       });
     });
 
@@ -66,13 +66,13 @@ export default {
     });
 
     // 分割代入で配列からオブジェクトを取り出す
-    return { loadedQuestionPosts, loadedColumPosts }
+    return { loadedQuestionPosts, loadedColumnPosts }
   },
   data() {
     return {
       page: 1,
       postQuestionPath: '/contents/questions/',
-      postColumPath: '/contents/colums/',
+      postColumnPath: '/contents/columns/',
     }
   }
 }

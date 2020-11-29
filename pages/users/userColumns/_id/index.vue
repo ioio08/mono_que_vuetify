@@ -1,8 +1,21 @@
 <template>
   <v-card >
-    <v-card-title><h2>{{ userColumData.text.title }}</h2></v-card-title>
+    <v-card-title><h2>{{ userColumnData.text.title }}</h2></v-card-title>
     <v-divider></v-divider>
-    <v-card-subtitle><h3>Author:  {{ userColumData.text.author }}</h3> Date:  {{ userColumData.text.postDay }}</v-card-subtitle>
+    <v-card-subtitle>
+      <h3>Author:  {{ userColumnData.text.author }}</h3>
+      Date:  {{ userColumnData.text.postDay }}
+    </v-card-subtitle>
+
+    <v-chip-group column v-if="userColumnData.tags.length > 0">
+      <v-chip
+      v-for="tag in userColumnData.tags"
+      :key="tag">
+      {{ "#" + " " + tag }}
+      <span @click="deleteTags(i)">[ x ]</span>
+      </v-chip>
+    </v-chip-group>
+
 
     <!-- toPostList-btn , Edit-btn , Delete-btn -->
     <v-card-actions >
@@ -12,9 +25,9 @@
     </v-card-actions>
 
     <v-divider></v-divider>
-    <v-img :src="userColumData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
+    <v-img :src="userColumnData.image.src" cover style="width: 500px; margin: 0 auto;"></v-img>
     <v-card-text>
-      <v-sheet><h2><pre>{{ userColumData.text.content }}</pre></h2> </v-sheet>
+      <v-sheet><h2><pre>{{ userColumnData.text.content }}</pre></h2> </v-sheet>
     </v-card-text>
 
     <!-- 本当に削除するの確認するdailog -->
@@ -49,12 +62,12 @@ import { mapGetters } from 'vuex'
 export default {
   // paramsのdocIdに応じてドキュメント指定して取得
   async asyncData({ params }){
-    const userColumData = await db.collection("colum")
+    const userColumnData = await db.collection("column")
     .doc(params.id)
     .get()
     .then(doc => doc.data());
 
-    return { userColumData }
+    return { userColumnData }
   },
   computed: {
     ...mapGetters({
@@ -64,20 +77,20 @@ export default {
   },
   methods: {
     onBackPage() {
-      this.$router.push('/users/userColums')
+      this.$router.push('/users/userColumns')
     },
     onEdit() {
-      this.$router.push('/users/post/colum/' + this.$route.params.id)
+      this.$router.push('/users/post/column/' + this.$route.params.id)
     },
     deletePost() {
       // ドキュメントの削除
-      db.collection("colum").doc(this.userColumData.text.docId).delete()
+      db.collection("column").doc(this.userColumnData.text.docId).delete()
       .catch(err => {
         console.error("Error removing document: ", err);
       });
 
       // FireStorageのimage削除
-      const deleteRef = storage.ref().child('images/' + this.userColumData.image.src)
+      const deleteRef = storage.ref().child('images/' + this.userColumnData.image.src)
       deleteRef.delete().catch(err => {
         console.log('エラー:' + err)});
 

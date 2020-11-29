@@ -1,6 +1,6 @@
 <template>
     <PostList
-    :exist-posts="loadedColumPosts"
+    :exist-posts="loadedColumnPosts"
     :post-path="postPath">コラム</PostList>
 </template>
 
@@ -12,24 +12,24 @@ export default {
   components: {
     PostList
   },
-  // columコレクションの全てのデータを取得
-  // loadedColumPostsに格納してv-forで描画
+  // columnコレクションの全てのデータを取得
+  // loadedColumnPostsに格納してv-forで描画
   async asyncData({ params }){
-    const loadedColumPosts = []
-    await db.collection("colum").get().then(querySnapshot => {
+    const loadedColumnPosts = []
+    await db.collection("column").get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        loadedColumPosts.push(doc.data())
+        loadedColumnPosts.push(doc.data())
       });
     });
 
     // 分割代入で配列からオブジェクトを取り出す
-    
-    return { loadedColumPosts }
+
+    return { loadedColumnPosts }
   },
   data() {
     return {
-      // columPostPreviewへのpath
-      postPath: '/contents/colums/'
+      // columnPostPreviewへのpath
+      postPath: '/contents/columns/'
     }
   }
 

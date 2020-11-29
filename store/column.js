@@ -2,8 +2,8 @@ import { firestoreAction } from 'vuexfire'
 import firebase from "firebase/app"
 import { db, storage } from '~/plugins/firebase'
 
-// columコレクションのインタスタンス作成
-const columPostRef = db.collection('colum')
+// columnコレクションのインタスタンス作成
+const columnPostRef = db.collection('column')
 
 export const state = () => ({
   newPost:[],
@@ -12,7 +12,7 @@ export const state = () => ({
 export const actions = {
   // 初期化
   init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('colum', columPostRef)
+    bindFirestoreRef('column', columnPostRef)
   }),
 
   // PostDataを投稿してFirebaseに登録する関数
@@ -29,7 +29,7 @@ export const actions = {
 
     // Editの場合の条件分岐
     if (contents.text.docId !== null && contents.text.docId !== undefined) {
-      await columPostRef.doc(contents.text.docId).set({
+      await columnPostRef.doc(contents.text.docId).set({
         text:{
           author: contents.text.author,
           title: contents.text.title,
@@ -43,17 +43,18 @@ export const actions = {
           name: contents.image.name,
           src: contents.image.src
         },
+        tags: contents.tags
       })
 
       // 編集したPostのPreview画面に戻る
-      this.$router.push('/users/userColums/' + contents.text.docId )
+      this.$router.push('/users/userColumns/' + contents.text.docId )
 
     // 新規投稿の場合の条件分岐
     } else {
 
       // Firebaseに登録するdocIdを取得する
-      const docId = db.collection("colum").doc().id;
-      await columPostRef.doc(docId).set({
+      const docId = db.collection("column").doc().id;
+      await columnPostRef.doc(docId).set({
         text:{
           author: contents.text.author,
           title: contents.text.title,
@@ -67,9 +68,10 @@ export const actions = {
           name: contents.image.name,
           src: contents.image.src
         },
+        tags: contents.tags
       })
       // pathにdocIDを渡して動的なページ遷移
-      this.$router.push('/users/userColums/' + docId )
+      this.$router.push('/users/userColumns/' + docId )
     }
   },
 
