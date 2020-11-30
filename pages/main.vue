@@ -7,29 +7,15 @@
 
         <!-- Question component -->
         <PostList
-        :exist-posts="loadedQuestionPosts"
+        :exist-posts="setQuestion"
         :post-path="postQuestionPath">質問</PostList>
 
         <!-- Column component -->
         <PostList
-        :exist-posts="loadedColumnPosts"
+        :exist-posts="setColumn"
         :post-path="postColumnPath">コラム</PostList>
       </div>
 
-      <!-- Keywords Card -->
-      <v-card style="background-color: #C5CAE9" class="keyword">
-        <v-card-title>
-          カテゴリー
-        </v-card-title>
-        <v-chip-group columnn >
-          <v-chip
-          v-for="keyword in keywords"
-          :key="keyword.title"
-          :to="keyword.to"
-          link
-          >{{ "#" + " " + keyword.title }}</v-chip>
-        </v-chip-group>
-      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -39,38 +25,25 @@
 // pages
 import PostList from '@/components/Posts/PostList'
 import { db } from '~/plugins/firebase'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('keyword', ['keywords'])
+    ...mapGetters({
+      setQuestion: 'question/setQuestionPost',
+      setColumn: 'column/setColumnPost'
+      })
   },
   components: {
     PostList
   },
-
-  // Columns, Questions のPostDataをFirebaseから取得してレンダリング
-  async asyncData({ params }){
-    const loadedColumnPosts = []
-    await db.collection("column").get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        loadedColumnPosts.push(doc.data())
-      });
-    });
-
-    const loadedQuestionPosts = []
-    await db.collection("question").get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        loadedQuestionPosts.push(doc.data())
-      });
-    });
-
-    // 分割代入で配列からオブジェクトを取り出す
-    return { loadedQuestionPosts, loadedColumnPosts }
+  created() {
+    this.$store.dispatch('question/setQuestionRef', db.collection('question'))
+    this.$store.dispatch('column/setColumnsRef', db.collection('column'))
+    this.$store.dispatch('tagKeyword/setColumnTag')
   },
   data() {
     return {
-      page: 1,
       postQuestionPath: '/contents/questions/',
       postColumnPath: '/contents/columns/',
     }
@@ -80,7 +53,6 @@ export default {
 
 <style lang="scss" >
 // keyword
-
 .keyword {
   padding-bottom: 20px;
 }

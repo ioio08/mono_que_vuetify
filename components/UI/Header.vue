@@ -152,22 +152,6 @@
           >{{ contentsPage.title }}
           </v-tab>
           <v-spacer />
-
-          <!-- header-right "Search-function" -->
-          <v-text-field
-            style="padding-top:15px"
-            v-model="keyword"
-            label="あなたの気になっているものはなんですか？"
-            type="text"
-          >
-          <template v-slot:append-outer>
-            <v-btn
-            color="primary"
-            style="margin-right: 10px;">
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-          </template>
-          </v-text-field>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -183,7 +167,6 @@ export default {
   //  default.vue ~ props
   props:['title','fixed','message', 'adminPages'],
   data:() => ({
-    keyword: '',
     clipped: false,
     // drawerのboolean値でメニューの出し入れ [true: 出力, false: 隠す(default)]
     drawer: false,

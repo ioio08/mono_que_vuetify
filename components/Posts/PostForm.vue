@@ -78,7 +78,7 @@
               label="Please write body contents"
               outlined
               auto-grow
-              rows="20"
+              rows="30"
               row-height="30"
               ></v-textarea>
             </v-card-actions>

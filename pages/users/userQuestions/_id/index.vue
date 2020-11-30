@@ -2,7 +2,18 @@
   <v-card >
     <v-card-title><h2>{{ userQuestionData.text.title }}</h2></v-card-title>
     <v-divider></v-divider>
-    <v-card-subtitle><h3>Author:  {{ userQuestionData.text.author }}</h3> Date:  {{ userQuestionData.text.postDay }}</v-card-subtitle>
+    <v-card-subtitle>
+      <h3>Author:  {{ userQuestionData.text.author }}</h3>
+      Date:  {{ userQuestionData.text.postDay }}
+    </v-card-subtitle>
+
+    <v-chip-group column v-if="userQuestionData.tags.length > 0">
+      <v-chip
+      v-for="tag in userQuestionData.tags"
+      :key="tag">
+      {{ "#" + " " + tag }}
+      </v-chip>
+    </v-chip-group>
 
     <!-- toPostList-btn , Edit-btn , Delete-btn -->
     <v-card-actions >
