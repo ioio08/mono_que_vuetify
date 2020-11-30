@@ -9,6 +9,15 @@
           Date:  {{ loadedQuestionData.text.postDay }}
     </v-card-subtitle>
 
+    <v-chip-group column v-if="loadedQuestionData.tags.length > 0">
+      <v-chip
+      v-for="tag in loadedQuestionData.tags"
+      :key="tag">
+      {{ "#" + " " + tag }}
+
+      </v-chip>
+    </v-chip-group>
+
     <!-- QuestionsPost 一覧 button -->
     <v-card-actions >
       <v-btn @click="onBackPage">一覧へ</v-btn>

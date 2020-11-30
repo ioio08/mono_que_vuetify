@@ -9,14 +9,15 @@
           Date:  {{ loadedColumnData.text.postDay }}
     </v-card-subtitle>
 
-    <v-chip-group column v-if="loadedColumnDate.tags.length > 0">
+    <v-chip-group column v-if="loadedColumnData.tags.length > 0">
       <v-chip
       v-for="tag in loadedColumnData.tags"
       :key="tag">
+      {{ "#" + " " + tag }}
 
       </v-chip>
-
     </v-chip-group>
+
 
 
     <!-- ColumnsPost 一覧 button -->

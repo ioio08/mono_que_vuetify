@@ -12,7 +12,7 @@
       v-for="tag in userColumnData.tags"
       :key="tag">
       {{ "#" + " " + tag }}
-      <span @click="deleteTags(i)">[ x ]</span>
+
       </v-chip>
     </v-chip-group>
 

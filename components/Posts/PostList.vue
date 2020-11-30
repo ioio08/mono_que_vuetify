@@ -7,7 +7,25 @@
         <!-- Postのタイトル挿入場所 -->
         <slot />
         </v-card-title>
-        <v-container v-if="existPosts.length > 0" style="background-color: #fff">
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+                style="padding-top:15px"
+                v-model="contentKeyword"
+                label="文章で検索"
+                type="text">
+            </v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+                style="padding-top:15px"
+                v-model="tagKeyword"
+                label="タグで検索"
+                type="text">
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-container v-if="getSixPosts.length > 0" style="background-color: #fff">
           <v-row align="center">
 
             <!-- PostDataのリストレンダリング -->
@@ -49,7 +67,6 @@
           </v-col>
         </v-row>
       </v-card>
-
     </v-col>
   </v-row>
 </template>
@@ -74,25 +91,77 @@ export default {
     },
   },
   computed: {
+    // Post表示を6までに整形して返す関数
+    // リストレンダリングの'ソースデータ'
     getSixPosts() {
       return this.pageChange(this.page)
     },
+
+    // Postの総数に対してページ数を決める関数
     pageLength() {
-      if (this.existPosts.length % 6 === 0) {
-        return Math.floor(this.existPosts.length / 6)
+      if (this.filteredPosts.length % 6 === 0) {
+        return Math.floor(this.filteredPosts.length / 6)
       } else {
-        return Math.floor(this.existPosts.length / 6) + 1
+        return Math.floor(this.filteredPosts.length / 6) + 1
       }
+    },
+
+    // 検索でPostの表示を変える関数(タグ検索・文章検索・初期値設定)
+    filteredPosts() {
+      let filteredPosts = []
+
+      // 『タグ検索』 に１文字でも入力されたら発火する条件
+      if (this.tagKeyword.length !== 0 ) {
+
+        // existPostsからオブジェクトを一旦全て抜き出す
+        this.existPosts.forEach(post => {
+
+          // 抜き出したオブジェクト1つ1つのtags配列内を検証
+          // this.tagsKeywordと一致するtagを持つオブジェクトを検索
+          // 該当のオブジェクトのみをfilteredPosts配列にpushする
+          if (post.tags.find(tag => tag === this.tagKeyword)) {
+            filteredPosts.push(post)
+          }
+
+          this.page = 1
+        });
+
+        // 『文章検索』 が１文字でも入力されたら発火する条件
+      } else if (this.contentKeyword.length !== 0 ) {
+
+        // existPostsからオブジェクトを一旦全て抜き出す
+        this.existPosts.forEach(post => {
+
+          // 抜き出したオブジェクト1つ1つのcontent文章内を検証
+          // this.contentKeywordと同じ文字を含むオブジェクトを検索
+          // 該当のオブジェクトのみをfilteredPosts配列にpushする
+          if (post.text.content.match(this.contentKeyword)) {
+            filteredPosts.push(post)
+          }
+          this.page = 1
+        });
+
+        // 検索フォームが0文字のときは初期値を再代入する
+      } else {
+        filteredPosts = this.existPosts
+      }
+      // 検索結果を返り値として返す
+      // 3パターン：1.タグ検索, 2. 文章検索, 3.初期値
+      return filteredPosts
     }
   },
   methods: {
     pageChange(page) {
-      return this.existPosts.slice(this.pageSize*(page -1), this.pageSize*(page));
-    }
+      // filteredPostsをsliceすることで、
+      // Postの初期値と検索値をリアルタイムで入れ替える
+      return this.filteredPosts.slice(this.pageSize*(page -1), this.pageSize*(page));
+    },
   },
   data:() =>({
     page:1,
     pageSize: 6,
+    tagKeyword:'',
+    contentKeyword:'',
   })
 }
 </script>

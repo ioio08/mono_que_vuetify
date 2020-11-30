@@ -6,13 +6,13 @@ import { db, storage } from '~/plugins/firebase'
 const questionPostRef = db.collection('question')
 
 export const state = () => ({
-  newPost:[],
+  questionPost: [],
 })
 
 export const actions = {
   // 初期化
-  init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('question', questionPostRef)
+  setQuestionRef: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('questionPost', questionPostRef)
   }),
 
   // PostDataを投稿してFirebaseに登録する関数
@@ -43,6 +43,7 @@ export const actions = {
           name: contents.image.name,
           src: contents.image.src
         },
+        tags: contents.tags
       })
 
      // 編集したPostのPreview画面に戻る
@@ -67,6 +68,7 @@ export const actions = {
           name: contents.image.name,
           src: contents.image.src
         },
+        tags: contents.tags
       })
       // pathにdocIDを渡して動的なページ遷移
       this.$router.push('/users/userQuestions/' + docId )
@@ -136,5 +138,7 @@ export const actions = {
 }
 
 export const getters = {
-  posts: state => state.newPost
+  setQuestionPost: state => {
+    return state.questionPost
+  },
 };

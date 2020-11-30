@@ -6,13 +6,13 @@ import { db, storage } from '~/plugins/firebase'
 const columnPostRef = db.collection('column')
 
 export const state = () => ({
-  newPost:[],
+  columnPost:[],
 })
 
 export const actions = {
   // 初期化
-  init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('column', columnPostRef)
+  setColumnsRef: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('columnPost', columnPostRef)
   }),
 
   // PostDataを投稿してFirebaseに登録する関数
@@ -137,5 +137,7 @@ export const actions = {
 }
 
 export const getters = {
-  posts: state => state.newPost
+  setColumnPost: state => {
+    return state.columnPost
+  },
 };
