@@ -40,7 +40,6 @@ export default {
   created() {
     this.$store.dispatch('question/setQuestionRef', db.collection('question'))
     this.$store.dispatch('column/setColumnsRef', db.collection('column'))
-    this.$store.dispatch('tagKeyword/setColumnTag')
   },
   data() {
     return {
