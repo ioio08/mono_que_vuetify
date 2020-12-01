@@ -8,12 +8,12 @@ import { auth } from '~/plugins/firebase.js'
 export default (context) => {
   const { store } = context
   return new Promise((resolve, reject) => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(user => {
       // ** ログイン済のユーザー
       if (user) {
         // ログイン済みユーザーの情報保持
         const users = {}
-        users.email = user.email
+        users.name = user.displayName
         users.uid = user.uid
 
         let authStatus = true

@@ -1,6 +1,6 @@
 <template>
 <!-- Question 新規登録Form -->
-  <PostForm @submit="postContents">新規 質問</PostForm>
+  <PostForm @submit="postContents">新しい質問をする</PostForm>
 </template>
 
 <script>
