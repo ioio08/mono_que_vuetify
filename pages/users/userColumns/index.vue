@@ -12,6 +12,9 @@ import { db, storage } from '~/plugins/firebase'
 export default {
   // ログイン中のみ確認できる用に制御
   middleware : 'authenticated',
+  components: {
+    PostList
+  },
 
   // uidが一致するドキュメントのみを取得する
   // postPath をuserColumnsに設定

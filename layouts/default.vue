@@ -1,109 +1,96 @@
 <template>
   <v-app dark >
-    <!-- ポップアップウィンドウ Search -->
-    <v-container class="mt-12" >
-      <v-dialog v-model="dialog" width=500>
-        <v-card>
-          <v-card-title>Search</v-card-title>
-          <v-divider></v-divider>
-          <v-card-text>
-            <v-text-field
-            v-model="message"
-            label="Search"
-            type="text"
-            >
-              <template
-              v-slot:append-outer
-              >
-                <v-btn color="primary" style="margin-right: 10px;"><v-icon>mdi-magnify</v-icon> </v-btn>
-              </template>
-            </v-text-field>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
-    </v-container>
 
     <!-- Action buttons of post function  fixed in the lower right coner   -->
     <!-- PC ver -->
     <!-- Open button -->
-    <v-btn
-    color="indigo"
-    elevation="5"
-    fixed
-    bottom
-    right
-    fab
-    large
-    @click="btnAction=!btnAction"
-    style="padding:25px;">
-      <v-icon v-if="btnAction">mdi-close</v-icon>
-      <v-icon v-else>mdi-apps</v-icon>
-    </v-btn>
+    <v-tooltip left >
+      <template v-slot:activator="{ on }">
+        <v-btn
+        color="indigo"
+        elevation="5"
+        v-on="on"
+        fixed
+        bottom
+        right
+        fab
+        large
+        @click="btnAction=!btnAction"
+        style="padding:25px;">
+          <v-icon v-if="btnAction">mdi-close</v-icon>
+          <v-icon v-else>mdi-apps</v-icon>
+        </v-btn>
+      </template>
+        <span v-if="btnAction">閉じる</span>
+        <span v-else>機能一覧</span>
+    </v-tooltip>
 
     <!-- Home button -->
-    <v-btn
-      color="orange"
-      elevation="5"
-      to="/main"
-      fixed
-      bottom
-      right
-      fab
-      large
-      v-if="btnAction"
-      @click="btnAction=!btnAction"
-      style="padding:25px;  bottom:85px; ">
-      <v-icon>mdi-home</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="orange"
+          elevation="5"
+          to="/main"
+          fixed
+          v-on="on"
+          bottom
+          right
+          fab
+          large
+          v-show="btnAction"
+          @click="btnAction=!btnAction"
+          style="padding:25px;  bottom:85px; ">
+          <v-icon>mdi-home</v-icon>
+        </v-btn>
+      </template>
+      <span>ホームへ</span>
+    </v-tooltip>
 
     <!-- Column button -->
-    <v-btn
-      color="green"
-      elevation="5"
-      to="/users/post/column"
-      fixed
-      bottom
-      right
-      fab
-      large
-      v-if="btnAction"
-      @click="btnAction=!btnAction"
-      style="padding:25px; bottom:155px; ">
-      <v-icon>mdi-note-text-outline</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="green"
+          elevation="5"
+          to="/users/post/column"
+          fixed
+          v-on="on"
+          bottom
+          right
+          fab
+          large
+          v-show="btnAction"
+          @click="btnAction=!btnAction"
+          style="padding:25px; bottom:155px; ">
+          <v-icon>mdi-note-text-outline</v-icon>
+        </v-btn>
+      </template>
+      <span>コラムを書く</span>
+    </v-tooltip>
 
     <!-- Question button  -->
-    <v-btn
-      color="orange"
-      elevation="5"
-      to="/users/post/question"
-      fixed
-      bottom
-      right
-      fab
-      large
-      v-if="btnAction"
-      @click="btnAction=!btnAction"
-      style="padding:25px; bottom:225px;">
-      <v-icon>mdi-comment-question-outline</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="orange"
+          elevation="5"
+          to="/users/post/question"
+          fixed
+          v-on="on"
+          bottom
+          right
+          fab
+          large
+          v-show="btnAction"
+          @click="btnAction=!btnAction"
+          style="padding:25px; bottom:225px;">
+          <v-icon>mdi-comment-question-outline</v-icon>
+        </v-btn>
 
-    <!-- Search button  -->
-    <v-btn
-      color="blue"
-      elevation="5"
-      fixed
-      bottom
-      right
-      fab
-      large
-      v-if="btnAction"
-      style="padding:25px; bottom:295px;"
-      class="search"
-      @click="onClickSearch"
-      >
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+      </template>
+      <span>質問を投稿する</span>
+    </v-tooltip>
 
     <!-- ここからメイン画面の設定： 1. Header, 2.Main, 3.Footer -->
     <!-- Header -->
@@ -114,7 +101,7 @@
       :adminPages="adminPages"/>
 
     <!-- default main -->
-    <v-main :class="{mask:btnAction}">
+    <v-main :class="{mask:btnAction}" >
       <v-container >
         <nuxt />
       </v-container>
@@ -139,7 +126,6 @@ export default {
   },
   data:() => ({
     fixed: false,
-    dialog: false,
     // Post-btnのboolean値で投稿ボタンの出し入れ [true: 出力, false: 隠す(default)]
     btnAction: false,
     page: 1,
@@ -154,14 +140,6 @@ export default {
       {title: '作者ページ', to: '/admins/adminsProfile', icon:'mdi-account-tie',},
     ],
   }),
-  methods: {
-    // 検索機能をポップアップで表示（true:表示、 false:非表示）
-    onClickSearch() {
-      this.btnAction = !this.btnAction
-      this.dialog = !this.dialog
-    }
-  }
-
 }
 </script>
 

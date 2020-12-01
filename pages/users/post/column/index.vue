@@ -1,6 +1,6 @@
 <template>
 <!-- Colum 新規登録Form -->
-  <PostForm @submit="postContents">New Column</PostForm>
+  <PostForm @submit="postContents">新規 コラム</PostForm>
 </template>
 
 <script>

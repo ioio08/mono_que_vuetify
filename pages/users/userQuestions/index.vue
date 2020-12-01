@@ -9,10 +9,12 @@
 import PostList from '@/components/Posts/PostList'
 import { db, storage } from '~/plugins/firebase'
 
-
 export default {
   // ログイン中のみ確認できる用に制御
   middleware : 'authenticated',
+  components: {
+    PostList
+  },
 
   // uidが一致するドキュメントのみを取得する
   // postPath をuserQuestionsに設定
@@ -37,7 +39,6 @@ export default {
 </script>
 
 <style>
-
 .v-card__title {
   text-align: center !important;
 }
@@ -53,5 +54,4 @@ pre {
   letter-spacing: 3px;
   font-weight: normal;
 }
-
 </style>

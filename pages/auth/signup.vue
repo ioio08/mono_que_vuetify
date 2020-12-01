@@ -17,6 +17,7 @@
 <script>
 import Form from "@/components/Users/UserForm";
 import { auth } from '~/plugins/firebase'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
