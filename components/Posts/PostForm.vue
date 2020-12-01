@@ -1,7 +1,7 @@
 <template>
   <v-card style="text-alighn: center">
     <!-- Column, Questionによってタイトル変更 -->
-    <v-card-title><h2><slot/> Post</h2></v-card-title>
+    <v-card-title><h2><slot/></h2></v-card-title>
     <v-divider></v-divider>
     <v-container>
       <v-row justify="center" align="center">
@@ -13,7 +13,7 @@
               <v-text-field
               v-model="newPost.text.author"
               prepend-icon="mdi-account-circle-outline"
-              label="Please write your name"
+              label="名前を入力してください。"
               ></v-text-field>
             </v-card-actions>
 
@@ -22,18 +22,18 @@
               <v-text-field
               v-model="newPost.text.title"
               prepend-icon="mdi-fountain-pen"
-              label="Please write post title"
+              label="投稿のタイトルを決めてください。"
               ></v-text-field>
             </v-card-actions>
 
-            <!-- TODO Post: タグ -->
+            <!-- Post: タグ -->
             <v-card-actions  style="width: 500px !important">
               <v-text-field
               v-model="tags"
-              prepend-icon="mdi-fountain-pen"
-              label="Please write post tag"
+              prepend-icon="mdi-music-accidental-sharp"
+              label="タグ付けができます。"
               ></v-text-field>
-              <v-btn style="margin-left:20px" @click="pushTags">+tag</v-btn>
+              <v-btn style="margin-left:20px" @click="pushTags">＋ タグを追加</v-btn>
             </v-card-actions>
 
         <!--   v-if="newPost.tags.length > 0" -->
@@ -75,11 +75,11 @@
             <v-card-actions>
               <v-textarea
               v-model="newPost.text.content"
-              label="Please write body contents"
+              label="本文を入力してください。"
               outlined
               auto-grow
-              rows="30"
-              row-height="30"
+              rows="25"
+              row-height="25"
               ></v-textarea>
             </v-card-actions>
 

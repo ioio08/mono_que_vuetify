@@ -29,7 +29,10 @@ a.link-white {
 
 }
 
-.v-btn::before {
-  background-color: transparent !important;
+.v-btn {
+
+  &::before {
+    background-color: transparent !important;
+  }
 }
 

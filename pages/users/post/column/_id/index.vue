@@ -3,7 +3,7 @@
   <PostForm
   :post-data="loadedColumnData"
   :post-path="postPath"
-  @submit="postContents">Edit Column</PostForm>
+  @submit="postContents">コラム 編集</PostForm>
 </template>
 
 <script>

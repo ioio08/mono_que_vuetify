@@ -22,7 +22,6 @@ export default (context) => {
         resolve(users)
       } else {
         // ** ログインしていないユーザーもしくは認証が切れている
-        console.log("not login");
         let authStatus = false
         store.commit('auth/setAuthStatus', authStatus)
         resolve(false)

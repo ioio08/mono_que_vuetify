@@ -3,7 +3,7 @@
   <PostForm
   :post-data="loadeQuestionData"
   :post-path="postPath"
-  @submit="postContents">Edit Question</PostForm>
+  @submit="postContents">質問 編集</PostForm>
 
 </template>
 

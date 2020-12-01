@@ -14,7 +14,7 @@
 
           <!-- Form submitは親コンポーネントのsubmitによって変わる -->
           <!-- $emitで呼び出して実行 -->
-          <v-form @submit.prevent="onClick">
+          <v-form @submit.prevent="onClick"  lazy-validation>
             <v-row justify="start" justify-xs="center" align="center" >
 
               <!-- Email input -->
@@ -23,6 +23,8 @@
                   type="email"
                   v-model="users.email"
                   prepend-icon="mdi-email"
+                  required
+                  :rules="emailRules"
                   label="Email">
                 </v-text-field>
                 </v-col>
@@ -64,7 +66,13 @@ export default {
     users: {
       email:'',
       password:'',
-    }
+    },
+    // validation設定
+    valid: true,
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+/.test(v) || 'E-mail を確認してください。例）@の入れ忘れや.(ドット)位置など。'
+    ],
   }),
   methods: {
     onClick() {
