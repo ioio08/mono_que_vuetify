@@ -138,7 +138,7 @@
         <v-card width="280px">
           <v-container>
             <v-card-title>
-              <h4 @click="onAccount('/users/userProfile')" style="cursor:pointer">プロフィール</h4>
+              <h4 @click="onAccount('/users/profile')" style="cursor:pointer">プロフィール</h4>
             </v-card-title>
             <v-card-text >
               <p>あなたの投稿や、後で見たい投稿を確認できます。</p>
@@ -223,15 +223,15 @@ export default {
       { title: 'ログイン', to: '/auth/login' , text:'すでにアカウトをお持ちの方は、ログインしてください。'},
     ],
     userLogins: [
-      { title: 'プロフィール', text:'あなたのプロフィールページです。', event:`onAccount(/users/userProfile)` },
+      { title: 'プロフィール', text:'あなたのプロフィールページです。', event:`onAccount(/users/profile)` },
       { title: 'ログアウト', text:'ログアウトできます。Myページ以外はそのままご覧になれます。',event:`logout`},
     ],
     // Usersデータ
     userPages: [
-      {title: 'プロフィール', to: '/users/userProfile', icon:'mdi-card-account-details-outline',},
+      {title: 'プロフィール', to: '/users/profile', icon:'mdi-card-account-details-outline',},
       {title: 'あなたのコラム', to: '/users/userColumns', icon:'mdi-note-text-outline',},
       {title: 'あなたの質問', to: '/users/userQuestions', icon:'mdi-comment-question-outline',},
-      {title: '後で読む記事', to: '/users/userStar', icon:'mdi-star-outline',},
+      // {title: '後で読む記事', to: '/users/userStar', icon:'mdi-star-outline',},
     ],
     isDownTab: true,
   }),
@@ -331,8 +331,8 @@ header {
 h4 {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.466);
-  padding: 5px 10px;
-  border-radius: 30px 10px;
+  padding: 8px;
+  border-radius: 25px 10px ;
 
   &:hover {
     opacity: .2;

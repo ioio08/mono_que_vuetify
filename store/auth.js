@@ -1,5 +1,6 @@
+import { firestoreAction } from 'vuexfire'
 import firebase from "@firebase/app"
-import { auth } from '~/plugins/firebase.js'
+import { db, auth } from '~/plugins/firebase.js'
 
 // login中のuser情報を保持するState
 // user:{ user.email , user.uid }
@@ -29,11 +30,11 @@ export const actions = {
   signUp({ commit }, { email, password }) {
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       auth.createUserWithEmailAndPassword(email, password)
-      .then(data => {
+      .then(doc => {
         // 取得したデータからuserのemail, uidを取得
         const user = {}
-        user.email = data.user.email
-        user.uid = data.user.uid
+        user.email = doc.user.email
+        user.uid = doc.user.uid
 
         // ログイン状態をtrue, falseで管理
         // true: ログイン中 , false: 未ログイン
@@ -42,7 +43,7 @@ export const actions = {
         // errorMessageの初期化
         let errorMessage = ''
 
-        this.$router.push('/users/userProfile')
+        this.$router.push('/main')
         commit('setUser', user )
         commit('setAuthStatus', authStatus )
         commit('setErrorMessage', errorMessage)
@@ -60,11 +61,33 @@ export const actions = {
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
         auth.signInWithEmailAndPassword(email, password)
-          .then(data => {
+          .then(doc => {
           // 取得したデータからuserのemail, uidを取得
           const user = {}
-          user.email = data.user.email
-          user.uid = data.user.uid
+          user.email = doc.user.email
+          user.uid = doc.user.uid
+
+          // アプリにuser情報がすでに保存されているユーザーか判別する関数
+          // 初回：userをusersコレクションに追加
+          // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+
+          // usersコレクションのインタスタンス作成
+          const userRef = db.collection('users').doc(user.uid)
+          userRef.get().then(doc => {
+
+          // 初めてのログインの場合
+          if (!doc.exists) {
+            userRef.set({
+              name: 'ナナシさん',
+              penName: 'ナナシさん',
+              email: user.email,
+              uid: user.uid,
+              image: '/images/smile.png',
+            })
+            .catch(error => {
+              console.log(`Error userData setting: ${error}`);
+            });
+          }})
 
           // ログイン状態をtrue, falseで管理
           // true: ログイン中 , false: 未ログイン
@@ -73,7 +96,7 @@ export const actions = {
           // errorMessageの初期化
           let errorMessage = ''
 
-          this.$router.push('/users/userProfile')
+          this.$router.push('/main')
           commit('setUser', user )
           commit('setAuthStatus', authStatus )
           commit('setErrorMessage', errorMessage)
@@ -90,10 +113,35 @@ export const actions = {
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(() => {
       auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then(data => {
+      .then(doc => {
         const user = {}
-        user.email = data.user.email
-        user.uid = data.user.uid
+        user.name = doc.user.displayName
+        user.penName = doc.user.displayName
+        user.email = doc.user.email
+        user.uid = doc.user.uid
+        user.image = doc.user.photoURL
+
+        // アプリにuser情報がすでに保存されているユーザーか判別する関数
+        // 初回：userをusersコレクションに追加
+        // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+
+        // usersコレクションのインタスタンス作成
+        const userRef = db.collection('users').doc(user.uid)
+        userRef.get().then(doc => {
+
+          // 初めてのログインの場合
+          if (!doc.exists) {
+            userRef.set({
+              name: user.name,
+              penName: user.name,
+              email: user.email,
+              uid: user.uid,
+              image: user.image,
+            })
+            .catch(error => {
+              console.log(`Error userData setting: ${error}`);
+            });
+          }})
 
         // ログイン状態をtrue, falseで管理
         // true: ログイン中 , false: 未ログイン
@@ -102,10 +150,10 @@ export const actions = {
         // errorMessageの初期化
         let errorMessage = ''
 
-        this.$router.push('/users/userProfile')
         commit('setUser', user )
         commit('setAuthStatus', authStatus )
         commit('setErrorMessage', errorMessage)
+        this.$router.push('/main')
       })
       .catch(() => {
         let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
@@ -113,7 +161,6 @@ export const actions = {
       })
     })
   },
-
 
   // サインアウト処理
   signOut() {
@@ -124,7 +171,7 @@ export const actions = {
       commit('setUser', user )
       commit('setAuthStatus', authStatus )
     })
-  }
+  },
 }
 
 export const getters = {

@@ -7,7 +7,7 @@
 
 <script>
 import PostList from '@/components/Posts/PostList'
-import { db, storage } from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 
 export default {
   // ログイン中のみ確認できる用に制御
