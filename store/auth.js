@@ -26,6 +26,10 @@ export const mutations = {
 }
 
 export const actions = {
+  setUsers({commit}, payload) {
+
+  },
+
   // Mailでの新規ユーザー登録, ユーザー情報取得
   signUp({ commit }, { email, password }) {
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
@@ -136,7 +140,10 @@ export const actions = {
               penName: user.name,
               email: user.email,
               uid: user.uid,
-              image: user.image,
+              image: {
+                name: user.image,
+                src: user.image,
+              }
             })
             .catch(error => {
               console.log(`Error userData setting: ${error}`);

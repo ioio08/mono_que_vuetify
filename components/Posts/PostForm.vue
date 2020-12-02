@@ -8,15 +8,6 @@
         <v-col cols="12" md="10" sm="8" >
           <v-form @submit.prevent="onPost">
 
-            <!-- Post: 著者名 -->
-            <v-card-actions >
-              <v-text-field
-              v-model="newPost.text.author"
-              prepend-icon="mdi-account-circle-outline"
-              label="名前を入力してください。"
-              ></v-text-field>
-            </v-card-actions>
-
             <!-- Post: タイトル -->
             <v-card-actions >
               <v-text-field
@@ -113,6 +104,10 @@ export default {
       type: String,
       required: false
     },
+    userDatas: {
+      type: Object,
+      required: false
+    },
   },
   data() {
     return {
@@ -199,9 +194,8 @@ export default {
     // Form送信で親コンポーネントのpostContentsメソッド発火
     onPost() {
       // Save the post
-      // uid取得
-      let user = this.$store.getters['auth/user']
-      this.newPost.text.uid = user.uid
+      this.newPost.text.uid = this.userDatas.uid
+      this.newPost.text.author = this.userDatas.penName
 
       // 既存の画像を受け渡す
       this.newPost.image.existName = this.existName

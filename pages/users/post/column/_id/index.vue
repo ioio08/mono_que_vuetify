@@ -3,6 +3,7 @@
   <PostForm
   :post-data="loadedColumnData"
   :post-path="postPath"
+  :user-datas="userDatas"
   @submit="postContents">コラム 編集</PostForm>
 </template>
 
@@ -14,10 +15,20 @@ export default {
   components: {
     PostForm
   },
-  async asyncData({ params }){
+  async asyncData({ params, store }){
+    // ColumnのPostデータを取得
     const loadedColumnData = await db.collection("column").doc(params.id).get().then(doc => doc.data());
 
-    return { loadedColumnData }
+    // ユーザーデータを取得
+    const user = store.getters['auth/user']
+    let userDatas;
+    await db.collection('users').doc(user.uid)
+    .get()
+    .then(doc => {
+      userDatas = doc.data()
+    });
+
+    return { loadedColumnData, userDatas }
   },
   data() {
     return {
