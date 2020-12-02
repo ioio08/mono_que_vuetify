@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12">
         <v-card>
-          <v-form @submit.prevent="editPenName">
+          <v-form @submit.prevent="editProfile">
             <v-row align="center">
               <v-col cols="5">
 
@@ -26,7 +26,7 @@
                   color="primary"
                   depressed
                   :loading="isSelecting"
-                  @click="onButtonClick"
+                  @click="onFileUpload"
                   >
                   <v-icon>mdi-image</v-icon>アップロード
                 </v-btn>
@@ -49,6 +49,7 @@
               </v-col>
               <v-col cols="2">
                 <v-btn type="submit" style="margin-top: 100%;" >変更</v-btn>
+                <v-btn @click="backPage" type="button" style="margin-top: 100%;" >戻る</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -59,11 +60,10 @@
 </template>
 
 <script>
-import { db } from '~/plugins/firebase'
+import { db, storage } from '~/plugins/firebase'
 
 export default {
   middleware : 'authenticated',
-
   async asyncData({ store }){
     const user = store.getters['auth/user']
     let userDatas;
@@ -78,19 +78,15 @@ export default {
   data:() => ({
     // アップロードの有無
       isSelecting: false,
+      fileObject: null,
+      imageName: null,
   }),
 
   methods: {
-    editPenName() {
-      const usersPostRef = db.collection('users').doc(this.userDatas.uid)
-      usersPostRef.set({
-        image :  this.userDatas.image,
-        name: this.userDatas.name,
-        penName: this.userDatas.penName,
-      }, { merge: true })
-      .then( () => { this.$router.push('/users/profile') })
+    backPage() {
+      this.$router.push('/users/profile')
     },
-    onButtonClick() {
+    onFileUpload() {
       this.isSelecting = true
       window.addEventListener('focus', () => {
         this.isSelecting = false
@@ -100,15 +96,59 @@ export default {
     onFileChanged(e) {
       // fileに選択した画像ファイル格納
       const file = e.target.files[0]
+      this.fileObject = file
 
       // オブジェクトのファイルを加工する
       const reader = new FileReader()
       reader.onload = e => {
         this.userDatas.image = e.target.result
+        this.imageName = file.name
       }
       // previewで描画するためにURLを取得
       reader.readAsDataURL(file)
     },
+    async editProfile() {
+      const usersPostRef = db.collection('users').doc(this.userDatas.uid)
+      if(this.fileObject !== null) {
+        let uploadImage = await this.uploadStorage(this.fileObject, this.imageName)
+        await usersPostRef.set({
+          image : {
+            src: uploadImage.src,
+            name:uploadImage.name
+          },
+          name: this.userDatas.name,
+          penName: this.userDatas.penName,
+          email: this.userDatas.email,
+          uid: this.userDatas.uid
+        }, { merge: true })
+        .then( () => { this.$router.push('/users/profile') })
+      } else {
+        await usersPostRef.set({
+          name: this.userDatas.name,
+          penName: this.userDatas.penName,
+          email: this.userDatas.email,
+          uid: this.userDatas.uid
+        }, { merge: true })
+        .then( () => { this.$router.push('/users/profile') })
+      }
+    },
+    uploadStorage(file, name) {
+      const storageRef = storage.ref()
+      return new Promise((resolve, reject) => {
+        storageRef
+        // FireStorage に'images'ディレクトリを作成
+        .child(`images/${name}`)
+        .put(file)
+        .then(snapshot => {
+          snapshot.ref.getDownloadURL().then(url => {
+            resolve({ name: name, src: url })
+          })
+        })
+        .catch(err => {
+          console.log('画像投稿エラー', err)
+        })
+      })
+    }
   }
 
 }
