@@ -16,7 +16,7 @@ export default {
   components: {
     PostForm
   },
-  async asyncData({ params }){
+  async asyncData({ params, store }){
     // QuestionのPostデータを取得
     const loadeQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
 
