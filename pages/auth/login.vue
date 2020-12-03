@@ -1,7 +1,7 @@
 <template>
   <Form @submit="emailLogin">
     <template v-slot:title>
-      <h1>ログイン</h1>
+      ログイン
     </template>
 
     <!-- google認証のslot -->

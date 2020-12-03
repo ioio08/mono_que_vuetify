@@ -1,7 +1,7 @@
 <template>
   <Form @submit="signUp">
     <template v-slot:title>
-      <h1>新規会員登録</h1>
+    新規会員登
     </template>
     <template v-slot:button>
       <v-btn type="submit">登録</v-btn>

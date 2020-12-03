@@ -3,18 +3,17 @@
     <v-col cols="12">
 
       <!-- Components  "Question" "Column" -->
-      <div class="text-center">
+        <!-- Column component -->
+        <PostList
+        :exist-posts="setColumn"
+        :post-path="postColumnPath">コラム</PostList>
+
+        <v-divider style="margin-bottom:5%;"></v-divider>
 
         <!-- Question component -->
         <PostList
         :exist-posts="setQuestion"
         :post-path="postQuestionPath">質問</PostList>
-
-        <!-- Column component -->
-        <PostList
-        :exist-posts="setColumn"
-        :post-path="postColumnPath">コラム</PostList>
-      </div>
 
     </v-col>
   </v-row>
@@ -50,20 +49,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
-// keyword
-.keyword {
-  padding-bottom: 20px;
-}
-
-.v-chip-group {
-  background: rgb(187, 222, 251);
-  padding: 10px 0;
-}
-
-.v-chip {
-  margin: 4px 8px 4px 4px !important;
-}
+<style lang="scss" scoped>
 
 .tab {
   @include tab {

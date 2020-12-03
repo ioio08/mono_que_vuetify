@@ -13,26 +13,51 @@
 //  commons
 //=================================
 
-$white: rgba(230, 227, 227, 0.87);
+// color
+$body-background-color:  #5c5c5c;
+$v-main-background-color:  #e9e9e9;
+$v-card-background-color:   #e9e9e9;
+$hover-menu-background-color:    rgba(214, 214, 214, 0.466);
+$header-background-color:    #5c5c5c;
+$profile-background-color:     #c2c2c2;
+$footer-background-color:    #5c5c5c;
+$preview-title-background-color:  #89c7bfbe;
 
+$v-chip-form-background-color:  rgb(146, 146, 146);
+$v-chip-form-font-color:rgb(233, 233, 233);
+$v-chip-view-background-color:  black;
+$v-chip-view-font-color:#fff;
+
+$main-font-color: rgb(36, 36, 36);
+$header-font-color: rgb(209, 209, 209);
+
+// display
 body {
   word-wrap: break-word;
   overflow-wrap: break-word;
+  background-color: $body-background-color;
 }
 
 a {
   text-decoration: none;
 }
 
-a.link-white {
-  color: $white !important;
-
-}
-
 .v-btn {
-
   &::before {
     background-color: transparent !important;
   }
 }
 
+.theme--light.v-card {
+  color:$header-font-color;
+}
+
+.v-chip-group {
+  padding: 10px 5px;
+}
+
+.theme--light.v-chip:not(.v-chip--active) {
+  margin: 4px 8px 4px 8px !important;
+  color:$v-chip-view-font-color  !important;
+  background-color: $v-chip-view-background-color !important;
+}

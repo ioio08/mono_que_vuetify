@@ -11,9 +11,33 @@
           <span>メニューを閉じる</span>
         </v-tooltip>
 
-        <!-- ここからSideBarコンテンツリスト: 1.Users, 2.Admins, 3. Contents(responsiveでtabサイズから表示) -->
-        <!-- 1.Users : "Profile" "Column" "Question" "Star" : defaultでリストを表示させる(value = true)-->
-        <v-list-group :value="true">
+        <!-- ここからSideBarコンテンツリスト: 1. Contents, 2.Users, 3.Admins,  -->
+
+        <!-- 1. Contents :  "Home" "Question" "Column"  -->
+        <v-list-group :value="true" class="header-nav__pagination">
+          <template v-slot:activator>
+              <v-icon>mdi-apps</v-icon>
+            <v-list-item-title>Contents</v-list-item-title>
+          </template>
+          <v-list-item
+          v-for="contentsPage in contentsPages"
+          :key="contentsPage.title"
+          style=" margin-top: 20px;"
+          >
+            <v-list-item-icon><v-icon>{{ contentsPage.icon }} </v-icon></v-list-item-icon>
+            <v-btn
+              :to="contentsPage.to"
+              text
+              class="font-weight-bold"
+              style="width: 120px;"
+            >
+              {{ contentsPage.title }}
+            </v-btn>
+          </v-list-item>
+        </v-list-group>
+
+        <!-- 2.Users : "Profile" "Column" "Question" "Star" : defaultでリストを表示させる(value = true)-->
+        <v-list-group :value="false">
           <template v-slot:activator>
             <v-icon>mdi-account-circle-outline</v-icon>
             <v-list-item-title>User's</v-list-item-title>
@@ -37,7 +61,7 @@
           </v-list-item>
         </v-list-group>
 
-        <!-- 2. Admins :  "Contact" "Q & A" "About the app" "Admin's pdofile" -->
+        <!-- 3. Admins :  "Contact" "Q & A" "About the app" "Admin's pdofile" -->
         <v-list-group>
           <template v-slot:activator>
               <v-icon>mdi-office-building</v-icon>
@@ -60,33 +84,12 @@
           </v-list-item>
         </v-list-group>
 
-        <!-- 3. Contents :  "Home" "Question" "Column" (tabから表示) -->
-        <v-list-group class="header-nav__pagination">
-          <template v-slot:activator>
-              <v-icon>mdi-apps</v-icon>
-            <v-list-item-title>Contents</v-list-item-title>
-          </template>
-          <v-list-item
-          v-for="contentsPage in contentsPages"
-          :key="contentsPage.title"
-          style=" margin-top: 20px;"
-          >
-            <v-list-item-icon><v-icon>{{ contentsPage.icon }} </v-icon></v-list-item-icon>
-            <v-btn
-              :to="contentsPage.to"
-              text
-              class="font-weight-bold"
-              style="width: 120px;"
-            >
-              {{ contentsPage.title }}
-            </v-btn>
-          </v-list-item>
-        </v-list-group>
+
       </v-list>
     </v-navigation-drawer>
 
     <!-- ＝＝＝＝＝＝＝ヘッダー上部＝＝＝＝＝＝＝＝＝＝ -->
-    <v-app-bar elevation="1" app clipped-left hide-on-scroll >
+    <v-app-bar elevation="1" app clipped-left flat>
 
       <!-- header-left -->
       <!-- SideBar "Open SideBar Contents" -->
@@ -99,17 +102,15 @@
       <v-spacer></v-spacer>
 
       <!-- Title : ClickでHomeにページ遷移 -->
-      <v-tooltip right>
+      <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-toolbar-title v-on="on">
-            <nuxt-link
-              to="/main"
-              class="link-white font-weight-bold ">
+            <nuxt-link to="/">
               {{ title }}
             </nuxt-link>
           </v-toolbar-title>
         </template>
-        <span>ホームへ戻る</span>
+        <span>ホームへ</span>
       </v-tooltip>
       <v-spacer></v-spacer>
 
@@ -135,23 +136,23 @@
           </v-avatar>
           </v-btn>
         </template>
-        <v-card width="280px">
+        <v-card width="280px" >
           <v-container>
             <v-card-title>
               <h4 @click="onAccount('/users/profile')" style="cursor:pointer">プロフィール</h4>
             </v-card-title>
             <v-card-text >
-              <p>あなたの投稿や、後で見たい投稿を確認できます。</p>
+              <p>あなたのプロフィールや投稿を確認することができます。</p>
             </v-card-text>
           </v-container>
         </v-card>
-        <v-card width="280px">
+        <v-card width="280px" >
           <v-container>
             <v-card-title>
               <h4 @click="logout" style="cursor:pointer">ログアウト</h4>
             </v-card-title>
             <v-card-text >
-              <p>ログアウトできます。<br> ログアウトしても投稿を見ることができます。</p>
+              <p>ログアウトしても、一般の投稿は継続して見られます。</p>
             </v-card-text>
           </v-container>
         </v-card>
@@ -166,21 +167,16 @@
       offset-y
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            text
-            v-bind="attrs"
-            v-on="on"
-          >
-          | アカウント |
-          </v-btn>
+          <div class="account-menu" v-bind="attrs"
+            v-on="on">|  アカウント  |</div>
         </template>
         <v-card width="280px">
           <v-container>
             <v-card-title>
-              <h4>新規登録・ログイン</h4>
+              <h3>新規登録・ログイン</h3>
             </v-card-title>
             <v-card-text>
-              <p>新規登録、またはログインをすることで投稿が利用できます。<br> 登録されなくても、質問やコラムを見ることができます。</p>
+              <p>新規登録・ログインをすることで投稿が出来るようになります。<br> 登録しなくても、質問やコラムの閲覧は可能です。</p>
             </v-card-text>
           </v-container>
           <v-container v-for="(item, i) in userSigns" :key="i" >
@@ -213,7 +209,7 @@ export default {
 
     // Contentsのデータ(Headerタブ、SideBarメニューの２カ所で使用)
     contentsPages: [
-      { icon: 'mdi-home', title: 'ホーム', to: '/main'},
+      { icon: 'mdi-home', title: 'ホーム', to: '/'},
       { icon: 'mdi-help-box', title: '質問', to: '/contents/questions'},
       { icon: 'mdi-note-text-outline', title: 'コラム', to: '/contents/columns'},
     ],
@@ -259,7 +255,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 //===============  Header Components  ======================
 
@@ -269,23 +265,26 @@ export default {
 // @include  $pc:1023px;  パソコン
 
 // SideBar
-.v-list-group__header  {
-  text-align: center;
-  margin-top: 15px;
+.v-list-group  {
+  // text-align: center;
+  margin-bottom: 5%;
 }
-.v-list-item__title {
+
+.v-list-item__title,.v-application .primary--text {
   font-size: 1.2rem !important;
+  margin-left: 6%;
+  color: $header-font-color !important;
 }
 
-
-// Headerのmoushover
-.downTabs {
-  top: 50%;
-}
 
 // Header
 header {
-  opacity: .8;
+  opacity: .8 !important;
+  background-color:$header-background-color !important;
+
+  &:hover {
+    opacity: 1 !important;
+  }
 
   //======  ツールバー上部  ======
   .v-toolbar__content {
@@ -308,31 +307,34 @@ header {
   //  ヘッダータイトル
   .v-toolbar__title {
     font-size: 2rem;
-    margin-left: 6%;
+    margin-left: 5%;
 
     @include tab {
       margin: 0 !important;
     }
-  }
 
-  //======  ツールバー下部  ======
-  //  ヘッダータブ
-  .v-toolbar__extension {
-    top: -50%;
-    opacity: 0;
-    height: 65px !important;
-    @include tab {
-      display: none !important;
-      transition: 0.6s;
-    }
   }
+}
+nav {
+  background-color:$header-background-color !important;
+  color: $header-font-color !important;
+
+}
+
+.v-application a, .theme--light.v-icon, .account-menu{
+  color: $header-font-color !important;
+}
+
+.theme--light.v-card{
+  background-color: $profile-background-color !important;
+  color:$main-font-color !important;
 }
 
 h4 {
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.466);
-  padding: 8px;
-  border-radius: 25px 10px ;
+  background-color: $v-main-background-color;
+  padding: 10px 15px;
+  border-radius: 20px;
 
   &:hover {
     opacity: .2;
@@ -342,7 +344,7 @@ h4 {
 .v-list-item {
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.459);
+    background-color: $hover-menu-background-color;
   }
 }
 </style>
