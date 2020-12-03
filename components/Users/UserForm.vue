@@ -1,14 +1,14 @@
 <template>
 
   <!-- ユーザーの新規登録、ログインに使うコンポーネント -->
-  <v-card>
+  <div>
     <v-container >
       <v-row justify="start" align="center">
         <v-col cols="12">
 
           <!-- Title: 1.新規登録, 2.ログイン -->
           <v-card-text style="text-align: center">
-            <slot name="title"/>
+            <h1><slot name="title"/></h1>
           </v-card-text>
           <v-divider></v-divider>
 
@@ -56,7 +56,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -87,9 +87,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h1 {
+  padding: 3% 0;
+}
 .v-card {
   width: 80%;
-  margin: 0 auto 5%;
+  margin: 3% auto ;
+
   @include mb {
     width: 95%;
   }

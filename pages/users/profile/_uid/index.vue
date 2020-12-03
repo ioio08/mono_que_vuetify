@@ -23,12 +23,11 @@
                 </v-card-actions>
                 <v-btn
                   style="margin:5px 30%"
-                  color="primary"
                   depressed
                   :loading="isSelecting"
                   @click="onFileUpload"
                   >
-                  <v-icon>mdi-image</v-icon>アップロード
+                  <v-icon>mdi-image</v-icon>画像を変更する
                 </v-btn>
               </v-col>
               <v-col cols="5">
@@ -155,6 +154,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.theme--light.v-card {
+  background-color: $profile-background-color !important;
+  color:$main-font-color;
+}
+
+.v-avatar {
+  margin: 0 auto;
+  display: block;
+}
 
 .v-card__text,
 .v-card__actions {

@@ -5,11 +5,9 @@
         <v-card>
           <v-row align="center">
             <v-col cols="4">
-              <v-card-actions>
-                <v-avatar size="200">
-                  <v-img :src="userDatas.image ? userDatas.image : '/images/smile.png'" ></v-img>
-                </v-avatar>
-              </v-card-actions>
+              <v-avatar size="200">
+                <v-img :src="userDatas.image ? userDatas.image : '/images/smile.png'" ></v-img>
+              </v-avatar>
             </v-col>
             <v-col cols="8">
               <v-row>
@@ -47,7 +45,7 @@
           <nuxt-link to="/users/post/column" >
             <v-img src="/images/mable.jpg" cover style="height: 100%">
               <v-card-title >
-                <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
+                <v-sheet style="text-align:center; padding:5px; width: 100%">
                   <h3>新しくコラムを書く</h3>
                 </v-sheet>
               </v-card-title>
@@ -60,7 +58,7 @@
           <nuxt-link to="/users/post/question" >
             <v-img src="/images/product_2.jpeg" cover style="height: 100%">
               <v-card-title >
-                <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
+                <v-sheet style="text-align:center; padding:5px; width: 100%">
                   <h3>新しく質問する</h3>
                 </v-sheet>
               </v-card-title>
@@ -73,7 +71,7 @@
           <nuxt-link to="/users/userColumns" >
             <v-img src="/images/cafe.jpeg" cover style="height: 100%">
               <v-card-title >
-                <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
+                <v-sheet style="text-align:center; padding:5px; width: 100%">
                   <h3>投稿したコラムを見返す</h3>
                 </v-sheet>
               </v-card-title>
@@ -86,7 +84,7 @@
           <nuxt-link to="/users/userQuestions" >
             <v-img src="/images/card.jpeg" cover style="height: 100%">
               <v-card-title >
-                <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
+                <v-sheet style="text-align:center; padding:5px; width: 100%">
                   <h3>投稿した質問を見返す</h3>
                 </v-sheet>
               </v-card-title>
@@ -150,8 +148,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-image {
 
+.theme--light.v-card {
+  background-color: $profile-background-color ;
+  color:$main-font-color;
+}
+
+
+.v-avatar {
+  margin: 0 auto;
+  display: block;
+}
+
+.v-image {
   &:hover {
     box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .7);
     transform: scale(1.01) ;
@@ -166,6 +175,6 @@ export default {
         transform: scale(1.2) ;
       }
   }
-
 }
+
 </style>

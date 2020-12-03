@@ -1,31 +1,34 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12">
-      <v-card style="background-color: #C5CAE9">
-        <v-card-title class="headline" style="color: yellow">
-
+      <v-sheet>
+        <v-card-text class="text-center">
         <!-- Postのタイトル挿入場所 -->
-        <slot />
-        </v-card-title>
-        <v-row>
-          <v-col cols="6">
+        <h1> <slot /> </h1>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-row v-show="getSixPosts.length > 0">
+          <v-spacer></v-spacer>
+          <v-col cols="4">
             <v-text-field
-                style="padding-top:15px"
-                v-model="contentKeyword"
-                label="文章で検索"
-                type="text">
+              style="padding-top:15px"
+              v-model="contentKeyword"
+              label="文章で検索"
+              type="text">
             </v-text-field>
           </v-col>
-          <v-col cols="6">
+          <v-spacer></v-spacer>
+          <v-col cols="4">
             <v-text-field
-                style="padding-top:15px"
-                v-model="tagKeyword"
-                label="タグで検索"
-                type="text">
+              style="padding-top:15px"
+              v-model="tagKeyword"
+              label="タグで検索"
+              type="text">
             </v-text-field>
           </v-col>
+          <v-spacer></v-spacer>
         </v-row>
-        <v-container v-if="getSixPosts.length > 0" style="background-color: #fff">
+        <v-container v-show="getSixPosts.length > 0" >
           <v-row align="center">
 
             <!-- PostDataのリストレンダリング -->
@@ -47,26 +50,24 @@
         </v-container>
 
         <!-- ページネーション -->
-        <v-card-actions v-if="existPosts.length > 0">
-          <div class="text-center">
-            <v-pagination v-model="page" :length="pageLength"></v-pagination>
-          </div>
+        <v-card-actions v-show="existPosts.length > 0">
+          <v-pagination color="grey darken-2" v-model="page" :length="pageLength"></v-pagination>
         </v-card-actions>
 
         <!-- 何も投稿がない場合に表示 -->
-        <v-row justify="center" align="center" v-else>
-          <v-col cols="12" xs="10" sm="10" md="10">
-            <v-card>
-              <v-card-text>
-              <h2>
-                何も投稿がありません<br><br>
-                どんどん投稿していきましょう！
+        <v-row justify="center" align="center" v-if="existPosts.length === 0">
+          <v-col cols="10" >
+            <div>
+              <v-card-text style="display: flex; justify-content:center">
+              <h2 >
+                今はまだ、何も投稿がありません。<br><br>
+                あなたの身近な「モノ」について投稿してみませんか？
               </h2>
               </v-card-text>
-            </v-card>
+            </div>
           </v-col>
         </v-row>
-      </v-card>
+      </v-sheet>
     </v-col>
   </v-row>
 </template>
@@ -166,10 +167,18 @@ export default {
 }
 </script>
 
-
-<style lang="scss">
-.v-card__actions {
-  justify-content: center;
+<style lang="scss" scoped>
+h1 {
+  margin-top: 3%;
 }
 
+.v-sheet {
+  background:$v-main-background-color;
+  margin-bottom: 13%;
+}
+
+// ページネーションの配置設定
+.v-card__actions {
+  justify-content: center ;
+}
 </style>

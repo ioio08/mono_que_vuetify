@@ -42,18 +42,16 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 //  ブレイクポイント  max-width で設定
 // @include  $mb:559px;   モバイル
 // @include $tab:959px;  タブレット
 // @include  $pc:1023px;  パソコン
 
-
-
 //===============  footer  =======================
 
-footer {
-
+.theme--light.v-card {
+  background-color: $footer-background-color !important;
 }
 
 

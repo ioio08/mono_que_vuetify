@@ -40,6 +40,28 @@ export const actions = {
         user.email = doc.user.email
         user.uid = doc.user.uid
 
+        // アプリにuser情報がすでに保存されているユーザーか判別する関数
+          // 初回：userをusersコレクションに追加
+          // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+
+          // usersコレクションのインタスタンス作成
+          const userRef = db.collection('users').doc(user.uid)
+          userRef.get().then(doc => {
+
+          // 初めてのログインの場合
+          if (!doc.exists) {
+            userRef.set({
+              name: 'ナナシさん',
+              penName: 'ナナシさん',
+              email: user.email,
+              uid: user.uid,
+              image: '/images/smile.png',
+            })
+            .catch(error => {
+              console.log(`Error userData setting: ${error}`);
+            });
+          }})
+
         // ログイン状態をtrue, falseで管理
         // true: ログイン中 , false: 未ログイン
         let authStatus = true
@@ -47,7 +69,7 @@ export const actions = {
         // errorMessageの初期化
         let errorMessage = ''
 
-        this.$router.push('/main')
+        this.$router.push('/')
         commit('setUser', user )
         commit('setAuthStatus', authStatus )
         commit('setErrorMessage', errorMessage)
@@ -100,7 +122,7 @@ export const actions = {
           // errorMessageの初期化
           let errorMessage = ''
 
-          this.$router.push('/main')
+          this.$router.push('/')
           commit('setUser', user )
           commit('setAuthStatus', authStatus )
           commit('setErrorMessage', errorMessage)
@@ -160,7 +182,7 @@ export const actions = {
         commit('setUser', user )
         commit('setAuthStatus', authStatus )
         commit('setErrorMessage', errorMessage)
-        this.$router.push('/main')
+        this.$router.push('/')
       })
       .catch(() => {
         let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
@@ -174,7 +196,7 @@ export const actions = {
     return auth.signOut().then(() => {
       const user = null
       let authStatus = false
-      this.$router.push('/main')
+      this.$router.push('/')
       commit('setUser', user )
       commit('setAuthStatus', authStatus )
     })

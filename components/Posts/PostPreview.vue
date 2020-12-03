@@ -6,7 +6,7 @@
     <nuxt-link :to="postPath + existPost.text.docId">
       <v-img :src="existPost.image.src" cover style="height: 100%">
         <v-card-title >
-          <v-sheet style="text-align:center;background-color: rgba(75, 100, 161, 0.8); padding:5px; width: 100%">
+          <v-sheet style="text-align:center; padding:5px; width: 100%">
           {{ existPost.text.title }}
           </v-sheet>
         </v-card-title>
@@ -33,6 +33,11 @@
 <style lang="scss" scoped>
 a {
   text-decoration: none;
+}
+
+.v-sheet {
+  background-color: $preview-title-background-color;
+  color: $main-font-color;
 }
 
 .v-image {

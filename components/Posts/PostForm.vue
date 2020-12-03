@@ -1,11 +1,11 @@
 <template>
-  <v-card style="text-alighn: center">
+  <div style="text-alighn: center">
+    <v-container>
     <!-- Column, Questionによってタイトル変更 -->
     <v-card-title><h2><slot/></h2></v-card-title>
     <v-divider></v-divider>
-    <v-container>
-      <v-row justify="center" align="center">
-        <v-col cols="12" md="10" sm="8" >
+      <v-row  align="center">
+        <v-col cols="10">
           <v-form @submit.prevent="onPost">
 
             <!-- Post: タイトル -->
@@ -27,20 +27,22 @@
               <v-btn style="margin-left:20px" @click="pushTags">＋ タグを追加</v-btn>
             </v-card-actions>
 
-        <!--   v-if="newPost.tags.length > 0" -->
+            <!-- v-if="newPost.tags.length > 0" -->
             <v-chip-group column>
               <v-chip
               v-for="(tag, i) in newPost.tags"
               :key="i"
-              >{{ "#" + " " + tag }}
-                <span @click="deleteTags(i)">[ x ]</span>
+              >{{ tag }}
+                <v-icon right @click="deleteTags(i)">
+                  mdi-close-circle
+                </v-icon>
+                <!-- <span @click="deleteTags(i)"> x </span> -->
               </v-chip>
             </v-chip-group>
 
             <!-- Post画像: upload -->
             <v-card-actions >
               <v-btn
-              color="primary"
               depressed
               :loading="isSelecting"
               @click="onButtonClick"
@@ -76,7 +78,7 @@
 
             <v-card-actions>
               <!-- submit: onPost()メソッド -->
-              <v-btn color="primary" type="submit">投稿</v-btn>
+              <v-btn type="submit">投稿</v-btn>
 
               <!-- click: onCancel()メソッド -->
               <v-btn @click="onCancel">戻る</v-btn>
@@ -86,7 +88,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -207,8 +209,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-chip-group {
-  background: none;
+h2 {
+  padding: 2% 0;
+  color:$main-font-color;
+}
+
+.v-btn {
+  margin-right: 2%;
+}
+
+.theme--light.v-chip:not(.v-chip--active) {
+  margin: 4px 8px 4px 8px !important;
+  color:$v-chip-form-font-color  !important;
+  background-color: $v-chip-form-background-color !important;
+
+  .theme--light.v-icon {
+    color:$v-chip-form-font-color  !important;
+  }
 }
 
 </style>

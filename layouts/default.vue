@@ -1,5 +1,5 @@
 <template>
-  <v-app dark >
+  <v-app >
 
     <!-- Action buttons of post function  fixed in the lower right coner   -->
     <!-- PC ver -->
@@ -7,7 +7,6 @@
     <v-tooltip left >
       <template v-slot:activator="{ on }">
         <v-btn
-        color="indigo"
         elevation="5"
         v-on="on"
         fixed
@@ -29,9 +28,8 @@
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <v-btn
-          color="orange"
           elevation="5"
-          to="/main"
+          to="/"
           fixed
           v-on="on"
           bottom
@@ -51,7 +49,6 @@
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <v-btn
-          color="green"
           elevation="5"
           to="/users/post/column"
           fixed
@@ -73,7 +70,6 @@
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <v-btn
-          color="orange"
           elevation="5"
           to="/users/post/question"
           fixed
@@ -129,7 +125,7 @@ export default {
     // Post-btnのboolean値で投稿ボタンの出し入れ [true: 出力, false: 隠す(default)]
     btnAction: false,
     page: 1,
-    title: 'MONO-QUE',
+    title: 'MONO-GATARI',
     message: '',
 
     // Header, Footerで利用
@@ -175,6 +171,7 @@ export default {
 }
 
 main {
+  background: $v-main-background-color;
   @include tab {
     padding: 0 !important;
   }
@@ -183,7 +180,7 @@ main {
 // btnActionについて
 // btnActionでメイン画面を薄いマスクで覆い隠す
 .mask {
-  opacity: 0.5;
+  opacity: .1;
 }
 
 // btnAction search
