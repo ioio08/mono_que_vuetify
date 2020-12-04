@@ -17,7 +17,7 @@
         <v-list-group :value="true" class="header-nav__pagination">
           <template v-slot:activator>
               <v-icon>mdi-apps</v-icon>
-            <v-list-item-title>Contents</v-list-item-title>
+            <v-list-item-title>コンテンツ</v-list-item-title>
           </template>
           <v-list-item
           v-for="contentsPage in contentsPages"
@@ -40,7 +40,7 @@
         <v-list-group :value="false">
           <template v-slot:activator>
             <v-icon>mdi-account-circle-outline</v-icon>
-            <v-list-item-title>User's</v-list-item-title>
+            <v-list-item-title>ユーザー</v-list-item-title>
           </template>
 
           <!-- Usersのリストレンダリング -->
@@ -65,7 +65,7 @@
         <v-list-group>
           <template v-slot:activator>
               <v-icon>mdi-office-building</v-icon>
-            <v-list-item-title>Admin 's</v-list-item-title>
+            <v-list-item-title>管理者</v-list-item-title>
           </template>
           <v-list-item
           v-for="adminPage in adminPages"
@@ -209,8 +209,8 @@ export default {
     // Contentsのデータ(Headerタブ、SideBarメニューの２カ所で使用)
     contentsPages: [
       { icon: 'mdi-home', title: 'ホーム', to: '/'},
-      { icon: 'mdi-help-box', title: '質問', to: '/contents/questions'},
-      { icon: 'mdi-note-text-outline', title: 'コラム', to: '/contents/columns'},
+      { icon: 'mdi-help-box', title: '質問一覧', to: '/contents/questions'},
+      { icon: 'mdi-note-text-outline', title: 'コラム一覧', to: '/contents/columns'},
     ],
     // sign in, loginの制御データ
     userSigns: [
@@ -270,7 +270,7 @@ export default {
 }
 
 .v-list-item__title,.v-application .primary--text {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
   margin-left: 6%;
   color: $header-font-color !important;
 }
@@ -306,7 +306,7 @@ header {
   //  ヘッダータイトル
   .v-toolbar__title {
     font-size: 2rem;
-    margin-left: 5%;
+    margin-left: 3.5%;
 
     @include tab {
       margin: 0 !important;

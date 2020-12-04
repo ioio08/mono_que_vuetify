@@ -7,6 +7,7 @@
     <v-tooltip left >
       <template v-slot:activator="{ on }">
         <v-btn
+        :color="btnColor"
         elevation="5"
         v-on="on"
         fixed
@@ -16,8 +17,8 @@
         large
         @click="btnAction=!btnAction"
         style="padding:25px;">
-          <v-icon v-if="btnAction">mdi-close</v-icon>
-          <v-icon v-else>mdi-apps</v-icon>
+          <v-icon color="white" v-if="btnAction">mdi-close</v-icon>
+          <v-icon color="white" v-else>mdi-apps</v-icon>
         </v-btn>
       </template>
         <span v-if="btnAction">閉じる</span>
@@ -49,6 +50,7 @@
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <v-btn
+
           elevation="5"
           to="/users/post/column"
           fixed
@@ -63,7 +65,7 @@
           <v-icon>mdi-note-text-outline</v-icon>
         </v-btn>
       </template>
-      <span>コラムを書く</span>
+      <span>コラムを投稿する</span>
     </v-tooltip>
 
     <!-- Question button  -->
@@ -124,8 +126,9 @@ export default {
     fixed: false,
     // Post-btnのboolean値で投稿ボタンの出し入れ [true: 出力, false: 隠す(default)]
     btnAction: false,
+    btnColor:'#757575',
     page: 1,
-    title: 'MONO-GATARI',
+    title: 'M O N O D Y',
     message: '',
 
     // Header, Footerで利用
