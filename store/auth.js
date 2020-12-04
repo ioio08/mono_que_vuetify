@@ -7,6 +7,7 @@ import { db, auth } from '~/plugins/firebase.js'
 // userStatus: true or false
 export const state = () => ({
   user: null,
+  userImage:null,
   authStatus: false,
   errorMessage: '  ',
 })
@@ -14,6 +15,10 @@ export const state = () => ({
 export const mutations = {
   setUser(state, payload) {
     state.user = payload
+  },
+
+  setUserImage(state, payload) {
+    state.userImage = payload
   },
 
   setAuthStatus(state, payload) {
@@ -26,10 +31,6 @@ export const mutations = {
 }
 
 export const actions = {
-  setUsers({commit}, payload) {
-
-  },
-
   // Mailでの新規ユーザー登録, ユーザー情報取得
   signUp({ commit }, { email, password }) {
     return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
@@ -206,6 +207,9 @@ export const actions = {
 export const getters = {
   user(state) {
     return state.user
+  },
+  userImage(state) {
+    return state.userImage
   },
   authStatus(state) {
     return state.authStatus
