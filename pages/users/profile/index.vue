@@ -16,7 +16,8 @@
                     <h3>名前：{{ userDatas.name ? userDatas.name : 'ナナシさん' }} </h3>
                   </v-card-text>
                   <v-card-text>
-                    <h3>ペンネーム：{{ userDatas.penName ? userDatas.penName : '' }}</h3>
+                    <h3>ペンネーム：{{ userDatas.penName ? userDatas.penName : 'ナナシさん' }}</h3>
+                    <p style="margin-bottom: 0; margin-top:2%;">※ ペンネームは投稿時に掲載される名前です。</p>
                   </v-card-text>
                   <v-card-text>
                     <h3>Email：{{ userDatas.email ? userDatas.email : 'no Email' }}</h3>
