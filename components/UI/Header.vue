@@ -121,7 +121,7 @@
 
       <!-- ログイン中の設定 -->
       <v-menu
-        v-if="loggedIn"
+
         open-on-hover
         bottom
         offset-y>
@@ -131,8 +131,8 @@
             v-bind="attrs"
             v-on="on"
           >
-          <v-avatar size="40" style="margin: 3px 5% 0 0;">
-            <v-img src="https://randomuser.me/api/portraits/men/1.jpg" />
+          <v-avatar v-show="loggedIn" size="40" style="margin: 3px 5% 0 0;">
+            <v-img :src="userImage ? userImage : '/images/cafe.jpeg'" />
           </v-avatar>
           </v-btn>
         </template>
@@ -160,14 +160,13 @@
 
       <!-- 未ログインの表示 -->
       <v-menu
-      v-else
       open-on-hover
       bottom
       left
       offset-y
       >
         <template v-slot:activator="{ on, attrs }">
-          <div class="account-menu" v-bind="attrs"
+          <div v-show="!loggedIn" class="account-menu" v-bind="attrs"
             v-on="on">|  アカウント  |</div>
         </template>
         <v-card width="280px">
@@ -248,10 +247,10 @@ export default {
   computed: {
     ...mapGetters({
       user: 'auth/user',
+      userImage: 'auth/userImage',
       loggedIn: 'auth/authStatus'
     })
   },
-
 }
 </script>
 

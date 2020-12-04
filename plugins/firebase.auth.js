@@ -11,14 +11,28 @@ export default (context) => {
     auth.onAuthStateChanged(user => {
       // ** ログイン済のユーザー
       if (user) {
-        // ログイン済みユーザーの情報保持
-        const users = {}
+        let users = {}
         users.uid = user.uid
-        
+
+        // usersコレクションのインタスタンス作成
+        const userRef = db.collection('users').doc(user.uid)
+        let userImage = {}
+        userRef.get().then(doc => {
+          // users = doc.data().images.src
+          if (doc.data().image.src) {
+            userImage.image = doc.data().image.src
+            store.commit('auth/setUserImage', userImage.image)
+          } else {
+            userImage.image = doc.data().image
+            store.commit('auth/setUserImage', userImage.image)
+          }
+        })
+
         let authStatus = true
         store.commit('auth/setUser', users)
         store.commit('auth/setAuthStatus', authStatus)
-        resolve(users)
+        resolve( users )
+
       } else {
         // ** ログインしていないユーザーもしくは認証が切れている
         let authStatus = false
