@@ -44,7 +44,7 @@
       <v-col cols="6">
         <v-card style="height:200px;">
           <nuxt-link to="/users/post/column" >
-            <v-img src="/images/mable.jpg" cover style="height: 100%">
+            <v-img src="/images/margiela.jpg" cover style="height: 100%">
               <v-card-title >
                 <v-sheet style="text-align:center; padding:5px; width: 100%">
                   <h3>新しくコラムを書く</h3>
@@ -57,7 +57,7 @@
       <v-col cols="6">
         <v-card style="height:200px;">
           <nuxt-link to="/users/post/question" >
-            <v-img src="/images/product_2.jpeg" cover style="height: 100%">
+            <v-img src="/images/Phone.jpeg" cover style="height: 100%">
               <v-card-title >
                 <v-sheet style="text-align:center; padding:5px; width: 100%">
                   <h3>新しく質問する</h3>
@@ -162,6 +162,7 @@ export default {
 }
 
 .v-image {
+
   &:hover {
     box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .7);
     transform: scale(1.01) ;
@@ -175,6 +176,11 @@ export default {
         transition: .3s;
         transform: scale(1.2) ;
       }
+  }
+
+  .v-sheet {
+    background-color: $preview-title-background-color;
+    color: $main-font-color;
   }
 }
 

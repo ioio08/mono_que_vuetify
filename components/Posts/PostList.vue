@@ -7,7 +7,7 @@
         <h1> <slot /> </h1>
         </v-card-text>
         <v-divider></v-divider>
-        <v-row v-show="getSixPosts.length > 0">
+        <v-row v-show="existPosts.length > 0">
           <v-spacer></v-spacer>
           <v-col cols="4">
             <v-text-field
@@ -28,7 +28,7 @@
           </v-col>
           <v-spacer></v-spacer>
         </v-row>
-        <v-container v-show="getSixPosts.length > 0" >
+        <v-container v-show="existPosts.length > 0" >
           <v-row align="center">
 
             <!-- PostDataのリストレンダリング -->
@@ -51,11 +51,11 @@
 
         <!-- ページネーション -->
         <v-card-actions v-show="existPosts.length > 0">
-          <v-pagination color="grey darken-2" v-model="page" :length="pageLength"></v-pagination>
+          <v-pagination color="grey darken-2" v-model="page" :length="pageLength" :total-visible="4"></v-pagination>
         </v-card-actions>
 
         <!-- 何も投稿がない場合に表示 -->
-        <v-row justify="center" align="center" v-if="existPosts.length === 0">
+        <v-row justify="center" align="center" v-show="existPosts.length === 0">
           <v-col cols="10" >
             <div>
               <v-card-text style="display: flex; justify-content:center">

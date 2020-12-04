@@ -18,7 +18,7 @@
         <v-divider></v-divider>
 
         <v-card-text class="white--text display-1" >
-          <span class="title">© </span> {{ title }} .inc
+          <span class="title">© </span> {{ title }}
         </v-card-text>
       </v-card>
     </v-footer>
@@ -54,5 +54,8 @@ export default {
   background-color: $footer-background-color !important;
 }
 
+.v-card__text {
+  padding: 2% 0;
+}
 
 </style>
