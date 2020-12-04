@@ -106,6 +106,7 @@ export default {
       // previewで描画するためにURLを取得
       reader.readAsDataURL(file)
     },
+
     async editProfile() {
       const usersPostRef = db.collection('users').doc(this.userDatas.uid)
       if(this.fileObject !== null) {
@@ -120,7 +121,10 @@ export default {
           email: this.userDatas.email,
           uid: this.userDatas.uid
         }, { merge: true })
-        .then( () => { this.$router.push('/users/profile') })
+        .then( () => {
+          this.$store.commit('auth/setUserImage', uploadImage.src)
+          this.$router.push('/users/profile')
+        })
       } else {
         await usersPostRef.set({
           name: this.userDatas.name,
