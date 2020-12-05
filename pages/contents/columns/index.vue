@@ -1,7 +1,7 @@
 <template>
     <PostList
-    :exist-posts="setColumn"
-    :post-path="postPath">コラム</PostList>
+    :exist-posts="columns"
+    :post-path="columnPath">コラム</PostList>
 </template>
 
 <script>
@@ -16,18 +16,16 @@ export default {
   // vuexfireでfirestoreとリアルタイムバインディング
   // created()で非同期通信を終わらせておく
   created() {
-    this.$store.dispatch('column/setColumnsRef', db.collection('column'))
+    this.$store.dispatch('column/setColumnRef', db.collection('column'))
   },
-
   // column/setColumnsRef actionsをcreated()で初期化した状態でgetters
   computed: {
-    ...mapGetters({ setColumn: 'column/setColumnPost' })
+    ...mapGetters({ columns: 'column/getColumns' })
   },
-
   data() {
     return {
       // columnPostPreviewへのpath
-      postPath: '/contents/columns/'
+      columnPath: '/contents/columns/'
     }
   }
 

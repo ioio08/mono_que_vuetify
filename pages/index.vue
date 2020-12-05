@@ -1,19 +1,20 @@
 <template>
   <v-row  justify="center" align="center" >
     <v-col cols="12">
+      <!-- <Explain/> -->
 
       <!-- Components  "Question" "Column" -->
         <!-- Column component -->
         <PostList
-        :exist-posts="setColumn"
-        :post-path="postColumnPath">コラム</PostList>
+        :exist-posts="columns"
+        :post-path="columnPath">コラム</PostList>
 
         <v-divider style="margin-bottom:5%;"></v-divider>
 
         <!-- Question component -->
         <PostList
-        :exist-posts="setQuestion"
-        :post-path="postQuestionPath">質問</PostList>
+        :exist-posts="questions"
+        :post-path="questionPath">質問</PostList>
 
     </v-col>
   </v-row>
@@ -23,27 +24,29 @@
 
 // pages
 import PostList from '@/components/Posts/PostList'
+import Explain from '~/components/UI/Explain'
 import { db } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 
 export default {
+  components: {
+    PostList,
+    Explain,
+  },
   computed: {
     ...mapGetters({
-      setQuestion: 'question/setQuestionPost',
-      setColumn: 'column/setColumnPost'
+      questions: 'question/getQuestions',
+      columns: 'column/getColumns'
       })
-  },
-  components: {
-    PostList
   },
   created() {
     this.$store.dispatch('question/setQuestionRef', db.collection('question'))
-    this.$store.dispatch('column/setColumnsRef', db.collection('column'))
+    this.$store.dispatch('column/setColumnRef', db.collection('column'))
   },
   data() {
     return {
-      postQuestionPath: '/contents/questions/',
-      postColumnPath: '/contents/columns/',
+      questionPath: '/contents/questions/',
+      columnPath: '/contents/columns/',
     }
   }
 }

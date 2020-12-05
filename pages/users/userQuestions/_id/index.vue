@@ -1,7 +1,7 @@
 <template>
   <div>
     <PostView
-      :exist-post="userQuestionData">
+      :exist-post="userQuestion">
 
       <!-- 一覧 , 編集 , 削除 -->
       <template v-slot:userPostActions>
@@ -40,8 +40,7 @@
 </template>
 
 <script>
-import { db, storage } from '~/plugins/firebase'
-import { auth } from '~/plugins/firebase'
+import { db, auth, storage } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 import PostView from '~/components/Posts/PostView'
 
@@ -52,12 +51,12 @@ export default {
 
   // paramsのdocIdに応じてドキュメント指定して取得
   async asyncData({ params }){
-    const userQuestionData = await db.collection("question")
+    const userQuestion = await db.collection("question")
     .doc(params.id)
     .get()
     .then(doc => doc.data());
 
-    return { userQuestionData }
+    return { userQuestion }
   },
   computed: {
     ...mapGetters({
@@ -74,13 +73,13 @@ export default {
     },
     deletePost() {
       // ドキュメントの削除
-      db.collection("question").doc(this.userQuestionData.text.docId).delete()
+      db.collection("question").doc(this.userQuestion.text.docId).delete()
       .catch(err => {
         console.error("Error removing document: ", err);
       });
 
       // FireStorageのimage削除
-      const deleteRef = storage.ref().child('images/' + this.userQuestionData.image.src)
+      const deleteRef = storage.ref().child('images/' + this.userQuestion.image.src)
       deleteRef.delete().catch(err => {
         console.log('エラー:' + err)});
 
@@ -97,7 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .v-dialog {
   .v-sheet {
     width: 100%;

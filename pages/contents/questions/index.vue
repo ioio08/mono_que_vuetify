@@ -1,7 +1,7 @@
 <template>
     <PostList
-    :exist-posts="setQuestion"
-    :post-path="postPath">質問</PostList>
+    :exist-posts="questions"
+    :post-path="questionPath">質問</PostList>
 </template>
 
 <script>
@@ -18,14 +18,14 @@ export default {
   created() {
     this.$store.dispatch('question/setQuestionRef', db.collection('question'))
   },
-  // question/setQuestionRef actionsをcreated()で初期化した状態でgetters
+  // question/getQuestionRef actionsをcreated()で初期化した状態でgetters
   computed: {
-    ...mapGetters({ setQuestion: 'question/setQuestionPost' })
+    ...mapGetters({ questions: 'question/getQuestions' })
   },
   data() {
     return {
       // questionPostPreviewへのpath
-      postPath: '/contents/questions/'
+      questionPath: '/contents/questions/'
     }
   }
 }

@@ -37,7 +37,7 @@
         </v-list-group>
 
         <!-- 2.Users : "Profile" "Column" "Question" "Star" : defaultでリストを表示させる(value = true)-->
-        <v-list-group :value="false">
+        <v-list-group :value="true">
           <template v-slot:activator>
             <v-icon>mdi-account-circle-outline</v-icon>
             <v-list-item-title>ユーザー</v-list-item-title>

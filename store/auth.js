@@ -7,9 +7,9 @@ import { db, auth } from '~/plugins/firebase.js'
 // userStatus: true or false
 export const state = () => ({
   user: null,
-  userImage:null,
+  userImage: null,
   authStatus: false,
-  errorMessage: '  ',
+  errorMessage: null,
 })
 
 export const mutations = {
@@ -32,176 +32,207 @@ export const mutations = {
 
 export const actions = {
   // Mailでの新規ユーザー登録, ユーザー情報取得
-  signUp({ commit }, { email, password }) {
-    return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-      auth.createUserWithEmailAndPassword(email, password)
-      .then(doc => {
-        // 取得したデータからuserのemail, uidを取得
-        const user = {}
-        user.email = doc.user.email
-        user.uid = doc.user.uid
+  async signUp({ commit }, { email, password }) {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    try {
+      const doc = await auth.createUserWithEmailAndPassword(email, password)
+      // 取得したデータからuserのemail, uidを取得
+      const user = {}
+      user.email = doc.user.email
+      user.uid = doc.user.uid
 
-        // アプリにuser情報がすでに保存されているユーザーか判別する関数
-          // 初回：userをusersコレクションに追加
-          // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+      // アプリにuser情報がすでに保存されているユーザーか判別する関数
+      // 初回：userをusersコレクションに追加
+      // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
 
-          // usersコレクションのインタスタンス作成
-          const userRef = db.collection('users').doc(user.uid)
-          userRef.get().then(doc => {
+      // usersコレクションからログインユーザーのデータを取得
+      const userData = db.collection('users').doc(user.uid).get()
 
-          // 初めてのログインの場合
-          if (!doc.exists) {
-            userRef.set({
-              name: 'ナナシさん',
-              penName: 'ナナシさん',
-              email: user.email,
-              uid: user.uid,
-              image: '/images/smile.png',
-            })
-            .catch(error => {
-              console.log(`Error userData setting: ${error}`);
-            });
-          }})
+      // 初めてのログインの場合
+      if (!userData) {
+        userData.set({
+          name: 'ナナシさん',
+          penName: 'ナナシさん',
+          email: user.email,
+          uid: user.uid,
+          image: '/images/smile.png',
+        })
+      }
 
-        // ログイン状態をtrue, falseで管理
-        // true: ログイン中 , false: 未ログイン
-        let authStatus = true
+      // ユーザー情報をセット
+      commit('setUser', user)
 
-        // errorMessageの初期化
-        let errorMessage = ''
+      // ログイン状態をtrue, falseで管理
+      // true: ログイン中 , false: 未ログイン
+      commit('setAuthStatus', true )
+      // errorMessageの初期化
+      commit('setErrorMessage', null)
+      this.$router.push('/')
 
-        this.$router.push('/')
-        commit('setUser', user )
-        commit('setAuthStatus', authStatus )
-        commit('setErrorMessage', errorMessage)
-      })
-      .catch(() => {
-        let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
-        commit('setErrorMessage', errorMessage)
-      })
-    })
+    } catch (error) {
+      // エラー分によってメッセージをswitchさせる関数
+      let errorMessage = errorHandling(error, 'signin')
+      commit('setErrorMessage', errorMessage)
+
+    }
   },
 
   // ここからログイン用関数
   // Mailで登録しているユーザーのログイン処理＋ユーザー情報取得
-  signInWithEmail({ commit }, { email, password } ) {
-    return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        auth.signInWithEmailAndPassword(email, password)
-          .then(doc => {
-          // 取得したデータからuserのemail, uidを取得
-          const user = {}
-          user.email = doc.user.email
-          user.uid = doc.user.uid
+  async signInWithEmail({ commit }, { email, password } ) {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    try {
+      const doc = await auth.signInWithEmailAndPassword(email, password)
+      // 取得したデータからuserのemail, uidを取得
+      const user = {}
+      user.email = doc.user.email
+      user.uid = doc.user.uid
 
-          // アプリにuser情報がすでに保存されているユーザーか判別する関数
-          // 初回：userをusersコレクションに追加
-          // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+      // アプリにuser情報がすでに保存されているユーザーか判別する関数
+      // 初回：userをusersコレクションに追加
+      // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
 
-          // usersコレクションのインタスタンス作成
-          const userRef = db.collection('users').doc(user.uid)
-          userRef.get().then(doc => {
+      // usersコレクションからログインユーザーのデータを取得
+      const userData = await db.collection('users').doc(user.uid).get()
 
-          // 初めてのログインの場合
-          if (!doc.exists) {
-            userRef.set({
-              name: 'ナナシさん',
-              penName: 'ナナシさん',
-              email: user.email,
-              uid: user.uid,
-              image: '/images/smile.png',
-            })
-            .catch(error => {
-              console.log(`Error userData setting: ${error}`);
-            });
-          }})
-
-          // ログイン状態をtrue, falseで管理
-          // true: ログイン中 , false: 未ログイン
-          let authStatus = true
-
-          // errorMessageの初期化
-          let errorMessage = ''
-
-          this.$router.push('/')
-          commit('setUser', user )
-          commit('setAuthStatus', authStatus )
-          commit('setErrorMessage', errorMessage)
+      // 初めてのログインの場合
+      if (!userData) {
+        userData.set({
+          name: 'ナナシさん',
+          penName: 'ナナシさん',
+          email: user.email,
+          uid: user.uid,
+          image: '/images/smile.png',
         })
-        .catch(() => {
-          let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
-          commit('setErrorMessage', errorMessage)
-        })
-    })
+      }
+
+      // ユーザー情報をセット
+      commit('setUser', user)
+
+      // ログイン状態をtrue, falseで管理
+      // true: ログイン中 , false: 未ログイン
+      commit('setAuthStatus', true )
+
+      // errorMessageの初期化
+      commit('setErrorMessage', null)
+
+      this.$router.push('/')
+
+    // エラーメッセージの描画処理
+    } catch (error) {
+      // エラー分によってメッセージをswitchさせる関数
+      let errorMessage = errorHandling(error, 'signin')
+      commit('setErrorMessage', errorMessage)
+
+    }
   },
 
   // Google認証でのログイン処理＋ユーザー情報取得
-  signInWithGoogle({ commit }){
-    return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .then(() => {
-      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then(doc => {
-        const user = {}
-        user.name = doc.user.displayName
-        user.penName = doc.user.displayName
-        user.email = doc.user.email
-        user.uid = doc.user.uid
-        user.image = doc.user.photoURL
+  async signInWithGoogle({ commit }) {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    try {
+      const doc = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      const user = {}
+      user.name = doc.user.displayName
+      user.penName = doc.user.displayName
+      user.email = doc.user.email
+      user.uid = doc.user.uid
+      user.image = doc.user.photoURL
 
-        // アプリにuser情報がすでに保存されているユーザーか判別する関数
-        // 初回：userをusersコレクションに追加
-        // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+      // アプリにuser情報がすでに保存されているユーザーか判別する関数
+      // 初回：userをusersコレクションに追加
+      // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
 
-        // usersコレクションのインタスタンス作成
-        const userRef = db.collection('users').doc(user.uid)
-        userRef.get().then(doc => {
+      // usersコレクションからログインユーザーのデータを取得
+      const userData = await db.collection('users').doc(user.uid).get()
 
-          // 初めてのログインの場合
-          if (!doc.exists) {
-            userRef.set({
-              name: user.name,
-              penName: user.name,
-              email: user.email,
-              uid: user.uid,
-              image: {
-                name: user.image,
-                src: user.image,
-              }
-            })
-            .catch(error => {
-              console.log(`Error userData setting: ${error}`);
-            });
-          }})
+      // 初めてのログインの場合
+      if (!userData) {
+          userData.set({
+            name: user.name,
+            penName: user.name,
+            email: user.email,
+            uid: user.uid,
+            image: {
+              name: user.image,
+              src: user.image,
+            }
+          })
+      }
 
-        // ログイン状態をtrue, falseで管理
-        // true: ログイン中 , false: 未ログイン
-        let authStatus = true
+      // ユーザー情報をセット
+      commit('setUser', user)
 
-        // errorMessageの初期化
-        let errorMessage = ''
+      // ログイン状態をtrue, falseで管理
+      // true: ログイン中 , false: 未ログイン
+      commit('setAuthStatus', true)
 
-        commit('setUser', user )
-        commit('setAuthStatus', authStatus )
-        commit('setErrorMessage', errorMessage)
-        this.$router.push('/')
-      })
-      .catch(() => {
-        let errorMessage = 'ログインに失敗しました。もう一度確認してください。'
-        commit('setErrorMessage', errorMessage)
-      })
-    })
+      // errorMessageの初期化
+      commit('setErrorMessage', null)
+      this.$router.push('/')
+
+    } catch (error) {
+      // エラー分によってメッセージをswitchさせる関数
+      let errorMessage = errorHandling(error, 'signin')
+      commit('setErrorMessage', errorMessage)
+    }
+
   },
 
   // サインアウト処理
   signOut() {
     return auth.signOut().then(() => {
-      const user = null
-      let authStatus = false
       this.$router.push('/')
-      commit('setUser', user )
-      commit('setAuthStatus', authStatus )
+      commit('setUser', null )
+      commit('setAuthStatus', false )
     })
   },
+
+  //  エラーコードによって描画するメッセージをswitchする関数
+  errorHandling(error, method) {
+    switch (error.code) {
+      case 'auth/cancelled-popup-request':
+      case 'auth/popup-closed-by-user':
+        return null;
+      case 'auth/email-already-in-use':
+        if (method.indexOf('signup') !== -1) {
+          return 'このメールアドレスは使用されています';
+        } else {
+          return 'メールアドレスまたはパスワードが違います';
+        }
+      case 'auth/invalid-email':
+        return 'メールアドレスの形式が正しくありません';
+      case 'auth/user-disabled':
+        return 'サービスの利用が停止されています';
+      case 'auth/user-not-found':
+        return 'メールアドレスまたはパスワードが違います';
+      case 'auth/user-mismatch':
+        if (method === 'signin/popup') {
+          return '認証されているユーザーと異なるアカウントが選択されました';
+        } else {
+          return 'メールアドレスまたはパスワードが違います';
+        }
+      case 'auth/weak-password':
+        return 'パスワードは6文字以上にしてください';
+      case 'auth/wrong-password':
+        return 'メールアドレスまたはパスワードが違います';
+      case 'auth/popup-blocked':
+        return '認証ポップアップがブロックされました。ポップアップブロックをご利用の場合は設定を解除してください';
+      case 'auth/operation-not-supported-in-this-environment':
+      case 'auth/auth-domain-config-required':
+      case 'auth/operation-not-allowed':
+      case 'auth/unauthorized-domain':
+        return '現在この認証方法はご利用頂けません';
+      case 'auth/requires-recent-login':
+        return '認証の有効期限が切れています';
+      default:
+        if (method.indexOf('signin') !== -1) {
+          return '認証に失敗しました。しばらく時間をおいて再度お試しください';
+        } else {
+          return 'エラーが発生しました。しばらく時間をおいてお試しください';
+        }
+    }
+  }
 }
 
 export const getters = {

@@ -1,7 +1,7 @@
 <template>
 <!-- Userが投稿したColumn一覧 -->
   <PostList
-  :exist-posts="userColumnDatas"
+  :exist-posts="userColumns"
   :post-path="postPath">コラム</PostList>
 </template>
 
@@ -20,17 +20,17 @@ export default {
   // postPath をuserColumnsに設定
   async asyncData({ store }){
     const user = store.getters['auth/user']
-    let userColumnDatas = []
+    let userColumns = []
     await db.collection('column')
     .where('text.uid', '==', user.uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        userColumnDatas.push(doc.data())
+        userColumns.push(doc.data())
       })
     });
 
-    return { userColumnDatas }
+    return { userColumns }
   },
   data:() => ({
       postPath: '/users/userColumns/'

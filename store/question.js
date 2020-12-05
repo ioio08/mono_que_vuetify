@@ -3,16 +3,16 @@ import firebase from "firebase/app"
 import { db, storage } from '~/plugins/firebase'
 
 // questionコレクションのインスタンス作成
-const questionPostRef = db.collection('question')
+const questionRef = db.collection('question')
 
 export const state = () => ({
-  questionPost: [],
+  questions: [],
 })
 
 export const actions = {
   // 初期化
   setQuestionRef: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('questionPost', questionPostRef)
+    bindFirestoreRef('questions', questionRef)
   }),
 
   // PostDataを投稿してFirebaseに登録する関数
@@ -29,7 +29,7 @@ export const actions = {
 
     // Editの場合の条件分岐
     if (contents.text.docId !== null && contents.text.docId !== undefined) {
-      await questionPostRef.doc(contents.text.docId).set({
+      await questionRef.doc(contents.text.docId).set({
         text:{
           author: contents.text.author,
           title: contents.text.title,
@@ -54,7 +54,7 @@ export const actions = {
 
       // Firebaseに登録するdocIdを取得する
       const docId = db.collection("question").doc().id;
-      await questionPostRef.doc(docId).set({
+      await questionRef.doc(docId).set({
         text:{
           author: contents.text.author,
           title: contents.text.title,
@@ -138,7 +138,7 @@ export const actions = {
 }
 
 export const getters = {
-  setQuestionPost: state => {
-    return state.questionPost
+  getQuestions: state => {
+    return state.questions
   },
 };

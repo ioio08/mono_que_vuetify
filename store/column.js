@@ -3,16 +3,16 @@ import firebase from "firebase/app"
 import { db, storage } from '~/plugins/firebase'
 
 // columnコレクションのインタスタンス作成
-const columnPostRef = db.collection('column')
+const columnRef = db.collection('column')
 
 export const state = () => ({
-  columnPost:[],
+  columns:[],
 })
 
 export const actions = {
   // 初期化
-  setColumnsRef: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('columnPost', columnPostRef)
+  setColumnRef: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('columns', columnRef)
   }),
 
   // PostDataを投稿してFirebaseに登録する関数
@@ -29,7 +29,7 @@ export const actions = {
 
     // Editの場合の条件分岐
     if (contents.text.docId !== null && contents.text.docId !== undefined) {
-      await columnPostRef.doc(contents.text.docId).set({
+      await columnRef.doc(contents.text.docId).set({
         text:{
           author: contents.text.author,
           title: contents.text.title,
@@ -54,7 +54,7 @@ export const actions = {
 
       // Firebaseに登録するdocIdを取得する
       const docId = db.collection("column").doc().id;
-      await columnPostRef.doc(docId).set({
+      await columnRef.doc(docId).set({
         text:{
           author: contents.text.author,
           title: contents.text.title,
@@ -137,7 +137,7 @@ export const actions = {
 }
 
 export const getters = {
-  setColumnPost: state => {
-    return state.columnPost
+  getColumns: state => {
+    return state.columns
   },
 };
