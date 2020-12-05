@@ -100,6 +100,7 @@
 
     <!-- default main -->
     <v-main :class="{mask:btnAction}" >
+
       <v-container >
         <nuxt />
       </v-container>
@@ -134,8 +135,6 @@ export default {
     // Header, Footerで利用
     adminPages: [
       {title:'お問い合わせ', to: '/admins/contact', icon:'mdi-email-outline',},
-      {title: 'よくある質問', to: '/admins/adminsQA', icon:'mdi-account-question-outline',},
-      {title: 'アプリ概要', to: '/admins/adminsAboutApp', icon:'mdi-apps',},
       {title: '作者ページ', to: '/admins/adminsProfile', icon:'mdi-account-tie',},
     ],
   }),

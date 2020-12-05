@@ -1,7 +1,7 @@
 <template>
   <!-- Userが投稿したQuestion一覧 -->
   <PostList
-  :exist-posts="userQuestionDatas"
+  :exist-posts="userQuestions"
   :post-path="postPath">質問</PostList>
 </template>
 
@@ -20,17 +20,17 @@ export default {
   // postPath をuserQuestionsに設定
   async asyncData({ store }){
     const user = store.getters['auth/user']
-    let userQuestionDatas = []
+    let userQuestions = []
     await db.collection('question')
     .where('text.uid', '==', user.uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        userQuestionDatas.push(doc.data())
+        userQuestions.push(doc.data())
       })
     });
 
-    return { userQuestionDatas }
+    return { userQuestions }
   },
   data:()  => ({
     postPath: '/users/userQuestions/'

@@ -1,7 +1,7 @@
 <template>
   <div>
     <PostView
-      :exist-post="loadedColumnData">
+      :exist-post="loadedColumn">
       <!-- QuestionsPost 一覧 button -->
       <template v-slot:commonPostActions>
         <v-divider></v-divider>
@@ -25,12 +25,12 @@ export default {
   },
 
   async asyncData({ params }){
-    const loadedColumnData = await db.collection("column")
+    const loadedColumn = await db.collection("column")
     .doc(params.id)
     .get()
     .then(doc => doc.data());
 
-    return { loadedColumnData }
+    return { loadedColumn }
   },
   methods: {
     onBackPage() {
