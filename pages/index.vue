@@ -1,7 +1,9 @@
 <template>
   <v-row  justify="center" align="center" >
     <v-col cols="12">
-      <!-- <Explain/> -->
+      <Explain><v-btn>
+        アプリについてはこちら
+      </v-btn></Explain>
 
       <!-- Components  "Question" "Column" -->
         <!-- Column component -->
