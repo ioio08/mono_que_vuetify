@@ -1,7 +1,9 @@
 <template>
     <PostList
     :exist-posts="columns"
-    :post-path="columnPath">コラム</PostList>
+    :post-path="columnPath"
+    :tags="columnTags"
+    >コラム</PostList>
 </template>
 
 <script>
@@ -17,10 +19,13 @@ export default {
   // created()で非同期通信を終わらせておく
   created() {
     this.$store.dispatch('column/setColumnRef', db.collection('column'))
+    this.$store.dispatch('tag/initAllTags')
   },
   // column/setColumnsRef actionsをcreated()で初期化した状態でgetters
   computed: {
-    ...mapGetters({ columns: 'column/getColumns' })
+    ...mapGetters({ columns: 'column/getColumns',
+      columnTags: 'tag/getColumnTags',
+    })
   },
   data() {
     return {
