@@ -7,14 +7,18 @@
         <!-- Column component -->
         <PostList
         :exist-posts="columns"
-        :post-path="columnPath">コラム</PostList>
+        :post-path="columnPath"
+        :tags="columnTags"
+        >コラム</PostList>
 
         <v-divider style="margin-bottom:5%;"></v-divider>
 
         <!-- Question component -->
         <PostList
         :exist-posts="questions"
-        :post-path="questionPath">質問</PostList>
+        :post-path="questionPath"
+        :tags="questionTags"
+        >質問</PostList>
 
     </v-col>
   </v-row>
@@ -35,13 +39,16 @@ export default {
   },
   computed: {
     ...mapGetters({
+      columns: 'column/getColumns',
+      columnTags: 'tag/getColumnTags',
       questions: 'question/getQuestions',
-      columns: 'column/getColumns'
+      questionTags: 'tag/getQuestionTags',
       })
   },
   created() {
     this.$store.dispatch('question/setQuestionRef', db.collection('question'))
     this.$store.dispatch('column/setColumnRef', db.collection('column'))
+    this.$store.dispatch('tag/initAllTags')
   },
   data() {
     return {

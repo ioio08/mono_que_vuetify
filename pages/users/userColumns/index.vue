@@ -2,12 +2,15 @@
 <!-- Userが投稿したColumn一覧 -->
   <PostList
   :exist-posts="userColumns"
-  :post-path="postPath">コラム</PostList>
+  :post-path="postPath"
+  :tags="columnTags"
+  >コラム</PostList>
 </template>
 
 <script>
 import PostList from '@/components/Posts/PostList'
 import { db, storage } from '~/plugins/firebase'
+import { mapGetters } from 'vuex'
 
 export default {
   // ログイン中のみ確認できる用に制御
@@ -31,6 +34,14 @@ export default {
     });
 
     return { userColumns }
+  },
+  created() {
+    this.$store.dispatch('tag/initUserTags', this.$store.getters['auth/user'].uid)
+  },
+  computed: {
+    ...mapGetters({
+      columnTags: 'tag/getColumnTags',
+    })
   },
   data:() => ({
       postPath: '/users/userColumns/'

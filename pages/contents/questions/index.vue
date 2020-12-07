@@ -1,7 +1,9 @@
 <template>
     <PostList
     :exist-posts="questions"
-    :post-path="questionPath">質問</PostList>
+    :post-path="questionPath"
+    :tags="questionTags"
+    >質問</PostList>
 </template>
 
 <script>
@@ -17,10 +19,14 @@ export default {
   // created()で非同期通信を終わらせておく
   created() {
     this.$store.dispatch('question/setQuestionRef', db.collection('question'))
+    this.$store.dispatch('tag/initAllTags')
   },
   // question/getQuestionRef actionsをcreated()で初期化した状態でgetters
   computed: {
-    ...mapGetters({ questions: 'question/getQuestions' })
+    ...mapGetters({
+      questions: 'question/getQuestions',
+      questionTags: 'tag/getQuestionTags',
+    })
   },
   data() {
     return {

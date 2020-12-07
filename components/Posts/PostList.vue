@@ -7,9 +7,8 @@
         <h1> <slot /> </h1>
         </v-card-text>
         <v-divider></v-divider>
-        <v-row v-show="existPosts.length > 0">
-          <v-spacer></v-spacer>
-          <v-col cols="4">
+        <v-row v-show="existPosts.length !== 0" align="center" justify="center">
+          <v-col cols="10">
             <v-text-field
               style="padding-top:15px"
               v-model="contentKeyword"
@@ -17,18 +16,20 @@
               type="text">
             </v-text-field>
           </v-col>
-          <v-spacer></v-spacer>
-          <v-col cols="4">
-            <v-text-field
-              style="padding-top:15px"
-              v-model="tagKeyword"
-              label="タグで検索"
-              type="text">
-            </v-text-field>
+          <v-col cols="10">
+            <p>タグで検索</p>
+            <v-chip-group  center-active show-arrows >
+              <v-chip
+              show-arrows
+              v-for="tag in tags"
+              @click="onChip(tag)"
+              :key="tag">
+              {{ tag }}
+              </v-chip>
+            </v-chip-group>
           </v-col>
-          <v-spacer></v-spacer>
         </v-row>
-        <v-container v-show="existPosts.length > 0" >
+        <v-container v-show="existPosts.length !== 0" >
           <v-row align="center">
 
             <!-- PostDataのリストレンダリング -->
@@ -50,7 +51,7 @@
         </v-container>
 
         <!-- ページネーション -->
-        <v-card-actions v-show="existPosts.length > 0">
+        <v-card-actions v-show="existPosts.length !== 0">
           <v-pagination color="grey darken-2" v-model="page" :length="pageLength" :total-visible="4"></v-pagination>
         </v-card-actions>
 
@@ -74,6 +75,7 @@
 
 <script>
 import PostPreview from '@/components/Posts/PostPreview'
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -90,6 +92,10 @@ export default {
       type:String,
       required:true
     },
+    tags: {
+      type:Array,
+      required:false
+    }
   },
   computed: {
     // Post表示を6までに整形して返す関数
@@ -157,6 +163,14 @@ export default {
       // Postの初期値と検索値をリアルタイムで入れ替える
       return this.filteredPosts.slice(this.pageSize*(page -1), this.pageSize*(page));
     },
+    onChip(tag) {
+      if(this.tagKeyword === tag) {
+        this.tagKeyword = ''
+      } else {
+        this.tagKeyword = tag
+        this.page = 1
+      }
+    }
   },
   data:() =>({
     page:1,
@@ -181,4 +195,14 @@ h1 {
 .v-card__actions {
   justify-content: center ;
 }
+
+.theme--light.v-chip:not(.v-chip--active) {
+  color:$v-chip-form-font-color  !important;
+  background-color: $v-chip-form-background-color !important;
+
+  .theme--light.v-icon {
+    color:$v-chip-form-font-color  !important;
+  }
+}
+
 </style>
