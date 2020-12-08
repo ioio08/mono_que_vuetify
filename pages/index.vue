@@ -1,7 +1,9 @@
 <template>
   <v-row  justify="center" align="center" >
     <v-col cols="12">
-      <!-- <Explain/> -->
+      <Explain><v-btn to="/admins/about" style="margin-top:5%;">
+        アプリについてはこちら
+      </v-btn> </Explain>
 
       <!-- Components  "Question" "Column" -->
         <!-- Column component -->
@@ -10,8 +12,6 @@
         :post-path="columnPath"
         :tags="columnTags"
         >コラム</PostList>
-
-        <v-divider style="margin-bottom:5%;"></v-divider>
 
         <!-- Question component -->
         <PostList

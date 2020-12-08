@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12">
+    <v-col cols="12" class="off-padding-top">
       <v-sheet>
         <v-card-text class="text-center">
         <!-- Postのタイトル挿入場所 -->
@@ -187,7 +187,8 @@ h1 {
 }
 
 .v-sheet {
-  background:$v-main-background-color;
+  // background:$v-main-background-color;
+  background:linear-gradient(180deg,$v-main-background-color ,#c4c4c4 , $v-main-background-color  );
   margin-bottom: 13%;
 }
 

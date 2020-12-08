@@ -65,7 +65,7 @@
         <v-list-group>
           <template v-slot:activator>
               <v-icon>mdi-office-building</v-icon>
-            <v-list-item-title>管理者</v-list-item-title>
+            <v-list-item-title>アプリについて</v-list-item-title>
           </template>
           <v-list-item
           v-for="adminPage in adminPages"

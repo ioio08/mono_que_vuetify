@@ -100,10 +100,7 @@
 
     <!-- default main -->
     <v-main :class="{mask:btnAction}" >
-
-      <v-container >
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
 
     <!-- default footer -->
@@ -135,7 +132,7 @@ export default {
     // Header, Footerで利用
     adminPages: [
       {title:'お問い合わせ', to: '/admins/contact', icon:'mdi-email-outline',},
-      {title: '作者ページ', to: '/admins/adminsProfile', icon:'mdi-account-tie',},
+      {title: 'アプリ概要', to: '/admins/about', icon:'mdi-account-tie',},
     ],
   }),
 }
@@ -196,4 +193,5 @@ main {
 .container {
   max-width: 1100px;
 }
+
 </style>
