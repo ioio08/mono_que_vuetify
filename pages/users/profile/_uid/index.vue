@@ -158,6 +158,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  margin-top: 5%;
+}
+
 .theme--light.v-card {
   background-color: $profile-background-color !important;
   color:$main-font-color;

@@ -21,13 +21,8 @@
           ></v-select>
 
           <v-textarea outlined rows="10" name="input-7-4" v-model="message" label="お問い合わせ内容を記載してください。"></v-textarea>
-
-          <v-checkbox
-            v-model="checkbox"
-            label="Do you agree?"
-          ></v-checkbox>
-          <v-btn class="mr-4"> submit </v-btn>
-          <v-btn @click="clear"> clear</v-btn>
+          <v-btn class="mr-4">送信</v-btn>
+          <v-btn @click="clear">リセット</v-btn>
         </form>
       </v-col>
     </v-row>

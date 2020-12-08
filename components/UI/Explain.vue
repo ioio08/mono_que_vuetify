@@ -3,14 +3,11 @@
     <div class="main-title">
       <h1>M O N O D Y</h1>
       <h3>モノと対話するように</h3>
-      <p>M O N O(モノ) と<br>D Y T T(Dialogue with Yourself through things ) を<br> 組み合わせた造語です。<slot /> </p>
+      <slot />
       <div class="circle1"></div>
       <div class="circle2"></div>
       <div class="circle3"></div>
       <div class="circle4"></div>
-
-    </div>
-    <div class="app-nav">
 
     </div>
   </div>
@@ -19,10 +16,11 @@
 <style lang="scss" scoped>
 
 .main-title {
-  background-color: $header-background-color;
+  // background-color: $header-background-color;
+  background:linear-gradient(130deg,$header-background-color 20% ,#a5a5a5be 80%, );
   color: $explain-font-color;
-  border-radius: 20px;
-  padding: 3%;
+  margin-top: 5%;
+  padding: 3% 3% 8% 3%;
   opacity: .9;
 
   text-align: center;
@@ -38,7 +36,7 @@
 
   }
   h3 {
-    font-size: 4rem;
+    font-size: 3rem;
     z-index: 10;
     position: relative;
     opacity: 1;
@@ -51,10 +49,6 @@
     z-index: 10;
     position: relative;
     opacity: 1;
-
-    button {
-      margin: 2% 0 0 20%;
-    }
   }
 
   .circle1 {
