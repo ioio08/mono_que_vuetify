@@ -306,7 +306,7 @@ header {
   //  ヘッダータイトル
   .v-toolbar__title {
     font-size: 2rem;
-    margin-left: 3.5%;
+    margin-left: 8%;
 
     @include tab {
       margin: 0 !important;
