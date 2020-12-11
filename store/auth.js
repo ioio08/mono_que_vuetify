@@ -32,7 +32,7 @@ export const mutations = {
 
 export const actions = {
   // Mailでの新規ユーザー登録, ユーザー情報取得
-  async signUp({ commit }, { email, password }) {
+  async signUp({ commit, dispatch }, { email, password }) {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     try {
       const doc = await auth.createUserWithEmailAndPassword(email, password)
@@ -46,11 +46,11 @@ export const actions = {
       // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
 
       // usersコレクションからログインユーザーのデータを取得
-      const userData = db.collection('users').doc(user.uid).get()
+      const userData = await db.collection('users').doc(user.uid).get()
 
       // 初めてのログインの場合
-      if (!userData) {
-        userData.set({
+      if (!userData.data()) {
+        await db.collection('users').doc(user.uid).set({
           name: 'ナナシさん',
           penName: 'ナナシさん',
           email: user.email,
@@ -71,7 +71,7 @@ export const actions = {
 
     } catch (error) {
       // エラー分によってメッセージをswitchさせる関数
-      let errorMessage = errorHandling(error, 'signin')
+      let errorMessage = dispatch('errorHandling', await (error, 'signin'))
       commit('setErrorMessage', errorMessage)
 
     }
@@ -79,7 +79,7 @@ export const actions = {
 
   // ここからログイン用関数
   // Mailで登録しているユーザーのログイン処理＋ユーザー情報取得
-  async signInWithEmail({ commit }, { email, password } ) {
+  async signInWithEmail({ commit, dispatch }, { email, password } ) {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     try {
       const doc = await auth.signInWithEmailAndPassword(email, password)
@@ -96,8 +96,8 @@ export const actions = {
       const userData = await db.collection('users').doc(user.uid).get()
 
       // 初めてのログインの場合
-      if (!userData) {
-        userData.set({
+      if (!userData.data()) {
+        await db.collection('users').doc(user.uid).set({
           name: 'ナナシさん',
           penName: 'ナナシさん',
           email: user.email,
@@ -121,14 +121,14 @@ export const actions = {
     // エラーメッセージの描画処理
     } catch (error) {
       // エラー分によってメッセージをswitchさせる関数
-      let errorMessage = errorHandling(error, 'signin')
+      let errorMessage = dispatch('errorHandling', await (error, 'signin'))
       commit('setErrorMessage', errorMessage)
 
     }
   },
 
   // Google認証でのログイン処理＋ユーザー情報取得
-  async signInWithGoogle({ commit }) {
+  async signInWithGoogle({ commit, dispatch }) {
     await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     try {
       const doc = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
@@ -147,8 +147,8 @@ export const actions = {
       const userData = await db.collection('users').doc(user.uid).get()
 
       // 初めてのログインの場合
-      if (!userData) {
-          userData.set({
+      if (!userData.data()) {
+          await db.collection('users').doc(user.uid).set({
             name: user.name,
             penName: user.name,
             email: user.email,
@@ -173,7 +173,7 @@ export const actions = {
 
     } catch (error) {
       // エラー分によってメッセージをswitchさせる関数
-      let errorMessage = errorHandling(error, 'signin')
+      let errorMessage = dispatch('errorHandling', await (error, 'signin'))
       commit('setErrorMessage', errorMessage)
     }
 
