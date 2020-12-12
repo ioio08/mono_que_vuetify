@@ -89,7 +89,7 @@
     </v-navigation-drawer>
 
     <!-- ＝＝＝＝＝＝＝ヘッダー上部＝＝＝＝＝＝＝＝＝＝ -->
-    <v-app-bar elevation="1" app clipped-left flat>
+    <v-app-bar elevation="10" app clipped-left >
 
       <!-- header-left -->
       <!-- SideBar "Open SideBar Contents" -->
@@ -121,20 +121,18 @@
 
       <!-- ログイン中の設定 -->
       <v-menu
-
         open-on-hover
         bottom
         offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            text
-            v-bind="attrs"
+          <v-avatar
+          v-bind="attrs"
             v-on="on"
+          v-show="loggedIn"
+          size="40"
           >
-          <v-avatar v-show="loggedIn" size="40" style="margin: 3px 5% 0 0;">
             <v-img :src="userImage ? userImage : '/images/cafe.jpeg'" />
           </v-avatar>
-          </v-btn>
         </template>
         <v-card width="280px" >
           <v-container>
@@ -263,9 +261,8 @@ export default {
 // @include $tab:959px;  タブレット
 // @include  $pc:1023px;  パソコン
 
-// SideBar
+// ==========  SideBar  ==========
 .v-list-group  {
-  // text-align: center;
   margin-bottom: 5%;
 }
 
@@ -276,7 +273,7 @@ export default {
 }
 
 
-// Header
+// ==========  Header (ツールバー)  =============
 header {
   opacity: .8 !important;
   background-color:$header-background-color !important;
@@ -285,7 +282,7 @@ header {
     opacity: 1 !important;
   }
 
-  //======  ツールバー上部  ======
+  // ======  ツールバー上部  ======
   .v-toolbar__content {
     @include tab {
       display: flex !important;
@@ -295,6 +292,21 @@ header {
     }
   }
 
+  //  ヘッダータイトル
+  .v-toolbar__title {
+    font-size: 2.5rem;
+
+    @include tab {
+      margin: 0 !important;
+      font-size: 2.2rem;
+    }
+
+    @include mb {
+      font-size: 2rem;
+    }
+  }
+
+  // ユーザーアイコン
   .v-avatar {
     @include tab {
       height: 40px !important;
@@ -303,32 +315,28 @@ header {
     }
   }
 
-  //  ヘッダータイトル
-  .v-toolbar__title {
-    font-size: 2rem;
-    margin-left: 3.5%;
-
-    @include tab {
-      margin: 0 !important;
-    }
-
-  }
-}
-nav {
-  background-color:$header-background-color !important;
-  color: $header-font-color !important;
-
 }
 
-.v-application a, .theme--light.v-icon, .account-menu{
+
+
+// Header Titleのカラー設定
+.v-application a,  .account-menu{
   color: $header-font-color !important;
 }
 
+// Headerのタブメニューアイコンのカラー設定
+.theme--light.v-icon {
+  color: $header-font-color !important;
+}
+
+// Header ユーザーアイコンで展開されるメニューの設定
+// カード全体
 .theme--light.v-card{
   background-color: $profile-background-color !important;
   color:$main-font-color !important;
 }
 
+// カード内のh4要素（タイトルなど）
 h4 {
   cursor: pointer;
   background-color: $v-main-background-color;
@@ -340,10 +348,30 @@ h4 {
   }
 }
 
-.v-list-item {
+// ==================================
+// SideBarで展開されるナビゲーション
+// ==================================
+nav {
+  background-color:$header-background-color !important;
+  color: $header-font-color !important;
 
-  &:hover {
-    background-color: $hover-menu-background-color;
+  // ナビゲーション内（各コンテンツリストないのアイテム）のボタンのホバー設定
+  .v-btn:not(.v-btn--round){
+    &:hover {
+      background-color: $v-menu-background-color !important;
+    }
+  }
+
+  // ナビゲーション内のコンテンツタイトルのホバー設定
+  ::v-deep .v-list-item--link {
+    &:hover {
+      background-color: $v-menu-background-color ;
+    }
+  }
+  // ナビゲーション内のコンテンツタイトルの矢印アイコンのカラー設定
+  ::v-deep ::before, ::after  {
+    color: $header-font-color !important;
   }
 }
+
 </style>

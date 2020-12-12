@@ -4,10 +4,10 @@
       <h1>M O N O D Y</h1>
       <h3>モノと対話するように</h3>
       <slot />
-      <div class="circle1"></div>
+      <!-- <div class="circle1"></div>
       <div class="circle2"></div>
       <div class="circle3"></div>
-      <div class="circle4"></div>
+      <div class="circle4"></div> -->
 
     </div>
   </div>
@@ -26,7 +26,6 @@
   text-align: center;
   max-width: 100% !important;
   position: relative;
-  z-index: 1;
 
   h1 {
     font-size: 8rem;
