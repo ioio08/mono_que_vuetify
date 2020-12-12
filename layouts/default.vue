@@ -5,9 +5,11 @@
     <!-- Header -->
     <Header
       :title="title"
-      :fixed="fixed"
+      :usrIcon="usrIcon"
       :message="message"
-      :adminPages="adminPages"/>
+      />
+
+    <Navigation :adminPages="adminPages"/>
 
     <!-- default main -->
     <v-main>
@@ -24,18 +26,20 @@
 
 <script>
 import Header from '~/components/UI/Header'
+import Navigation from '~/components/UI/Navigation'
 import Footer from '~/components/UI/Footer'
+import { auth, db } from '~/plugins/firebase.js'
 
 export default {
   components: {
     Header,
+    Navigation,
     Footer,
   },
   data:() => ({
-    fixed: false,
     page: 1,
     title: 'M O N O D Y',
-    message: '',
+    usrIcon: null,
 
     // Header, Footerで利用
     adminPages: [
@@ -43,6 +47,10 @@ export default {
       {title: 'アプリ概要', to: '/admins/about', icon:'mdi-account-tie',},
     ],
   }),
+  async fetch({ store }) {
+    let user = store.getters['auth/user']
+    let userData = await db.collection('users').doc(user.uid).get()
+  }
 }
 </script>
 
