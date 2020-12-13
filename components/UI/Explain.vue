@@ -4,10 +4,10 @@
       <h1>M O N O D Y</h1>
       <h3>モノと対話するように</h3>
       <slot />
-      <!-- <div class="circle1"></div>
+      <div class="circle1"></div>
       <div class="circle2"></div>
       <div class="circle3"></div>
-      <div class="circle4"></div> -->
+      <div class="circle4"></div>
 
     </div>
   </div>
@@ -33,6 +33,14 @@
     position: relative;
     opacity: 1;
 
+    @include tab{
+      font-size: 5rem;
+    }
+
+    @include mb{
+      font-size: 3rem;
+    }
+
   }
   h3 {
     font-size: 3rem;
@@ -40,65 +48,75 @@
     position: relative;
     opacity: 1;
     font-weight: lighter;
-  }
-  p {
-    text-align-last: left;
-    margin: 3% 0 0 15%;
-    font-size: 2rem;
-    z-index: 10;
-    position: relative;
-    opacity: 1;
+
+    @include tab {
+      font-size: 1.8rem;
+    }
+
+    @include mb {
+      font-size: 1.1rem;
+    }
   }
 
+  // メインタイトル左側のパーツ
   .circle1 {
     position: absolute;
-    top: 30px;
-    left: 600px;
+    top: 2%;
+    left: 25%;
 
-    width: 200px;
-    height: 200px;
+    width: 6%;
+    height: 0;
+    padding: 4%;
     background: $explain-background-color;
     opacity: .8;
     border-radius: 50%;
     z-index: -2;
+
   }
+
+  //  メインタイトル右側のパーツ
   .circle2 {
     position: absolute;
-    top: 200px;
-    left: 180px;
+    top: 3%;
+    left: 52%;
 
-    width: 170px;
-    height: 170px;
+    width: 10%;
+    height: 0;
+    padding: 6%;
     background: $explain-background-color;
     opacity: .8;
     border-radius: 50%;
     z-index: -2;
-
   }
+
+  // サブタイトル左側のパーツ
   .circle3 {
     position: absolute;
-    top: 230px;
-    left: 800px;
+    top: 50%;
+    left: 33%;
 
-    width: 120px;
-    height: 120px;
+    width: 8%;
+    height: 0;
+    padding: 5%;
     background: $explain-background-color;
     opacity: .8;
     border-radius: 50%;
     z-index: -2;
-
   }
+  // サブタイトル右側のパーツ
   .circle4 {
     position: absolute;
-    top: 15px;
-    left: 80px;
+    top: 68%;
+    left: 60%;
 
-    width: 130px;
-    height: 130px;
+    width: 6%;
+    height: 0;
+    padding: 3%;
     background: $explain-background-color;
     opacity: .8;
     border-radius: 50%;
     z-index: -2;
+
   }
 
 

@@ -5,13 +5,13 @@
 
           <!-- Admins のリストレンダリング -->
           <v-btn
-            v-for="adminPage in adminPages"
-            :key="adminPage.title"
-            :to="adminPage.to"
+            v-for="adminList in adminLists"
+            :key="adminList.title"
+            :to="adminList.to"
             class="link-white font-weight-bold"
             style="margin-left: 20px;"
             >
-              {{ adminPage.title }}
+              {{ adminList.title }}
           </v-btn>
         </v-card-text>
 
@@ -33,7 +33,7 @@ export default {
       required:true,
       default: 'MONO-QUE'
     },
-    adminPages: {
+    adminLists: {
       type: Array,
       required:true,
     },

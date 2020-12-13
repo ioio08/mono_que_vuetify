@@ -5,11 +5,17 @@
     <!-- Header -->
     <Header
       :title="title"
-      :usrIcon="usrIcon"
-      :message="message"
+      :admin-lists="adminLists"
+      :content-lists="contentLists"
+      :user-lists="userLists"
       />
 
-    <Navigation :adminPages="adminPages"/>
+    <Navigation
+      :admin-lists="adminLists"
+      :content-lists="contentLists"
+      :user-lists="userLists"
+
+      />
 
     <!-- default main -->
     <v-main>
@@ -18,9 +24,8 @@
 
     <!-- default footer -->
     <Footer
-    :fixed="fixed"
     :title="title"
-    :adminPages="adminPages"/>
+    :admin-lists="adminLists"/>
   </v-app>
 </template>
 
@@ -28,7 +33,7 @@
 import Header from '~/components/UI/Header'
 import Navigation from '~/components/UI/Navigation'
 import Footer from '~/components/UI/Footer'
-import { auth, db } from '~/plugins/firebase.js'
+import { auth } from '~/plugins/firebase.js'
 
 export default {
   components: {
@@ -39,18 +44,28 @@ export default {
   data:() => ({
     page: 1,
     title: 'M O N O D Y',
-    usrIcon: null,
 
     // Header, Footerで利用
-    adminPages: [
+    adminLists: [
       {title:'お問い合わせ', to: '/admins/contact', icon:'mdi-email-outline',},
       {title: 'アプリ概要', to: '/admins/about', icon:'mdi-account-tie',},
     ],
+
+    // Contentのデータ(Headerタブ、SideBarメニューの２カ所で使用)
+    contentLists: [
+      { icon: 'mdi-home', title: 'ホーム', to: '/'},
+      { icon: 'mdi-help-box', title: '質問一覧', to: '/contents/questions'},
+      { icon: 'mdi-note-text-outline', title: 'コラム一覧', to: '/contents/columns'},
+    ],
+
+    // Usersデータ
+    userLists: [
+      {title: 'プロフィール', to: '/users/profile', icon:'mdi-card-account-details-outline',},
+      {title: 'あなたのコラム', to: '/users/userColumns', icon:'mdi-note-text-outline',},
+      {title: 'あなたの質問', to: '/users/userQuestions', icon:'mdi-comment-question-outline',},
+      // {title: '後で読む記事', to: '/users/userStar', icon:'mdi-star-outline',},
+    ],
   }),
-  async fetch({ store }) {
-    let user = store.getters['auth/user']
-    let userData = await db.collection('users').doc(user.uid).get()
-  }
 }
 </script>
 
@@ -64,10 +79,6 @@ export default {
 .pc {
   @include pc {
     display: none !important;
-  }
-
-  @include tab {
-    display: inline-flex !important;
   }
 }
 
@@ -87,9 +98,6 @@ export default {
 
 main {
   background: $v-main-background-color;
-  @include tab {
-    padding: 0 !important;
-  }
 }
 
 .container {

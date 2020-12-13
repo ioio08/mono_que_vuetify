@@ -1,7 +1,7 @@
 <template>
   <v-row  justify="center" align="center" >
     <v-col cols="12">
-      <Explain><v-btn to="/admins/about" style="margin-top:5%;">
+      <Explain v-show="user === false"><v-btn to="/admins/about" style="margin-top:5%;" v-bind="size">
         アプリについてはこちら
       </v-btn> </Explain>
 
@@ -43,7 +43,12 @@ export default {
       columnTags: 'tag/getColumnTags',
       questions: 'question/getQuestions',
       questionTags: 'tag/getQuestionTags',
-      })
+      user: 'auth/authStatus'
+    }),
+    size () {
+      const size = {xs:'x-small',sm:'small',lg:'large',xl:'x-large'}[this.$vuetify.breakpoint.name];
+      return size ? { [size]: true } : {}
+    }
   },
   created() {
     this.$store.dispatch('question/setQuestionRef', db.collection('question'))
@@ -64,6 +69,13 @@ export default {
 .tab {
   @include tab {
     display: none;
+  }
+}
+
+.v-btn {
+
+  @include tab {
+    font-size: .4rem;
   }
 }
 </style>
