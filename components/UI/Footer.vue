@@ -1,7 +1,8 @@
 <template>
     <v-footer :padless="true">
       <v-card flat tile width="100%" class="text-center">
-        <v-card-text class="mb">
+        <v-card-actions class="mb">
+          <v-spacer/>
 
           <!-- Admins のリストレンダリング -->
           <v-btn
@@ -9,15 +10,17 @@
             :key="adminList.title"
             :to="adminList.to"
             class="link-white font-weight-bold"
-            style="margin-left: 20px;"
+            style="margin: 2% 3%;"
+            sm
             >
               {{ adminList.title }}
           </v-btn>
-        </v-card-text>
+          <v-spacer/>
+        </v-card-actions>
 
         <v-divider></v-divider>
 
-        <v-card-text class="white--text display-1" >
+        <v-card-text class="white--text " >
           <span class="title">© </span> {{ title }}
         </v-card-text>
       </v-card>
@@ -37,7 +40,6 @@ export default {
       type: Array,
       required:true,
     },
-
   },
 }
 </script>
@@ -56,6 +58,19 @@ export default {
 
 .v-card__text {
   padding: 2% 0;
+  margin-left: 1%;
+  font-size: 3rem;
+  @include pc {
+    font-size: 2.6rem;
+  }
+
+  @include tab {
+    font-size: 2.2rem;
+  }
+
+  @include mb {
+    font-size: 1.8rem;
+  }
 }
 
 </style>
