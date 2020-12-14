@@ -1,138 +1,68 @@
 <template>
   <v-app >
 
-    <!-- Action buttons of post function  fixed in the lower right coner   -->
-    <!-- PC ver -->
-    <!-- Open button -->
-    <v-tooltip left >
-      <template v-slot:activator="{ on }">
-        <v-btn
-        :color="btnColor"
-        elevation="5"
-        v-on="on"
-        fixed
-        bottom
-        right
-        fab
-        large
-        @click="btnAction=!btnAction"
-        style="padding:25px;">
-          <v-icon color="white" v-if="btnAction">mdi-close</v-icon>
-          <v-icon color="white" v-else>mdi-apps</v-icon>
-        </v-btn>
-      </template>
-        <span v-if="btnAction">閉じる</span>
-        <span v-else>機能一覧</span>
-    </v-tooltip>
-
-    <!-- Home button -->
-    <v-tooltip left>
-      <template v-slot:activator="{ on }">
-        <v-btn
-          elevation="5"
-          to="/"
-          fixed
-          v-on="on"
-          bottom
-          right
-          fab
-          large
-          v-show="btnAction"
-          @click="btnAction=!btnAction"
-          style="padding:25px;  bottom:85px; ">
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-      </template>
-      <span>ホームへ</span>
-    </v-tooltip>
-
-    <!-- Column button -->
-    <v-tooltip left>
-      <template v-slot:activator="{ on }">
-        <v-btn
-
-          elevation="5"
-          to="/users/post/column"
-          fixed
-          v-on="on"
-          bottom
-          right
-          fab
-          large
-          v-show="btnAction"
-          @click="btnAction=!btnAction"
-          style="padding:25px; bottom:155px; ">
-          <v-icon>mdi-note-text-outline</v-icon>
-        </v-btn>
-      </template>
-      <span>コラムを投稿する</span>
-    </v-tooltip>
-
-    <!-- Question button  -->
-    <v-tooltip left>
-      <template v-slot:activator="{ on }">
-        <v-btn
-          elevation="5"
-          to="/users/post/question"
-          fixed
-          v-on="on"
-          bottom
-          right
-          fab
-          large
-          v-show="btnAction"
-          @click="btnAction=!btnAction"
-          style="padding:25px; bottom:225px;">
-          <v-icon>mdi-comment-question-outline</v-icon>
-        </v-btn>
-
-      </template>
-      <span>質問を投稿する</span>
-    </v-tooltip>
-
     <!-- ここからメイン画面の設定： 1. Header, 2.Main, 3.Footer -->
     <!-- Header -->
     <Header
       :title="title"
-      :fixed="fixed"
-      :message="message"
-      :adminPages="adminPages"/>
+      :admin-lists="adminLists"
+      :content-lists="contentLists"
+      :user-lists="userLists"
+      />
+
+    <Navigation
+      :admin-lists="adminLists"
+      :content-lists="contentLists"
+      :user-lists="userLists"
+      />
 
     <!-- default main -->
-    <v-main :class="{mask:btnAction}" >
+    <v-main>
       <nuxt />
     </v-main>
 
     <!-- default footer -->
     <Footer
-    :fixed="fixed"
     :title="title"
-    :adminPages="adminPages"/>
+    :admin-lists="adminLists"/>
   </v-app>
 </template>
 
 <script>
 import Header from '~/components/UI/Header'
+import Navigation from '~/components/UI/Navigation'
 import Footer from '~/components/UI/Footer'
+import { auth } from '~/plugins/firebase.js'
 
 export default {
   components: {
     Header,
+    Navigation,
     Footer,
   },
   data:() => ({
-    fixed: false,
-    // Post-btnのboolean値で投稿ボタンの出し入れ [true: 出力, false: 隠す(default)]
-    btnAction: false,
-    btnColor:'#757575',
     page: 1,
     title: 'M O N O D Y',
-    message: '',
 
     // Header, Footerで利用
-    adminPages: [
+    adminLists: [
       {title:'お問い合わせ', to: '/admins/contact', icon:'mdi-email-outline',},
       {title: 'アプリ概要', to: '/admins/about', icon:'mdi-account-tie',},
+    ],
+
+    // Contentのデータ(Headerタブ、SideBarメニューの２カ所で使用)
+    contentLists: [
+      { icon: 'mdi-home', title: 'ホーム', to: '/'},
+      { icon: 'mdi-help-box', title: '質問一覧', to: '/contents/questions'},
+      { icon: 'mdi-note-text-outline', title: 'コラム一覧', to: '/contents/columns'},
+    ],
+
+    // Usersデータ
+    userLists: [
+      {title: 'プロフィール', to: '/users/profile', icon:'mdi-card-account-details-outline',},
+      {title: 'あなたのコラム', to: '/users/userColumns', icon:'mdi-note-text-outline',},
+      {title: 'あなたの質問', to: '/users/userQuestions', icon:'mdi-comment-question-outline',},
+      // {title: '後で読む記事', to: '/users/userStar', icon:'mdi-star-outline',},
     ],
   }),
 }
@@ -148,10 +78,6 @@ export default {
 .pc {
   @include pc {
     display: none !important;
-  }
-
-  @include tab {
-    display: inline-flex !important;
   }
 }
 
@@ -171,23 +97,6 @@ export default {
 
 main {
   background: $v-main-background-color;
-  @include tab {
-    padding: 0 !important;
-  }
-}
-
-// btnActionについて
-// btnActionでメイン画面を薄いマスクで覆い隠す
-.mask {
-  opacity: .1;
-}
-
-// btnAction search
-.search {
-  display: none;
-  @include tab {
-    display: inline-flex;
-  }
 }
 
 .container {

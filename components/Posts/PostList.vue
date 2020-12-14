@@ -3,10 +3,10 @@
     <v-col cols="12" class="off-padding-top">
       <v-sheet>
         <v-card-text class="text-center">
-        <!-- Postのタイトル挿入場所 -->
-        <h1> <slot /> </h1>
+          <!-- Postのタイトル挿入場所 -->
+          <h1> <slot /> </h1>
         </v-card-text>
-        <v-divider></v-divider>
+        <v-divider/>
         <v-row v-show="existPosts.length !== 0" align="center" justify="center">
           <v-col cols="10">
             <v-text-field
@@ -30,15 +30,14 @@
           </v-col>
         </v-row>
         <v-container v-show="existPosts.length !== 0" >
-          <v-row align="center">
+          <v-row justify="center" justify-sm="space-around" justify-md="start" align="center">
 
             <!-- PostDataのリストレンダリング -->
             <v-col
               v-for="existPost in getSixPosts"
               :key="existPost.text.docId"
-              cols="12"
-              xs="12"
-              sm="4"
+              cols="11"
+              sm="6"
               md="4"
               xl="3">
 
@@ -183,8 +182,47 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  margin-top: 3%;
+  margin: 5% 0 3%;
+  font-size: 3.5rem;
+
+  @include tab {
+    font-size: 2.5rem;
+  }
+
+  @include mb {
+    font-size: 2rem;
+  }
 }
+
+p {
+  font-size: 2rem;
+
+  @include tab {
+    font-size: 1.6rem;
+  }
+
+  @include mb {
+    font-size: 1.6rem;
+  }
+}
+
+.v-input {
+  ::deep .v-input__slot {
+    ::before.v-text-field__slot {
+      font-size: 2rem !important;
+
+      @include tab {
+        font-size: 1.6rem !important;
+      }
+
+      @include mb {
+        font-size: 1.6rem !important;
+      }
+    }
+
+  }
+}
+
 
 .v-sheet {
   // background:$v-main-background-color;

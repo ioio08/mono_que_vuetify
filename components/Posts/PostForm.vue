@@ -1,88 +1,107 @@
 <template>
-  <div style="text-alighn: center">
+  <div style="text-align: center">
     <v-container>
     <!-- Column, Questionによってタイトル変更 -->
-    <v-card-title><h2><slot/></h2></v-card-title>
+    <v-card-title style="display:flex; justify-content:center"><h2><slot/></h2></v-card-title>
     <v-divider></v-divider>
-      <v-row  align="center">
+      <v-row justify="center"  align="center">
         <v-col cols="10">
           <v-form @submit.prevent="onPost">
+            <v-row justify="center">
 
-            <!-- Post: タイトル -->
-            <v-card-actions >
-              <v-text-field
-              v-model="newPost.text.title"
-              prepend-icon="mdi-fountain-pen"
-              label="投稿のタイトルを決めてください。"
-              ></v-text-field>
-            </v-card-actions>
+              <!-- Post: タイトル -->
+              <v-col cols="12" sm="10">
+                <v-card-actions >
+                  <v-text-field
+                  v-model="newPost.text.title"
+                  prepend-icon="mdi-fountain-pen"
+                  label="タイトル"
+                  ></v-text-field>
+                </v-card-actions>
+              </v-col>
 
-            <!-- Post: タグ -->
-            <v-card-actions  style="width: 500px !important">
-              <v-text-field
-              v-model="tags"
-              prepend-icon="mdi-music-accidental-sharp"
-              label="タグ付けができます。"
-              ></v-text-field>
-              <v-btn style="margin-left:20px" @click="pushTags">＋ タグを追加</v-btn>
-            </v-card-actions>
+              <!-- Post: タグ -->
+              <v-col cols="12" sm="10">
+                <v-row justify="start" align="start">
+                  <v-col cols="11" sm="8">
+                    <v-text-field
+                    v-model="tags"
+                    prepend-icon="mdi-music-accidental-sharp"
+                    label="タグ"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="5" sm="4">
+                    <v-btn style="margin: 5% 0 0 10%" small @click="pushTags">＋ タグを追加</v-btn>
+                  </v-col>
+                  <v-spacer/>
+                </v-row>
+              </v-col>
 
-            <!-- v-if="newPost.tags.length > 0" -->
-            <v-chip-group column>
-              <v-chip
-              v-for="(tag, i) in newPost.tags"
-              :key="i"
-              >{{ tag }}
-                <v-icon right @click="deleteTags(i)">
-                  mdi-close-circle
-                </v-icon>
-                <!-- <span @click="deleteTags(i)"> x </span> -->
-              </v-chip>
-            </v-chip-group>
+              <v-col cols="12" sm="10"  v-show="newPost.tags.length > 0" >
+                <v-chip-group column>
+                  <v-chip
+                  v-for="(tag, i) in newPost.tags"
+                  :key="i"
+                  >{{ tag }}
+                    <v-icon right @click="deleteTags(i)">
+                      mdi-close-circle
+                    </v-icon>
+                  </v-chip>
+                </v-chip-group>
 
-            <!-- Post画像: upload -->
-            <v-card-actions >
-              <v-btn
-              depressed
-              :loading="isSelecting"
-              @click="onButtonClick"
-              >
-                <v-icon>mdi-image</v-icon>アップロード
-              </v-btn>
+              </v-col>
 
-              <!-- Post画像: 描画 -->
-              <v-card-text>
-                <v-img v-if="preview" :src="preview" style="width:200px;"/>
-              </v-card-text>
-              <!-- Post画像:アップロード用 input -->
-              <input
-                ref="file"
-                style="display:none;"
-                type="file"
-                accept="image/*"
-                @change="onFileChanged"
-              >
-            </v-card-actions>
+              <!-- Post画像: upload -->
+              <v-col cols="12" sm="10">
+                <v-card-actions >
+                  <v-btn
+                  depressed
+                  :loading="isSelecting"
+                  @click="onButtonClick"
+                  >
+                    <v-icon>mdi-image</v-icon>アップロード
+                  </v-btn>
 
-            <!-- Post 本文 -->
-            <v-card-actions>
-              <v-textarea
-              v-model="newPost.text.content"
-              label="本文を入力してください。"
-              outlined
-              auto-grow
-              rows="25"
-              row-height="25"
-              ></v-textarea>
-            </v-card-actions>
+                  <!-- Post画像: 描画 -->
+                  <v-card-text>
+                    <v-img v-if="preview" :src="preview" style="width:200px;"/>
+                  </v-card-text>
+                  <!-- Post画像:アップロード用 input -->
+                  <input
+                    ref="file"
+                    style="display:none;"
+                    type="file"
+                    accept="image/*"
+                    @change="onFileChanged"
+                  >
+                </v-card-actions>
+              </v-col>
 
-            <v-card-actions>
-              <!-- submit: onPost()メソッド -->
-              <v-btn type="submit">投稿</v-btn>
 
-              <!-- click: onCancel()メソッド -->
-              <v-btn @click="onCancel">戻る</v-btn>
-            </v-card-actions>
+              <!-- Post 本文 -->
+              <v-col cols="12" sm="10">
+                <v-card-actions>
+                  <v-textarea
+                  v-model="newPost.text.content"
+                  label="本文"
+                  outlined
+                  auto-grow
+                  rows="20"
+                  row-height="20"
+                  ></v-textarea>
+                </v-card-actions>
+              </v-col>
+
+              <v-col cols="12" sm="10">
+                <v-card-actions>
+                  <!-- submit: onPost()メソッド -->
+                  <v-btn type="submit">投稿</v-btn>
+
+                  <!-- click: onCancel()メソッド -->
+                  <v-btn @click="onCancel">戻る</v-btn>
+                </v-card-actions>
+              </v-col>
+            </v-row>
 
           </v-form>
         </v-col>
@@ -212,6 +231,19 @@ export default {
 h2 {
   padding: 2% 0;
   color:$main-font-color;
+  font-size: 3rem;
+
+  @include pc {
+    font-size: 2.7rem;
+  }
+
+  @include tab {
+    font-size: 2.3rem;
+  }
+
+  @include mb {
+    font-size: 1.9rem;
+  }
 }
 
 .v-btn {

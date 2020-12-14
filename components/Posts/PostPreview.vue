@@ -38,6 +38,7 @@ a {
 .v-sheet {
   background-color: $preview-title-background-color;
   color: $main-font-color;
+  font-weight: bold;
 }
 
 .v-image {
@@ -56,7 +57,6 @@ a {
         transform: scale(1.2) ;
       }
   }
-
 }
 
 

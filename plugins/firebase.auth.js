@@ -11,32 +11,24 @@ export default (context) => {
     auth.onAuthStateChanged(user => {
       // ** ログイン済のユーザー
       if (user) {
-        let users = {}
-        users.uid = user.uid
-
+        // ログインした場合に登録画像をリアルタイムで描画する為の処理
         // usersコレクションのインタスタンス作成
         const userRef = db.collection('users').doc(user.uid)
         let userImage = {}
+        // ログイン中のユーザー情報を確認し、
+        // フィールド状況に合わせて画像を取得
         userRef.get().then(doc => {
-          // users = doc.data().images.src
-          if (doc.data().image.src) {
-            userImage.image = doc.data().image.src
-            store.commit('auth/setUserImage', userImage.image)
-          } else {
-            userImage.image = doc.data().image
-            store.commit('auth/setUserImage', userImage.image)
-          }
+          store.commit('auth/setUserImage', doc.data().image.src)
         })
 
-        let authStatus = true
-        store.commit('auth/setUser', users)
-        store.commit('auth/setAuthStatus', authStatus)
-        resolve( users )
+        store.commit('auth/setUser', user.uid)
+        store.commit('auth/setAuthStatus', true)
+        resolve( user )
 
       } else {
         // ** ログインしていないユーザーもしくは認証が切れている
         let authStatus = false
-        store.commit('auth/setAuthStatus', authStatus)
+        store.commit('auth/setAuthStatus', false)
         resolve(false)
       }
     })
