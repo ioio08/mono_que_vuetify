@@ -120,10 +120,7 @@
     opacity: .8;
     border-radius: 50%;
     z-index: -2;
-
   }
-
-
 }
 
 </style>
