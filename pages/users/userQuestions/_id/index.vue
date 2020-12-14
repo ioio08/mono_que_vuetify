@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { db, auth, storage } from '~/plugins/firebase'
+import { db, storage } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 import PostView from '~/components/Posts/PostView'
 
@@ -59,10 +59,7 @@ export default {
     return { userQuestion }
   },
   computed: {
-    ...mapGetters({
-      user: 'auth/user',
-      loggedIn: 'auth/authStatus'
-    })
+    ...mapGetters({ loggedIn: 'auth/getAuthStatus'})
   },
   methods: {
     onBackPage() {

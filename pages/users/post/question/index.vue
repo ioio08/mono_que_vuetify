@@ -20,10 +20,10 @@ export default {
     },
   },
   async asyncData({ store }){
-    const user = store.getters['auth/user']
+    const uid = store.getters['auth/getUid']
     // ログイン中のユーザー情報を取得
     let userDatas;
-    await db.collection('users').doc(user.uid)
+    await db.collection('users').doc(uid)
     .get()
     .then(doc => {
       userDatas = doc.data()

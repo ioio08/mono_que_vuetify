@@ -109,7 +109,7 @@ export default {
     let userDatas;
     let userColumnDatas = []
     let userQuestionDatas = []
-    const uid = await store.getters['auth/user']
+    const uid = await store.getters['auth/getUid']
 
     // ユーザー情報
     await db.collection('users').doc(uid)

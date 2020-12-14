@@ -18,7 +18,6 @@
 import { db } from '~/plugins/firebase'
 import PostView from '~/components/Posts/PostView'
 
-
 export default {
   components: {
     PostView

@@ -22,7 +22,7 @@ export default {
 // ユーザー固有の質問と関連するタグを取得
   async asyncData({ store }){
   // uidを取得
-    const uid = store.getters['auth/user']
+    const uid = store.getters['auth/getUid']
 
   // uidが一致するドキュメントのみを取得する
   // postPath をuserQuestionsに設定

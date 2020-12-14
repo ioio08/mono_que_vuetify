@@ -32,7 +32,6 @@
 import Header from '~/components/UI/Header'
 import Navigation from '~/components/UI/Navigation'
 import Footer from '~/components/UI/Footer'
-import { auth } from '~/plugins/firebase.js'
 
 export default {
   components: {

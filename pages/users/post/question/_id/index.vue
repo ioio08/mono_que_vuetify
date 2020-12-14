@@ -21,9 +21,9 @@ export default {
     const loadeQuestionData = await db.collection("question").doc(params.id).get().then(doc => doc.data());
 
     // ユーザーデータを取得
-    const user = store.getters['auth/user']
+    const uid = store.getters['auth/getUid']
     let userDatas;
-    await db.collection('users').doc(user.uid)
+    await db.collection('users').doc(uid)
     .get()
     .then(doc => {
       userDatas = doc.data()

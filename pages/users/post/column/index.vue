@@ -16,15 +16,15 @@ export default {
   },
   methods: {
     // Form送信でFireStore(collection:colum)にデータ格納
-    async postContents(newPost) {
-      await this.$store.dispatch('column/postContents', newPost)
+    postContents(newPost) {
+      this.$store.dispatch('column/postContents', newPost)
     },
   },
   async asyncData({ store }){
-    const user = store.getters['auth/user']
+    const uid = store.getters['auth/getUid']
     // ログイン中のユーザー情報を取得
     let userDatas;
-    await db.collection('users').doc(user.uid)
+    await db.collection('users').doc(uid)
     .get()
     .then(doc => {
       userDatas = doc.data()

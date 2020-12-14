@@ -253,9 +253,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'auth/user',
-      userImage: 'auth/userImage',
-      loggedIn: 'auth/authStatus'
+      userImage: 'auth/getUserImage',
+      loggedIn: 'auth/getAuthStatus'
     }),
   },
 }

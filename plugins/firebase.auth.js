@@ -14,14 +14,13 @@ export default (context) => {
         // ログインした場合に登録画像をリアルタイムで描画する為の処理
         // usersコレクションのインタスタンス作成
         const userRef = db.collection('users').doc(user.uid)
-        let userImage = {}
-        // ログイン中のユーザー情報を確認し、
-        // フィールド状況に合わせて画像を取得
+        
+        // ログイン中のユーザー情報を確認し、フィールド状況に合わせて画像を取得
         userRef.get().then(doc => {
           store.commit('auth/setUserImage', doc.data().image.src)
         })
 
-        store.commit('auth/setUser', user.uid)
+        store.commit('auth/setUid', user.uid)
         store.commit('auth/setAuthStatus', true)
         resolve( user )
 

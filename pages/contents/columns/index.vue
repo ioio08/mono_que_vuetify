@@ -23,7 +23,8 @@ export default {
   },
   // column/setColumnsRef actionsをcreated()で初期化した状態でgetters
   computed: {
-    ...mapGetters({ columns: 'column/getColumns',
+    ...mapGetters({
+      columns: 'column/getColumns',
       columnTags: 'tag/getColumnTags',
     })
   },
