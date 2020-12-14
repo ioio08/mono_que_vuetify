@@ -3,8 +3,9 @@
     <template v-slot:title>
     新規会員登
     </template>
+    
     <template v-slot:button>
-      <v-btn type="submit">登録</v-btn>
+      <v-btn type="submit" small style="font-size: 1.6rem;">登録</v-btn>
     </template>
 
     <!-- login失敗時のエラー表示 -->

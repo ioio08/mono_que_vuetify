@@ -301,7 +301,7 @@ header {
 
 
     @include tab {
-      margin-left: 2% !important;
+      margin-left: 4% !important;
       font-size: 2.2rem;
     }
 

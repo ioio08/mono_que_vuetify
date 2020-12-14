@@ -4,16 +4,9 @@
       ログイン
     </template>
 
-    <!-- google認証のslot -->
-    <template v-slot:google>
-      <v-avatar @click="googleLogin" size="40">
-        <v-img src="/images/google-icon.svg"></v-img>
-      </v-avatar>
-    </template>
-
     <!-- Email認証のslot -->
     <template v-slot:button>
-      <v-btn type="submit">ログイン</v-btn>
+      <v-btn type="submit" small>ログイン</v-btn>
     </template>
 
     <!-- sign in失敗時のエラー表示 -->
@@ -42,24 +35,11 @@ export default {
     emailLogin(email, password) {
       this.$store.dispatch('auth/signInWithEmail',{email: email, password: password})
     },
-
-    // google認証を発火させる関数
-    googleLogin() {
-      this.$store.dispatch('auth/signInWithGoogle')
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.v-avatar {
-  cursor: pointer;
-
-  &:hover {
-    border: .5px solid #fff;
-  }
-}
-
 p {
   text-align: center;
   padding-top: 10px;
