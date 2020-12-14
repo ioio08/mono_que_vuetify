@@ -56,7 +56,6 @@ a {
         transform: scale(1.2) ;
       }
   }
-
 }
 
 

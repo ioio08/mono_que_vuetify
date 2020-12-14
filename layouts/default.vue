@@ -14,7 +14,6 @@
       :admin-lists="adminLists"
       :content-lists="contentLists"
       :user-lists="userLists"
-
       />
 
     <!-- default main -->
