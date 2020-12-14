@@ -9,7 +9,7 @@
 
 <script>
 import PostList from '@/components/Posts/PostList'
-import { db, storage } from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -21,7 +21,7 @@ export default {
 
 // ユーザー固有のコラムと関連するタグを取得
   async asyncData({ store }){
-    const uid =  await store.getters['auth/user']
+    const uid =  await store.getters['auth/getUid']
 
     // uidが一致するドキュメントのみを取得する
     // postPath をuserColumnsに設定

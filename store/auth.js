@@ -1,20 +1,21 @@
-import { firestoreAction } from 'vuexfire'
 import firebase from "@firebase/app"
 import { db, auth } from '~/plugins/firebase.js'
 
 // login中のuser情報を保持するState
-// user:{ user.email , user.uid }
-// userStatus: true or false
+// uid
+// userImage : ヘッダーの画像切り替え
+// authStatus : true or false
+// errorMessage : 認証エラー文を日本語表記で返す
 export const state = () => ({
-  user: null,
+  uid: null,
   userImage: null,
   authStatus: false,
   errorMessage: null,
 })
 
 export const mutations = {
-  setUser(state, payload) {
-    state.user = payload
+  setUid(state, payload) {
+    state.uid = payload
   },
 
   setUserImage(state, payload) {
@@ -63,7 +64,7 @@ export const actions = {
       }
 
       // ユーザー情報をセット
-      commit('setUser', user.uid)
+      commit('setUid', user.uid)
 
       // ログイン状態をtrue, falseで管理
       // true: ログイン中 , false: 未ログイン
@@ -113,7 +114,7 @@ export const actions = {
       }
 
       // ユーザー情報をセット
-      commit('setUser', user.uid)
+      commit('setUid', user.uid)
 
       // ログイン状態をtrue, falseで管理
       // true: ログイン中 , false: 未ログイン
@@ -167,7 +168,7 @@ export const actions = {
       }
 
       // ユーザー情報をセット
-      commit('setUser', user.uid)
+      commit('setUid', user.uid)
 
       // ログイン状態をtrue, falseで管理
       // true: ログイン中 , false: 未ログイン
@@ -189,7 +190,7 @@ export const actions = {
   signOut() {
     return auth.signOut().then(() => {
       this.$router.push('/')
-      commit('setUser', null )
+      commit('setUid', null )
       commit('setAuthStatus', false )
     })
   },
@@ -242,16 +243,16 @@ export const actions = {
 }
 
 export const getters = {
-  user(state) {
-    return state.user
+  getUid(state) {
+    return state.uid
   },
-  userImage(state) {
+  getUserImage(state) {
     return state.userImage
   },
-  authStatus(state) {
+  getAuthStatus(state) {
     return state.authStatus
   },
-  errorMessage(state) {
+  getErrorMessage(state) {
     return state.errorMessage
   }
 }

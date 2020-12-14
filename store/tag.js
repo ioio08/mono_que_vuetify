@@ -1,5 +1,4 @@
-import firebase from "firebase/app"
-import { db, storage } from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 
 // column, Questionコレクションのインタスタンス作成
 const columnRef = db.collection('column')
@@ -54,7 +53,8 @@ export const actions = {
       commit('setQuestionTags', filteredQuestionTags)
 
     } catch (error) {
-      console.log('タグの取得に失敗');
+      commit('setColumnTags', [])
+      commit('setQuestionTags', [])
     }
   },
 
@@ -92,7 +92,8 @@ export const actions = {
       commit('setQuestionTags', filteredQuestionTags)
 
     } catch (error) {
-      console.log('タグの取得に失敗');
+      commit('setColumnTags', [])
+      commit('setQuestionTags', [])
     }
   }
 

@@ -19,10 +19,10 @@ export default {
     // ColumnのPostデータを取得
     const loadedColumnData = await db.collection("column").doc(params.id).get().then(doc => doc.data());
 
-    // ユーザーデータを取得
-    const user = store.getters['auth/user']
+    // uidを取得
+    const uid = store.getters['auth/getUid']
     let userDatas;
-    await db.collection('users').doc(user.uid)
+    await db.collection('users').doc(uid)
     .get()
     .then(doc => {
       userDatas = doc.data()
@@ -38,15 +38,10 @@ export default {
   },
   methods: {
     // Form送信でFireStore(collection:column)にデータ格納
-    async postContents(newPost) {
-      await this.$store.dispatch('column/postContents', newPost)
+    postContents(newPost) {
+      this.$store.dispatch('column/postContents', newPost)
     },
   },
 
 }
 </script>
-
-<style lang="scss" scoped>
-
-
-</style>

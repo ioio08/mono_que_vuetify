@@ -3,7 +3,7 @@
     <v-col cols="12">
       <!-- ファーストビュー -->
       <!-- ログイン済の場合は非表示 -->
-      <Explain v-show="user === false">
+      <Explain v-show="loggedIn === false">
         <v-btn to="/admins/about" style="margin-top:5%;" v-bind="size">
           アプリについてはこちら
         </v-btn>
@@ -48,7 +48,8 @@ export default {
       questions: 'question/getQuestions',
       questionTags: 'tag/getQuestionTags',
       // ユーザーのログイン状態を取得（true: ログイン済, false: 未ログイン）
-      user: 'auth/authStatus'
+      // Explainコンポーネントの表示／非表示制御に利用
+      loggedIn: 'auth/getAuthStatus'
     }),
     // Explain ページへのボタンサイズをレスポンシブ化
     // vuetifyのブレイクポイント基準

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { db, auth, storage } from '~/plugins/firebase'
+import { db, storage } from '~/plugins/firebase'
 import { mapGetters } from 'vuex'
 import PostView from '~/components/Posts/PostView'
 
@@ -49,7 +49,6 @@ export default {
   components: {
     PostView
   },
-
   // paramsのdocIdに応じてドキュメント指定して取得
   async asyncData({ params }){
     const userColumn = await db.collection("column")
@@ -60,10 +59,7 @@ export default {
     return { userColumn }
   },
   computed: {
-    ...mapGetters({
-      user: 'auth/user',
-      loggedIn: 'auth/authStatus'
-    })
+    ...mapGetters({ loggedIn: 'auth/getAuthStatus' })
   },
   methods: {
     onBackPage() {
@@ -79,7 +75,7 @@ export default {
         console.error("Error removing document: ", err);
       });
 
-      // FireStorageのimage削除
+      // FireStorageのimage削除の参照
       const deleteRef = storage.ref().child('images/' + this.userColumn.image.src)
       deleteRef.delete().catch(err => {
         console.log('エラー:' + err)});

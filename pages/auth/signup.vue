@@ -3,7 +3,7 @@
     <template v-slot:title>
     新規会員登
     </template>
-    
+
     <template v-slot:button>
       <v-btn type="submit" small style="font-size: 1.6rem;">登録</v-btn>
     </template>
@@ -25,7 +25,7 @@ export default {
     Form,
   },
   computed: {
-    ...mapGetters({error:'auth/errorMessage'})
+    ...mapGetters({error:'auth/getErrorMessage'})
   },
   methods: {
     // Email sign inのActionsを発火させる関数

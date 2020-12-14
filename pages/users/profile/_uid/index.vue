@@ -72,7 +72,7 @@ import { db, storage } from '~/plugins/firebase'
 export default {
   middleware : 'authenticated',
   async asyncData({ store }){
-    const uid = store.getters['auth/user']
+    const uid = store.getters['auth/getUid']
     let userDatas;
     await db.collection('users').doc(uid)
     .get()
@@ -84,15 +84,16 @@ export default {
   },
   data:() => ({
     // アップロードの有無
-      isSelecting: false,
-      fileObject: null,
-      imageName: null,
+    isSelecting: false,
+    fileObject: null,
+    imageName: null,
   }),
-
   methods: {
     backPage() {
       this.$router.push('/users/profile')
     },
+
+    // 画像アップロードボタンの発火メソッド
     onFileUpload() {
       this.isSelecting = true
       window.addEventListener('focus', () => {
@@ -100,6 +101,8 @@ export default {
       }, { once: true })
       this.$refs.file.click()
     },
+
+    // 画像を指定して、編集内容のセット
     onFileChanged(e) {
       // fileに選択した画像ファイル格納
       const file = e.target.files[0]
@@ -115,8 +118,14 @@ export default {
       reader.readAsDataURL(file)
     },
 
+    // プロフィールの編集を行う関数
     async editProfile() {
+
+      // ユーザーコレクションからログイン中のユーザーデータへの参照
       const usersPostRef = await db.collection('users').doc(this.userDatas.uid)
+
+      // 画像の変更の有無を識別する条件分岐(  変更あり )
+      // 変更があればFireStorageのデータ更新、他ユーザー情報もコレクションに更新
       if(this.fileObject !== null) {
         let uploadImage = await this.uploadStorage(this.fileObject, this.imageName)
         await usersPostRef.set({
@@ -133,6 +142,8 @@ export default {
           this.$store.commit('auth/setUserImage', uploadImage.src)
           this.$router.push('/users/profile')
         })
+
+        // 画像の変更なしの場合の条件分岐( 変更なし )
       } else {
         await usersPostRef.set({
           name: this.userDatas.name,
@@ -143,6 +154,8 @@ export default {
         .then( () => { this.$router.push('/users/profile') })
       }
     },
+
+    // 画像変更をStorageに反映させる関数
     uploadStorage(file, name) {
       const storageRef = storage.ref()
       return new Promise((resolve, reject) => {

@@ -27,7 +27,7 @@ export default {
     Form,
   },
   computed: {
-    ...mapGetters({error:'auth/errorMessage'})
+    ...mapGetters({error:'auth/getErrorMessage'})
   },
   methods: {
     // Emailでのlogin認証を発火させる関数
