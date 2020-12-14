@@ -20,12 +20,16 @@
   background:linear-gradient(130deg,$header-background-color 20% ,#a5a5a5be 80%, );
   color: $explain-font-color;
   margin-top: 5%;
-  padding: 3% 3% 8% 3%;
+  padding: 5% 3% 10% 3%;
   opacity: .9;
 
   text-align: center;
   max-width: 100% !important;
   position: relative;
+
+  @include pc {
+    min-height: unset;
+  }
 
   h1 {
     font-size: 8rem;
@@ -61,7 +65,7 @@
   // メインタイトル左側のパーツ
   .circle1 {
     position: absolute;
-    top: 2%;
+    top: 10%;
     left: 25%;
 
     width: 6%;
@@ -92,7 +96,7 @@
   // サブタイトル左側のパーツ
   .circle3 {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 33%;
 
     width: 8%;
@@ -106,7 +110,7 @@
   // サブタイトル右側のパーツ
   .circle4 {
     position: absolute;
-    top: 68%;
+    top: 65%;
     left: 60%;
 
     width: 6%;

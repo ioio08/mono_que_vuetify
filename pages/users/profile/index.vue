@@ -105,13 +105,13 @@ export default {
 
   // uidが一致するドキュメントのみを取得する
   async asyncData({ store }){
-    const user = store.getters['auth/user']
     let userDatas;
     let userColumnDatas = []
     let userQuestionDatas = []
+    const uid = await store.getters['auth/user']
 
     // ユーザー情報
-    await db.collection('users').doc(user.uid)
+    await db.collection('users').doc(uid)
     .get()
     .then(doc => {
       userDatas = doc.data()
@@ -119,7 +119,7 @@ export default {
 
     // Column.lengthのために取得
     await db.collection('column')
-    .where('text.uid', '==', user.uid)
+    .where('text.uid', '==', uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
@@ -129,7 +129,7 @@ export default {
 
     // Question.lengthのために取得
     await db.collection('question')
-    .where('text.uid', '==', user.uid)
+    .where('text.uid', '==', uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {

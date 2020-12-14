@@ -64,9 +64,9 @@ import { db, storage } from '~/plugins/firebase'
 export default {
   middleware : 'authenticated',
   async asyncData({ store }){
-    const user = store.getters['auth/user']
+    const uid = store.getters['auth/user']
     let userDatas;
-    await db.collection('users').doc(user.uid)
+    await db.collection('users').doc(uid)
     .get()
     .then(doc => {
       userDatas = doc.data()
@@ -108,7 +108,7 @@ export default {
     },
 
     async editProfile() {
-      const usersPostRef = db.collection('users').doc(this.userDatas.uid)
+      const usersPostRef = await db.collection('users').doc(this.userDatas.uid)
       if(this.fileObject !== null) {
         let uploadImage = await this.uploadStorage(this.fileObject, this.imageName)
         await usersPostRef.set({

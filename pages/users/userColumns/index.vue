@@ -3,7 +3,7 @@
   <PostList
   :exist-posts="userColumns"
   :post-path="postPath"
-  :tags="columnTags"
+  :tags="tags"
   >コラム</PostList>
 </template>
 
@@ -19,13 +19,15 @@ export default {
     PostList
   },
 
-  // uidが一致するドキュメントのみを取得する
-  // postPath をuserColumnsに設定
+// ユーザー固有のコラムと関連するタグを取得
   async asyncData({ store }){
-    const user = store.getters['auth/user']
+    const uid =  await store.getters['auth/user']
+
+    // uidが一致するドキュメントのみを取得する
+    // postPath をuserColumnsに設定
     let userColumns = []
     await db.collection('column')
-    .where('text.uid', '==', user.uid)
+    .where('text.uid', '==', uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
@@ -33,18 +35,14 @@ export default {
       })
     });
 
-    return { userColumns }
-  },
-  created() {
-    this.$store.dispatch('tag/initUserTags', this.$store.getters['auth/user'].uid)
-  },
-  computed: {
-    ...mapGetters({
-      columnTags: 'tag/getColumnTags',
-    })
+    // 関連するタグのみを取得する
+    await store.dispatch('tag/initUserTags', uid)
+    const tags = await store.getters['tag/getColumnTags']
+
+    return { userColumns, tags }
   },
   data:() => ({
-      postPath: '/users/userColumns/'
+    postPath: '/users/userColumns/'
   }),
 }
 </script>

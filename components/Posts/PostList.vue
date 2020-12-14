@@ -38,7 +38,7 @@
               :key="existPost.text.docId"
               cols="12"
               xs="12"
-              sm="4"
+              sm="6"
               md="4"
               xl="3">
 

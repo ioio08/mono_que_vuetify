@@ -55,12 +55,15 @@ export const actions = {
           penName: 'ナナシさん',
           email: user.email,
           uid: user.uid,
-          image: '/images/smile.png',
+          image: {
+            name: '/images/smile.png',
+            src: '/images/smile.png',
+          }
         })
       }
 
       // ユーザー情報をセット
-      commit('setUser', user)
+      commit('setUser', user.uid)
 
       // ログイン状態をtrue, falseで管理
       // true: ログイン中 , false: 未ログイン
@@ -102,12 +105,15 @@ export const actions = {
           penName: 'ナナシさん',
           email: user.email,
           uid: user.uid,
-          image: '/images/smile.png',
+          image: {
+            name: '/images/smile.png',
+            src: '/images/smile.png',
+          }
         })
       }
 
       // ユーザー情報をセット
-      commit('setUser', user)
+      commit('setUser', user.uid)
 
       // ログイン状態をtrue, falseで管理
       // true: ログイン中 , false: 未ログイン
@@ -161,7 +167,7 @@ export const actions = {
       }
 
       // ユーザー情報をセット
-      commit('setUser', user)
+      commit('setUser', user.uid)
 
       // ログイン状態をtrue, falseで管理
       // true: ログイン中 , false: 未ログイン

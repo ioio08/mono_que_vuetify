@@ -3,7 +3,7 @@
   <PostList
   :exist-posts="userQuestions"
   :post-path="postPath"
-  :tags="questionTags"
+  :tags="tags"
   >質問</PostList>
 </template>
 
@@ -19,13 +19,16 @@ export default {
     PostList
   },
 
+// ユーザー固有の質問と関連するタグを取得
+  async asyncData({ store }){
+  // uidを取得
+    const uid = store.getters['auth/user']
+
   // uidが一致するドキュメントのみを取得する
   // postPath をuserQuestionsに設定
-  async asyncData({ store }){
-    const user = store.getters['auth/user']
-    let userQuestions = []
+    const userQuestions = []
     await db.collection('question')
-    .where('text.uid', '==', user.uid)
+    .where('text.uid', '==', uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
@@ -33,15 +36,11 @@ export default {
       })
     });
 
-    return { userQuestions }
-  },
-  created() {
-    this.$store.dispatch('tag/initUserTags', this.$store.getters['auth/user'].uid)
-  },
-  computed: {
-    ...mapGetters({
-      questionTags: 'tag/getQuestionTags',
-    })
+    // 関連するタグのみを取得する
+    await store.dispatch('tag/initUserTags', uid)
+    const tags = await store.getters['tag/getQuestionTags']
+
+    return { userQuestions, tags }
   },
   data:()  => ({
     postPath: '/users/userQuestions/'
