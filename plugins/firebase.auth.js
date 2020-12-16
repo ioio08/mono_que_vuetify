@@ -9,12 +9,12 @@ export default (context) => {
   const { store } = context
   return new Promise((resolve, reject) => {
     auth.onAuthStateChanged(user => {
-      // ** ログイン済のユーザー
+      //  ログイン済のユーザー
       if (user) {
         // ログインした場合に登録画像をリアルタイムで描画する為の処理
         // usersコレクションのインタスタンス作成
         const userRef = db.collection('users').doc(user.uid)
-        
+
         // ログイン中のユーザー情報を確認し、フィールド状況に合わせて画像を取得
         userRef.get().then(doc => {
           store.commit('auth/setUserImage', doc.data().image.src)

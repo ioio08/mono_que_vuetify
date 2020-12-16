@@ -132,8 +132,8 @@ export default {
   },
   data() {
     return {
-      // 新規投稿・編集によってnewPostの設定を調整する三項演算子
-      // 新規登録：this.postData = null なので、初期値の設定
+      // 新規投稿 / 編集によってnewPostの設定を調整する三項演算子
+      // 新規投稿：this.postData = null なので、初期値の設定
       // 編集：this.postData がpropsで渡され、newPostとして設定
       newPost: this.postData
       ? { ...this.postData}

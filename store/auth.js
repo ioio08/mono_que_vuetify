@@ -180,7 +180,7 @@ export const actions = {
 
     } catch (error) {
       // エラー分によってメッセージをswitchさせる関数
-      let errorMessage = dispatch('errorHandling', await (error, 'signin'))
+      let errorMessage = dispatch('errorHandling', await (error, 'popup'))
       commit('setErrorMessage', errorMessage)
     }
 
