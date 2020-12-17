@@ -1,7 +1,7 @@
 ## <img width="1280" alt="スクリーンショット 2020-12-15 18 31 47" src="https://user-images.githubusercontent.com/66821960/102196959-e424c980-3f03-11eb-8a59-4c64e330e241.png">
 
 # プロダクト名
-##  `MONODY( モノディー )`
+##  MONODY( モノディー )
 『モノと対話するように』をコンセプトに、皆さんの身の周りにある「モノ」との関わり方を、対話する様に綴ってもらう投稿型アプリケーションです。
 
 アクセス：[ここをクリック](https://mono-que-data.firebaseapp.com/)してアプリケーションに進めます。
@@ -13,9 +13,6 @@
  - [開発環境](#開発環境)
    - 利用技術
    - バージョン
- - [機能](#機能)
-   - イメージ画像
-   - 機能説明
  - [アプリ概要](#アプリ概要)
    - 目的
    - 構成
@@ -24,21 +21,14 @@
    - 工夫内容
    - コード
 
+
 # 使用言語
-### マークアップ
- -  HTML　<img width= '20px'  src="https://cdn.svgporn.com/logos/html-5.svg">
+|  マークダウン |  ベース  | フレームワーク | バックエンド |
+| :-----------: | :------: | :------------: | :----------: |
+|  HTML　<img width= '20px'  src="https://cdn.svgporn.com/logos/html-5.svg">  |  JavaScript (ES6)　<img width= '25px'  src="https://cdn.svgporn.com/logos/javascript.svg">  | Nuxt.js　<img width= '20px'  src="https://cdn.svgporn.com/logos/nuxt-icon.svg">  |  Firebase　<img width= '20px'  src="https://cdn.svgporn.com/logos/firebase.svg">  |
+|  SCSS　<img width= '30px'  src="https://cdn.svgporn.com/logos/sass.svg">  |    | vuetify　<img width= '18px'  src="https://cdn.svgporn.com/logos/vuetifyjs.svg"> |
 
- -  SCSS　<img width= '30px'  src="https://cdn.svgporn.com/logos/sass.svg">
 
-### ベース
- -  JavaScript (ES6)　<img width= '25px'  src="https://cdn.svgporn.com/logos/javascript.svg">
-
-### フレームワーク
-
- -  Nuxt.js　<img width= '20px'  src="https://cdn.svgporn.com/logos/nuxt-icon.svg">
-
- ### バックエンド
-  - Firebase　<img width= '20px'  src="https://cdn.svgporn.com/logos/firebase.svg">
 
 # 開発環境
  - npm v6.14.8
@@ -46,14 +36,7 @@
  - Nuxt.js v2.14.7
  - Firebase v8.1.1
 
- # 機能
-
-1. 投稿記事のCRUD機能(新規作成、読込、編集、削除)
-
-1. ユーザーの認証機能(新規登録、ログイン)
-
-1. 登録プロフィールの編集（名前、ペンネーム、画像）
- # アプリ概要
+# アプリ概要
 
 ### 目的：
 1. SPA開発の理解を深める為。
@@ -89,7 +72,7 @@
 ### 1. 投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計( /components/Posts/PostForm.vue )
 
 #### <script> dataのプロパティ `newPost(投稿データの設定値)` を三項演算子で実装し、propsデータの有無でデフォルト値を指定( /components/Posts/PostForm.vue L117 ~ 122, L138 ~ 151)
-```bash
+```
 props: {
   # Column, Questionからデータ受け取り
   postData: {
@@ -122,7 +105,7 @@ newPost: this.postData
 
 #### ログイン状態の永続化( /store/auth.js L138 ~ 185 )
 #### ログインのエラーハンドリング( /store/auth.js L181 ~ 185, L199 ~ 240)
-```bash
+```
 # Google認証でのログイン処理＋ユーザー情報取得 => ユーザー登録
   async signInWithGoogle({ commit, dispatch }) {
     # setPersistence(firebase.auth.Auth.Persistence.LOCAL) でログイン状態を永続化
@@ -192,7 +175,7 @@ newPost: this.postData
 
 #### ログインしたタイミングでアイコンを表示（未ログインは場合は非表示）
 
-```bash
+```
 //// Header.vue ////
 
 # v-showでloggedIn（ログインの有無をtrue,falseで格納）がtrueの場合表示
@@ -207,9 +190,9 @@ newPost: this.postData
 </v-avatar>
 ```
 
-#### ログインしたユーザーの登録データから、登録している画像データを取得し、storeに格納。その後ヘッダーからgetters経由で画像データーを取得し、リアルタイムでレンダリングする。
+#### ログインしたユーザーの登録データから、登録している画像データを取得し、storeに格納。その後Headerでは、storeからgetters経由で画像データーを取得し、リアルタイムでレンダリングする。
 
-```bash
+```
 //// /plugins/firebase.auth.js ////
 
 # ログインの有無を識別するメソッド( auth.onAuthStateChanged() )
@@ -233,7 +216,7 @@ auth.onAuthStateChanged(user => {
     # <!- 省略 ->
 ```
 
-```bash
+```
 ////  Header.vue  ////
 
 # computedでgettersデータを取得し、レンダリングする。
