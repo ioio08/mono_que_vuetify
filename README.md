@@ -74,9 +74,9 @@
 1. [google認証実装](#2-google認証実装)
 1. [ヘッダーアイコンを、ユーザーが登録している画像で表示](#3-ヘッダーアイコンを、ユーザー登録画像で表示)
 
-### 1. 投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計( /components/Posts/PostForm.vue )
+### 1. 投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計( [pullReq](https://github.com/ioio08/mono_que_vuetify/pull/30/files#diff-ae46465c9f268c047c82f7d908ced92f01677a97d48a6415374944929cf9665b) )
 
-#### <script> dataのプロパティ `newPost(投稿データの設定値)` を三項演算子で実装し、propsデータの有無でデフォルト値を指定( /components/Posts/PostForm.vue L117 ~ 122, L138 ~ 151)
+#### <script> dataのプロパティ `newPost(投稿データの設定値)` を三項演算子で実装し、propsデータの有無でデフォルト値を指定
 ```
 props: {
   # Column, Questionからデータ受け取り
@@ -109,7 +109,7 @@ newPost: this.postData
 ### 2. google認証実装( /store/auth.js )
 
 #### ログイン状態の永続化( [pullReq](https://github.com/ioio08/mono_que_vuetify/pull/41/files#diff-e5325c6d5dcefa6b26e2deb7b2a561d472d0f9247f76925abc303bc8d98b7a55) )
-#### ログインのエラーハンドリング( /store/auth.js L181 ~ 185, L199 ~ 240)
+#### ログインのエラーハンドリング( [pullReq](https://github.com/ioio08/mono_que_vuetify/pull/82/files#diff-e5325c6d5dcefa6b26e2deb7b2a561d472d0f9247f76925abc303bc8d98b7a55))
 ```
 # Google認証でのログイン処理＋ユーザー情報取得 => ユーザー登録
   async signInWithGoogle({ commit, dispatch }) {
@@ -176,7 +176,7 @@ newPost: this.postData
   }
 ```
 
-### 3. ヘッダーアイコンを、ユーザー登録画像で表示( /store/auth.js )
+### 3. ヘッダーアイコンを、ユーザー登録画像で表示( [pullReq](https://github.com/ioio08/mono_que_vuetify/pull/69/files#diff-abda917bdb0f4670d443fba843cbfb2e5def3a9d1c3fdf792fa6823271bd0bb6) )
 
 #### ログインしたタイミングでアイコンを表示（未ログインは場合は非表示）
 
