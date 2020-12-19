@@ -9,8 +9,7 @@
           <!-- Title: 1.新規登録, 2.ログイン -->
           <v-card-text style="text-align: center">
             <h1><slot name="title"/></h1>
-            <!-- TODO ゲストユーザーを追加する -->
-            <v-btn style="marigin-left:5%" @click="onGestClick">ゲストログイン</v-btn>
+            <v-btn @click="onGestClick">ゲストログイン</v-btn>
           </v-card-text>
           <v-divider></v-divider>
 
