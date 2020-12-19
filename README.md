@@ -108,7 +108,7 @@ newPost: this.postData
 
 ### 2. google認証実装( /store/auth.js )
 
-#### ログイン状態の永続化( /store/auth.js L138 ~ 185 )
+#### ログイン状態の永続化( [pullReq](https://github.com/ioio08/mono_que_vuetify/pull/41/files#diff-e5325c6d5dcefa6b26e2deb7b2a561d472d0f9247f76925abc303bc8d98b7a55) )
 #### ログインのエラーハンドリング( /store/auth.js L181 ~ 185, L199 ~ 240)
 ```
 # Google認証でのログイン処理＋ユーザー情報取得 => ユーザー登録
