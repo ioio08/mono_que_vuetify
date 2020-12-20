@@ -70,9 +70,9 @@
 
 # 工夫ポイント
 ## 工夫リスト
-1. [投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計](#https://github.com/ioio08/mono_que_vuetify#1-%E6%8A%95%E7%A8%BF%E3%83%9A%E3%83%BC%E3%82%B8%E3%82%92%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E5%8C%96%E3%81%97%E6%96%B0%E8%A6%8F%E6%8A%95%E7%A8%BF%E3%81%A8%E7%B7%A8%E9%9B%86%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%99%E3%82%8B%E6%A7%98%E3%81%AB%E8%A8%AD%E8%A8%88-pullreq-)
-1. [google認証実装](#https://github.com/ioio08/mono_que_vuetify#2-google%E8%AA%8D%E8%A8%BC%E5%AE%9F%E8%A3%85-storeauthjs-)
-1. [ヘッダーアイコンを、ユーザーが登録している画像で表示](#https://github.com/ioio08/mono_que_vuetify#3-%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3%E3%82%92%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E7%99%BB%E9%8C%B2%E7%94%BB%E5%83%8F%E3%81%A7%E8%A1%A8%E7%A4%BA-pullreq-)
+1. [投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計](#1-投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計-pullreq-)
+1. [google認証実装](#2-google認証実装-pullreq-)
+1. [ヘッダーアイコンを、ユーザーが登録している画像で表示](#3-ヘッダーアイコンを、ユーザー登録画像で表示-pullreq-)
 
 ### 1. 投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計( [pullReq](https://github.com/ioio08/mono_que_vuetify/pull/30/files#diff-ae46465c9f268c047c82f7d908ced92f01677a97d48a6415374944929cf9665b) )
 
