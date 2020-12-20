@@ -242,17 +242,20 @@ computed: {
 # 実装予定機能
 ## リスト
 1. Firebase Rulesを記述する(Cloud Firestore, Storage, Authentication, Functions) CRUD機能
+1. 質問コメント機能
 1. 全文検索
 1. 製作者ページ作成
 1. コンタクトフォーム
 
 ### 1. Firebase Rules ([issue](https://github.com/ioio08/mono_que_vuetify/issues/72))
  - rulesファイルを編集（特にCRUD機能周り）
-### 2. 全文検索 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/76))
+### 2. コメント機能 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/95))
+ - 質問投稿に対するコメント機能
+### 3. 全文検索 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/76))
  - Algoliaを実装する(Firebase FunctionsでSDKも許可する。)
  - Algolia実装後、ページネーションも対応させる
-### 3. 製作者ページ作成 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/74))
+### 4. 製作者ページ作成 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/74))
  - ポートフォリをサイトを掲載
  -  簡易的な自己紹介を載せる（名前、年齢、スキル、実績、作品など）
-### 4. コンタクトフォーム ([issue](https://github.com/ioio08/mono_que_vuetify/issues/72))
+### 5. コンタクトフォーム ([issue](https://github.com/ioio08/mono_que_vuetify/issues/72))
  -  node mailer と連携
