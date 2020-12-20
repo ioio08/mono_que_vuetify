@@ -23,6 +23,9 @@
  - [工夫ポイント](#工夫ポイント)
    - 工夫内容
    - コード
+ - [実装予定機能](#実装予定機能)
+   - 機能
+   - 実装方法
 
 
 # 使用言語
@@ -71,7 +74,7 @@
 
 
 # 工夫ポイント
-## 工夫リスト
+## リスト
 1. [投稿ページをコンポーネント化し、新規投稿と編集に対応する様に設計](#1-投稿ページをコンポーネント化し新規投稿と編集に対応する様に設計-pullreq-)
 1. [google認証実装](#2-google認証実装-storeauthjs-)
 1. [ヘッダーアイコンを、ユーザーが登録している画像で表示](#3-ヘッダーアイコンをユーザー登録画像で表示-pullreq-)
@@ -235,3 +238,21 @@ computed: {
 },
 
 ```
+
+# 実装予定機能
+## リスト
+1. Firebase Rulesを記述する(Cloud Firestore, Storage, Authentication, Functions) CRUD機能
+1. 全文検索
+1. 製作者ページ作成
+1. コンタクトフォーム
+
+### 1. [Firebase Rules](https://github.com/ioio08/mono_que_vuetify/issues/72)
+#### rulesファイルを編集（特にCRUD機能周り）
+### 2. [全文検索](https://github.com/ioio08/mono_que_vuetify/issues/76)
+#### Algoliaを実装する(Firebase FunctionsでSDKも許可する。)
+#### Algolia実装後、ページネーションも対応させる
+### 3. [製作者ページ作成](https://github.com/ioio08/mono_que_vuetify/issues/74)
+#### ポートフォリをサイトを掲載
+#### 簡易的な自己紹介を載せる（名前、年齢、スキル、実績、作品など）
+### 4. [コンタクトフォーム](https://github.com/ioio08/mono_que_vuetify/issues/72)
+#### node mailer と連携
