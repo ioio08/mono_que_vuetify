@@ -247,12 +247,12 @@ computed: {
 1. コンタクトフォーム
 
 ### 1. Firebase Rules ([issue](https://github.com/ioio08/mono_que_vuetify/issues/72))
-#### rulesファイルを編集（特にCRUD機能周り）
+ - rulesファイルを編集（特にCRUD機能周り）
 ### 2. 全文検索 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/76))
-#### Algoliaを実装する(Firebase FunctionsでSDKも許可する。)
-#### Algolia実装後、ページネーションも対応させる
+ - Algoliaを実装する(Firebase FunctionsでSDKも許可する。)
+ - Algolia実装後、ページネーションも対応させる
 ### 3. 製作者ページ作成 ([issue](https://github.com/ioio08/mono_que_vuetify/issues/74))
-#### ポートフォリをサイトを掲載
-#### 簡易的な自己紹介を載せる（名前、年齢、スキル、実績、作品など）
+ - ポートフォリをサイトを掲載
+ -  簡易的な自己紹介を載せる（名前、年齢、スキル、実績、作品など）
 ### 4. コンタクトフォーム ([issue](https://github.com/ioio08/mono_que_vuetify/issues/72))
-#### node mailer と連携
+ -  node mailer と連携
