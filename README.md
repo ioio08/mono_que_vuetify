@@ -44,6 +44,7 @@
 # ライブラリ
  - dotenv v1.4.1
  - Firebase v8.1.1
+ - @nuxtjs/firebase@ v7.4.1
  - vuexfire v3.2.4
 
 # アプリ概要
