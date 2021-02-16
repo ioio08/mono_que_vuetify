@@ -1,57 +1,39 @@
 import firebase from "@firebase/app"
-import { db, auth } from '~/plugins/firebase.js'
+import "@firebase/firestore";
 
-// login中のuser情報を保持するState
-// uid
-// userImage : ヘッダーの画像切り替え
-// authStatus : true or false
-// errorMessage : 認証エラー文を日本語表記で返す
 export const state = () => ({
-  uid: null,
-  userImage: null,
+  userData: null,
   authStatus: false,
   errorMessage: null,
 })
 
 export const mutations = {
-  setUid(state, payload) {
-    state.uid = payload
+  setUserData(state, userData) {
+    state.userData = userData
   },
 
-  setUserImage(state, payload) {
-    state.userImage = payload
+  setAuthStatus(state, status) {
+    state.authStatus = status
   },
 
-  setAuthStatus(state, payload) {
-    state.authStatus = payload
-  },
-
-  setErrorMessage(state, payload) {
-    state.errorMessage = payload
+  setErrorMessage(state, errorMessage) {
+    state.errorMessage = errorMessage
   }
 }
 
 export const actions = {
-  // Mailでの新規ユーザー登録, ユーザー情報取得
+
   async signUp({ commit, dispatch }, { email, password }) {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
     try {
-      const doc = await auth.createUserWithEmailAndPassword(email, password)
-      // 取得したデータからuserのemail, uidを取得
-      const user = {}
-      user.email = doc.user.email
-      user.uid = doc.user.uid
+      const { user } = await this.$fb.auth().createUserWithEmailAndPassword(email, password)
 
-      // アプリにuser情報がすでに保存されているユーザーか判別する関数
-      // 初回：userをusersコレクションに追加
-      // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+      // アプリのユーザー情報登録済みかを確認
+      const userData = await this.$fb.usersRef.doc(user.uid).get()
 
-      // usersコレクションからログインユーザーのデータを取得
-      const userData = await db.collection('users').doc(user.uid).get()
-
-      // 初めてのログインの場合
-      if (!userData.data()) {
-        await db.collection('users').doc(user.uid).set({
+      // 初ログインの場合のみ
+      if (!userData) {
+        await this.$fb.userRef.set({
           name: 'ナナシさん',
           penName: 'ナナシさん',
           email: user.email,
@@ -63,123 +45,59 @@ export const actions = {
         })
       }
 
-      // ユーザー情報をセット
-      commit('setUid', user.uid)
-
-      // ログイン状態をtrue, falseで管理
-      // true: ログイン中 , false: 未ログイン
-      commit('setAuthStatus', true )
-      // errorMessageの初期化
+      commit('setUserData', userData)
+      commit('setAuthStatus', true)
       commit('setErrorMessage', null)
-      this.$router.push('/')
-
     } catch (error) {
-      // エラー分によってメッセージをswitchさせる関数
-      let errorMessage = dispatch('errorHandling', await (error, 'signin'))
+      const errorMessage = await dispatch('errorHandling', {error: error.code, method: 'signUp'})
       commit('setErrorMessage', errorMessage)
-
     }
   },
 
-  // ここからログイン用関数
-  // Mailで登録しているユーザーのログイン処理＋ユーザー情報取得
-  async signInWithEmail({ commit, dispatch }, { email, password } ) {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  async signInWithEmail({ commit, dispatch }, { email, password }) {
     try {
-      const doc = await auth.signInWithEmailAndPassword(email, password)
-      // 取得したデータからuserのemail, uidを取得
-      const user = {}
-      user.email = doc.user.email
-      user.uid = doc.user.uid
+      const { user } = await this.$fb.auth().signInWithEmailAndPassword(email, password)
 
-      // アプリにuser情報がすでに保存されているユーザーか判別する関数
-      // 初回：userをusersコレクションに追加
-      // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
+      // ユーザー情報の登録を確認
+      const userData = await this.$fb.usersRef.doc(user.uid).get()
 
-      // usersコレクションからログインユーザーのデータを取得
-      const userData = await db.collection('users').doc(user.uid).get()
-
-      // 初めてのログインの場合
-      if (!userData.data()) {
-        await db.collection('users').doc(user.uid).set({
-          name: 'ナナシさん',
-          penName: 'ナナシさん',
-          email: user.email,
-          uid: user.uid,
-          image: {
-            name: '/images/smile.png',
-            src: '/images/smile.png',
-          }
-        })
-      }
-
-      // ユーザー情報をセット
-      commit('setUid', user.uid)
-
-      // ログイン状態をtrue, falseで管理
-      // true: ログイン中 , false: 未ログイン
-      commit('setAuthStatus', true )
-
-      // errorMessageの初期化
+      commit('setUserData', userData)
+      commit('setAuthStatus', true)
       commit('setErrorMessage', null)
 
-      this.$router.push('/')
-
-    // エラーメッセージの描画処理
     } catch (error) {
-      // エラー分によってメッセージをswitchさせる関数
-      let errorMessage = dispatch('errorHandling', await (error, 'signin'))
+      const errorMessage = await dispatch('errorHandling', {error: error.code, method: 'signIn'})
       commit('setErrorMessage', errorMessage)
-
     }
   },
 
-  // Google認証でのログイン処理＋ユーザー情報取得
   async signInWithGoogle({ commit, dispatch }) {
-    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    const auth = this.$fb.auth
+    const usersRef = this.$fb.usersRef
+
     try {
-      const doc = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      const user = {}
-      user.name = doc.user.displayName
-      user.penName = doc.user.displayName
-      user.email = doc.user.email
-      user.uid = doc.user.uid
-      user.image = doc.user.photoURL
+      const { user } = await auth().signInWithPopup(new auth.GoogleAuthProvider())
+      const { displayName: userName, email, uid, photoURL: imageURL, photoURL: imageName } = { ...user }
+      const image = { imageURL, imageName }
 
-      // アプリにuser情報がすでに保存されているユーザーか判別する関数
-      // 初回：userをusersコレクションに追加
-      // 既存：usersコレクションからログインユーザーのuser情報を取得してstateに保存する→auth.jsに保存
-
-      // usersコレクションからログインユーザーのデータを取得
-      const userData = await db.collection('users').doc(user.uid).get()
-
-      // 初めてのログインの場合
-      if (!userData.data()) {
-          await db.collection('users').doc(user.uid).set({
-            name: user.name,
-            penName: user.name,
-            email: user.email,
-            uid: user.uid,
-            image: {
-              name: user.image,
-              src: user.image,
-            }
+      // ユーザー情報の登録を確認
+      const { exists } = await usersRef.doc(user.uid).get()
+      // 未登録の場合 users collection に user情報を登録
+      if (!exists) {
+          await userRef.set({
+            userName: userName,
+            penName: userName,
+            email: email,
+            uid: uid,
+            image: image
           })
       }
 
-      // ユーザー情報をセット
-      commit('setUid', user.uid)
-
-      // ログイン状態をtrue, falseで管理
-      // true: ログイン中 , false: 未ログイン
+      commit('setUserData', { userName, email, uid, image })
       commit('setAuthStatus', true)
-
-      // errorMessageの初期化
       commit('setErrorMessage', null)
-      this.$router.push('/')
 
     } catch (error) {
-      // エラー分によってメッセージをswitchさせる関数
       let errorMessage = dispatch('errorHandling', await (error, 'popup'))
       commit('setErrorMessage', errorMessage)
     }
@@ -188,21 +106,44 @@ export const actions = {
 
   // サインアウト処理
   signOut() {
-    return auth.signOut().then(() => {
-      this.$router.push('/')
-      commit('setUid', null )
-      commit('setAuthStatus', false )
-    })
+    this.$fb.auth().signOut()
+    commit('setUid', null )
+    commit('setAuthStatus', false )
+  },
+
+  async onUserStateChanged(ctx, { authUser, claims }, args3rd) {
+    console.log('ctx',ctx) // 1st args {state, commit, dispatch, getters, rootGetters, rootState}
+    // 2nd args {authUser, claims} のみ
+    console.log('authUser', authUser) // authUser: Firebase Authentication の 登録情報
+    console.log('claims', claims)     // claims: Firebase 上記と似たような情報（詳細わからず）
+    console.log('args3rd', args3rd) // 3rd args は取得できない。
+
+
+    // import で直接firebaseモジュールを利用すればuserDataを取得できるが、
+    // @nuxtjs/firebase モジュール の ショートカットで統一し、 極力 import せずに統一したい。
+    // plugin/firebase.js でよく使う @nuxtjs/firebaseのショートカット を inject で 各ファイルからアクセスできるように設定している。
+    if (authUser) {
+      const userData = await firebase.firestore().collection('users').doc(authUser.uid).get()
+
+      const { name: userName, email, uid, image } = await userData.data()
+
+      // commit('setUserData', { userName, email, uid, image })
+      // commit('setAuthStatus', true)
+    } else {
+      commit('setUserData', null)
+      commit('setAuthStatus', false)
+    }
+
   },
 
   //  エラーコードによって描画するメッセージをswitchする関数
-  errorHandling(error, method) {
-    switch (error.code) {
+  errorHandling( { ctx }, { error, method } ) {
+    switch (error) {
       case 'auth/cancelled-popup-request':
       case 'auth/popup-closed-by-user':
         return null;
       case 'auth/email-already-in-use':
-        if (method.indexOf('signup') !== -1) {
+        if (method === 'signUp') {
           return 'このメールアドレスは使用されています';
         } else {
           return 'メールアドレスまたはパスワードが違います';
@@ -212,9 +153,9 @@ export const actions = {
       case 'auth/user-disabled':
         return 'サービスの利用が停止されています';
       case 'auth/user-not-found':
-        return 'メールアドレスまたはパスワードが違います';
+        return 'ユーザー情報が登録されていません。新規登録に進んでください。';
       case 'auth/user-mismatch':
-        if (method === 'signin/popup') {
+        if (method === 'signIn/popup') {
           return '認証されているユーザーと異なるアカウントが選択されました';
         } else {
           return 'メールアドレスまたはパスワードが違います';
@@ -233,21 +174,18 @@ export const actions = {
       case 'auth/requires-recent-login':
         return '認証の有効期限が切れています';
       default:
-        if (method.indexOf('signin') !== -1) {
+        if (method === 'signIn' ) {
           return '認証に失敗しました。しばらく時間をおいて再度お試しください';
         } else {
           return 'エラーが発生しました。しばらく時間をおいてお試しください';
         }
     }
-  }
+  },
 }
 
 export const getters = {
-  getUid(state) {
-    return state.uid
-  },
-  getUserImage(state) {
-    return state.userImage
+  getUserData(state) {
+    return state.userData
   },
   getAuthStatus(state) {
     return state.authStatus

@@ -1,26 +1,13 @@
-import firebase from "@firebase/app"
-import "@firebase/firestore";
-import '@firebase/auth'
-import '@firebase/storage';
+export default ({ $fireModule }, inject) => {
+  const db = $fireModule.firestore
+  const auth = $fireModule.auth
+  const storage= $fireModule.storage
+  const columnRef= db().collection('column')
+  const questionRef= db().collection('question')
+  const usersRef = db().collection('users')
 
-// .envファイルにkeyを配置することでkeyを隠す
-export const config = {
-    apiKey: process.env.FB_API_KEY,
-    authDomain: process.env.FB_AUTH_DOMAIN,
-    databaseURL: process.env.FB_DATABASE_URL,
-    projectId: process.env.FB_PROJECT_ID,
-    storageBucket: process.env.FB_STORAGE_BUCKET,
-    messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID,
+  const fb = { db, auth, storage, columnRef, questionRef, usersRef }
+  inject('fb', fb)
 }
+// this.$fb. で参照できる
 
-// Firebase接続の初期化
-if (!firebase.apps.length) {
-  firebase.initializeApp(config)
-}
-
-export const db = firebase.firestore()      // Cloud Firestore への参照を変数化
-export const storage = firebase.storage()   // FireStorage への参照を変数化
-export const auth = firebase.auth()         // Firebase Authentication の参照を変数化
-export default { db, auth, storage,}

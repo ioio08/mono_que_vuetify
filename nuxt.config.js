@@ -27,7 +27,6 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '~/plugins/firebase.js',
-    '~/plugins/firebase.auth.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -41,8 +40,33 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    '@nuxtjs/dotenv',
+    '@nuxtjs/firebase',
   ],
+
+  firebase: {
+    config: {
+      apiKey: "AIzaSyAJdTWb3bd8NqohC19s5Xp6eFwBHPQJCIM",
+      authDomain: "mono-que-data.firebaseapp.com",
+      databaseURL: "https://mono-que-data.firebaseio.com",
+      projectId: "mono-que-data",
+      storageBucket: "mono-que-data.appspot.com",
+      messagingSenderId: "359914177786",
+      appId: "1:359914177786:web:13ba738f87f4a883c27543",
+      measurementId: "G-5E3TJJE4BY"
+    },
+    services: {
+      auth: {
+        persistence: 'local',
+        initialize: {
+          onAuthStateChangedAction: 'auth/onUserStateChanged',
+          subscribeManually: false
+        },
+        ssr: false
+      },
+      firestore: true,
+      storage: true
+    }
+  },
 
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
